@@ -9,7 +9,7 @@ enableRobotsTXT = true
 # ブログのタイトル
 title = "TEST"
 
-theme = "mainroad"
+theme = "terminal"
 paginate = 20
 
 # 自己紹介
