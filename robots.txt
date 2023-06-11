@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://sparrow-blue.github.io/blogsitemap.xml
+Sitemap: https://sparrow-blue.github.io/blog/sitemap.xml
