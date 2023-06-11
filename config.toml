@@ -1,7 +1,6 @@
 baseURL = "https://sparrow-blue.github.io/blog/"
 
-languageCode = "ja"
-DefaultContentLanguage = "ja"
+languageCode = "en-us"
 HasCJKLanguage = true
 enableRobotsTXT = true
 
