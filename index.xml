@@ -1,1 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TEST</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on TEST</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Sample Page</title><link>https://sparrow-blue.github.io/blog/posts/sample/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/sample/</guid><description>HUGOのサンプル h1 h2 h3 h4 h5 h6 a b c d e f $ bash BOLD italic 44GG44KT44GT #include &amp;lt;stdio.h&amp;gt; int main() { printf(&amp;#34;Hello, World!\n&amp;#34;); return 0; }</description></item><item><title>test 2</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>Hello world!!</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TEST</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on TEST</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Sample Page</title><link>https://sparrow-blue.github.io/blog/posts/sample/</link><pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/sample/</guid><description>HUGOのサンプル h1 h2 h3 h4 h5 h6 a b c d e f $ bash BOLD italic 44GG44KT44GT #include &amp;lt;stdio.h&amp;gt; int main() { printf(&amp;#34;Hello, World!\n&amp;#34;); return 0; }</description><content>&lt;h1 id="hugoのサンプル">HUGOのサンプル&lt;/h1>
+&lt;h1 id="h1">h1&lt;/h1>
+&lt;h2 id="h2">h2&lt;/h2>
+&lt;h3 id="h3">h3&lt;/h3>
+&lt;h4 id="h4">h4&lt;/h4>
+&lt;h5 id="h5">h5&lt;/h5>
+&lt;h6 id="h6">h6&lt;/h6>
+&lt;!-- raw HTML omitted -->
+&lt;ul>
+&lt;li>
+&lt;p>a&lt;/p>
+&lt;ul>
+&lt;li>b
+&lt;ul>
+&lt;li>c&lt;/li>
+&lt;li>d&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>e&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>f&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>$ bash&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>BOLD&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;em>italic&lt;/em>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;del>44GG44KT44GT&lt;/del>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-c" data-lang="c">&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+printf(&lt;span style="color:#e6db74">&amp;#34;Hello, World!&lt;/span>&lt;span style="color:#ae81ff">\n&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>);
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;figure class="left" >
+&lt;img src="./image.jpeg" alt="モード" />
+&lt;/figure></content></item><item><title>test 2</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>Hello world!!</description><content>&lt;p>Hello world!!&lt;/p></content></item></channel></rss>
