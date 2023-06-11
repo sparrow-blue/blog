@@ -8,9 +8,9 @@ theme = "terminal"
 paginate = 20
 
 [Author]
-    name = "Kumazawa"
-    bio = "Hello world!!"
-    avatar = "img/avatar.JPG"
+  name = "Kumazawa"
+  bio = "Hello world!!"
+  avatar = "img/avatar.JPG"
 
 [params]
   contentTypeName = "posts"
@@ -20,13 +20,14 @@ paginate = 20
   fullWidthTheme = true
   centerTheme = false
   autoCover = true
-  showLastUpdated = false
+  showLastUpdated = true
   # favicon = "favicon.ico"
   # updatedDatePrefix = "Updated"
   # oneHeadingSize = true # default
   # readingTime = false # default
   # Toc = false # default
   # TocTitle = "Table of Contents" # default
+  enableGitInfo=true
 
 [languages]
   [languages.en]
