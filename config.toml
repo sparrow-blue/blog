@@ -17,7 +17,7 @@ paginate = 20
   contentTypeName = "posts"
   themeColor = "green"
   showMenuItems = 2
-  showLanguageSelector = true
+  showLanguageSelector = false
   fullWidthTheme = true
   centerTheme = false
   autoCover = true
@@ -30,21 +30,6 @@ paginate = 20
   # TocTitle = "Table of Contents" # default
 
 [languages]
-  [languages.ja]
-    languageName = "日本語"
-    title = "Design and Implementation"
-    subtitle = "Theory and Practice of Software Development"
-    owner = "Kumazawa"
-    keywords = ""
-    copyright = ""
-    menuMore = "もっと見る"
-    readMore = "続き"
-    readOtherPosts = "他の投稿を読む"
-    newerPosts = "新しい投稿"
-    olderPosts = "古い投稿"
-    missingContentMessage = "ページが見つかりません"
-    missingBackButtonLabel = "ホームに戻る"
-
   [languages.en]
     languageName = "English"
     title = "Design and Implementation"
