@@ -1,51 +1,55 @@
-# 公開するページのURL
-baseURL = "https://sparrow-blue.github.io/blog"
+baseURL = "https://sparrow-blue.github.io/blog/"
 
 languageCode = "ja"
 DefaultContentLanguage = "ja"
 HasCJKLanguage = true
 enableRobotsTXT = true
 
-# ブログのタイトル
-title = "TEST"
-
 theme = "terminal"
 paginate = 20
 
-# 自己紹介
 [Author]
     name = "Kumazawa"
     bio = "Hello world!!"
     avatar = "img/avatar.JPG"
 
-[Params]
-    customCSS = ["css/custom.css"]
-    copyright = "Author"
-    readmore = true
-    authorbox = true
-    post_meta = ["date", "categories"]
-    twitter_cards = true
-
-# ページのテーマカラー
-[Params.style.vars]
-  highlightColor = "#2e8b57"
-
-# SNS等のユーザー名
-[Params.widgets.social]
-  github = "sparrow-blue"
-
-[Params.sidebar]
-    home = "right"
-    list = "right"
-    single = "right"
-    widgets = ["search", "recent", "categories", "taglist", "social"]
+[params]
+  contentTypeName = "posts"
+  themeColor = "green"
+  showMenuItems = 2
+  showLanguageSelector = true
+  fullWidthTheme = true
+  centerTheme = false
+  autoCover = true
+  showLastUpdated = false
+  # favicon = "favicon.ico"
+  # updatedDatePrefix = "Updated"
+  # oneHeadingSize = true # default
+  # readingTime = false # default
+  # Toc = false # default
+  # TocTitle = "Table of Contents" # default
 
 [languages]
   [languages.ja]
+    languageName = "日本語"
+    title = "Design and Implementation"
+    subtitle = "Theory and Practice of Software Development"
+    owner = "Kumazawa"
+    keywords = ""
+    copyright = ""
+    menuMore = "もっと見る"
+    readMore = "続き"
+    readOtherPosts = "他の投稿を読む"
+    newerPosts = "新しい投稿"
+    olderPosts = "古い投稿"
+    missingContentMessage = "ページが見つかりません"
+    missingBackButtonLabel = "ホームに戻る"
+
+  [languages.en]
     languageName = "English"
-    title = "Test"
-    subtitle = "test for terminal"
-    owner = ""
+    title = "Design and Implementation"
+    subtitle = "Theory and Practice of Software Development"
+    owner = "Kumazawa"
     keywords = ""
     copyright = ""
     menuMore = "Show more"
@@ -56,20 +60,15 @@ paginate = 20
     missingContentMessage = "Page not found..."
     missingBackButtonLabel = "Back to home page"
 
-    [languages.ja.params.logo]
-      logoText = "TEST LOGO"
-      logoHomeLink = "/"
+    [languages.en.params.logo]
+      logoText = "Design and Implementation"
+      logoHomeLink = "/blog/"
 
-    [languages.ja.menu]
-      [[languages.ja.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about"
-      [[languages.ja.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
-
+    # [languages.en.menu]
+    #   [[languages.en.menu.main]]
+    #     identifier = "about"
+    #     name = "About"
+    #     url = "/about/"
 
 # [[module.imports]]
 #   path = 'github.com/panr/hugo-theme-terminal'
