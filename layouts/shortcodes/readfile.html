@@ -1,5 +1,5 @@
-{{ $path := .Page.File.Dir }}
 {{ $file := .Get "file" }}
-{{ $filepath := path.Join $path $file }}
-{{ $content := readFile $filepath | safeHTML }}
-<pre><code>{{ $content }}</code></pre>
+{{ $lang := .Get "lang" }}
+{{ $path := printf "content/%s" $file }}
+{{ $bytes := readFile $path }}
+{{ $bytes | safeHTML | highlight $lang "" }}

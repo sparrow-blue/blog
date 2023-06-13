@@ -64,7 +64,7 @@ categories: ["design"]
 
 ### 実装
 
-{{< readfile file="command_pattern.cpp" >}}
+{{< readfile file="command_pattern.cpp" lang="cpp" >}}
 
 ### 実行結果
 
