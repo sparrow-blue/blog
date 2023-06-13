@@ -52,7 +52,7 @@
 &lt;h2 id="実例">実例&lt;/h2>
 &lt;h3 id="設計">設計&lt;/h3>
 &lt;h3 id="実装">実装&lt;/h3>
-&lt;p>{{readFile &amp;ldquo;command_pattern.cpp&amp;rdquo;}}&lt;/p>
+&lt;p>{{ os.ReadFile &amp;ldquo;command_pattern.cpp&amp;rdquo; }}&lt;/p>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
 &lt;pre>&lt;code>$ clang++ command_pattern.cpp -o command_pattern.out
 $ ./command_pattern.out
