@@ -3,4 +3,4 @@
 {{ $lang := .Get "lang" }}
 {{ $filepath := path.Join $path $file }}
 {{ $bytes := readFile $filepath }}
-{{ $bytes | safeHTML | highlight $lang "" }}
+{{ highlight (print $bytes) $lang "" }}
