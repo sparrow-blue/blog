@@ -64,7 +64,7 @@ categories: ["design"]
 
 ### 実装
 
-{{ os.ReadFile "README.md" }}
+"{{ os.ReadFile "README.md" }}"
 
 ### 実行結果
 
