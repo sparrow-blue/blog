@@ -1,4 +1,5 @@
+{{ $path := .Page.File.Dir }}
 {{ $file := .Get "file" }}
-{{ $path := printf "content/%s" $file }}
-{{ $bytes := readFile $path }}
-{{ $bytes | markdownify }}
+{{ $filepath := path.Join $path $file }}
+{{ $content := readFile $filepath | safeHTML }}
+<pre><code>{{ $content }}</code></pre>
