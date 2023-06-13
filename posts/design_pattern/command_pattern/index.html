@@ -93,12 +93,36 @@ Design and Implementation
 </li>
 </ul>
 <h3 id=整理>整理<a href=#整理 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<ol>
+<li>Command Pattern の典型的な用例として Undo/Redo が挙げられる</li>
+<li>手続き一式を隠ぺいし，オブジェクトとして取り扱えるようにする</li>
+<li>手続きがオブジェクトとして扱われることで，キューイングや呼び出し履歴の記録が可能になる</li>
+<li>ある手続きを定義したとして，それを実行する責務と分離される</li>
+</ol>
+<h3 id=疑問>疑問<a href=#疑問 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<ol>
+<li>Redo はともかく Undo をどのように実現するのか
+<ul>
+<li>Command に対する入力と出力を保持しておくということか</li>
+</ul>
+</li>
+</ol>
+<h2 id=要点>要点<a href=#要点 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h2 id=検討>検討<a href=#検討 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=どのようなシーンで使えるのか>どのようなシーンで使えるのか<a href=#どのようなシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=なぜそのシーンで使えるのか>なぜそのシーンで使えるのか<a href=#なぜそのシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>{{readFile &ldquo;command_pattern.cpp&rdquo;}}</p>
+<h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<pre><code>$ clang++ command_pattern.cpp  -o command_pattern.out
+$ ./command_pattern.out 
+# initial state
+# final state
+PN13DesignPattern14CommandPattern7DiagramE: (5,10)
+PN13DesignPattern14CommandPattern7DiagramE: (0,10)
+</code></pre>
 </div></div>
 <div class=pagination>
 <div class=pagination__title>

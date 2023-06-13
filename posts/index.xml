@@ -31,12 +31,36 @@
 &lt;/li>
 &lt;/ul>
 &lt;h3 id="整理">整理&lt;/h3>
+&lt;ol>
+&lt;li>Command Pattern の典型的な用例として Undo/Redo が挙げられる&lt;/li>
+&lt;li>手続き一式を隠ぺいし，オブジェクトとして取り扱えるようにする&lt;/li>
+&lt;li>手続きがオブジェクトとして扱われることで，キューイングや呼び出し履歴の記録が可能になる&lt;/li>
+&lt;li>ある手続きを定義したとして，それを実行する責務と分離される&lt;/li>
+&lt;/ol>
+&lt;h3 id="疑問">疑問&lt;/h3>
+&lt;ol>
+&lt;li>Redo はともかく Undo をどのように実現するのか
+&lt;ul>
+&lt;li>Command に対する入力と出力を保持しておくということか&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="要点">要点&lt;/h2>
 &lt;h2 id="検討">検討&lt;/h2>
 &lt;h3 id="どのようなシーンで使えるのか">どのようなシーンで使えるのか&lt;/h3>
 &lt;h3 id="なぜそのシーンで使えるのか">なぜそのシーンで使えるのか&lt;/h3>
 &lt;h2 id="実例">実例&lt;/h2>
 &lt;h3 id="設計">設計&lt;/h3>
-&lt;h3 id="実装">実装&lt;/h3></content></item><item><title>ブログを書くことにした</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとする</description><content>&lt;p>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとするとずいぶん昔の話である．&lt;/p>
+&lt;h3 id="実装">実装&lt;/h3>
+&lt;p>{{readFile &amp;ldquo;command_pattern.cpp&amp;rdquo;}}&lt;/p>
+&lt;h3 id="実行結果">実行結果&lt;/h3>
+&lt;pre>&lt;code>$ clang++ command_pattern.cpp -o command_pattern.out
+$ ./command_pattern.out
+# initial state
+# final state
+PN13DesignPattern14CommandPattern7DiagramE: (5,10)
+PN13DesignPattern14CommandPattern7DiagramE: (0,10)
+&lt;/code>&lt;/pre></content></item><item><title>ブログを書くことにした</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとする</description><content>&lt;p>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとするとずいぶん昔の話である．&lt;/p>
 &lt;p>これまでも気になったことを Twitter に書いてみたりしていたのだが，どうしても複数の投稿をまたぐ長文になってしまうし，そんなものはフォロワにとって興味のないものというのは想像の易く投稿に躊躇することがしばしばあった． とはいえ，考えたことを記録しておきたい場合もある．何らかの形で公開しようと試みることで考えが整理されることもあるだろう．&lt;/p>
 &lt;p>そんな折に Hugo を使うと GitHub Pages でブログが作れるという話を風の便りに聞き，試してみることにした．自分の好きなエディタで記事が書けるというのは助かる．&lt;/p>
 &lt;p>おそらく設計や開発の話になると思う．いわゆる技術ブログというものになるだろう．もしかしたら，はてなブログ，Qiita や Zenn がいいのかもしれない．しかし，もともとが Twitter の鍵垢で投稿しようとしていた内容を書く環境を作る，という目的だったことを考えると積極的に他者の目に触れる必要はない．積極的な理由ではないが GitHub Pages + Hugo でブログを書いてみようと思う．&lt;/p></content></item></channel></rss>
