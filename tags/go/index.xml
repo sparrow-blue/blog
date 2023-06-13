@@ -1,1 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>go on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/go/</link><description>Recent content in go on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Profile</title><link>https://sparrow-blue.github.io/blog/profile/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/profile/</guid><description>Who am I?</description><content>&lt;p>Who am I?&lt;/p></content></item><item><title>test 1</title><link>https://sparrow-blue.github.io/blog/posts/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/</guid><description>Hello world!!</description><content>&lt;p>Hello world!!&lt;/p></content></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>go on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/go/</link><description>Recent content in go on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Profile</title><link>https://sparrow-blue.github.io/blog/profile/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/profile/</guid><description>Field Information Name KUMAZAWA Photo - Contact Information GitHub Personal Interests 写真を撮るのが好きです．</description><content>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Field&lt;/th>
+&lt;th>Information&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Name&lt;/td>
+&lt;td>KUMAZAWA&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Photo&lt;/td>
+&lt;td>-&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Contact Information&lt;/td>
+&lt;td>&lt;a href="https://github.com/sparrow-blue">GitHub&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Personal Interests&lt;/td>
+&lt;td>写真を撮るのが好きです．&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></content></item><item><title>test 1</title><link>https://sparrow-blue.github.io/blog/posts/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/</guid><description>Hello world!!</description><content>&lt;p>Hello world!!&lt;/p></content></item></channel></rss>
