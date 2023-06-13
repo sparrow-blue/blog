@@ -52,8 +52,137 @@
 &lt;h2 id="実例">実例&lt;/h2>
 &lt;h3 id="設計">設計&lt;/h3>
 &lt;h3 id="実装">実装&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">
-&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="実行結果">実行結果&lt;/h3>
+&lt;pre>&lt;code>#include &lt;algorithm>
+#include &lt;iostream>
+#include &lt;list>
+#include &lt;memory>
+#include &lt;queue>
+#include &lt;sstream>
+namespace DesignPattern {
+namespace CommandPattern {
+/**
+* 描画される図形の抽象クラス
+*/
+class Diagram {
+public:
+Diagram() : height(0), width(0) {}
+virtual ~Diagram() = 0;
+int height;
+int width;
+std::string to_string() {
+std::stringstream ss;
+ss &lt;&lt; typeid(this).name() &lt;&lt; ": "
+&lt;&lt; "(" &lt;&lt; this->height &lt;&lt; "," &lt;&lt; this->width &lt;&lt; ")";
+return ss.str();
+}
+};
+Diagram::~Diagram() {}
+/**
+* 図形が描画されるキャンバス
+*/
+class Canvas {
+public:
+void AddDiagram(std::shared_ptr&lt;Diagram> diagram) {
+this->diagrams.push_back(diagram);
+}
+void dump() {
+std::for_each(
+this->diagrams.begin(), this->diagrams.end(),
+[](auto diagram) { std::cout &lt;&lt; diagram->to_string() &lt;&lt; std::endl; });
+}
+private:
+std::vector&lt;std::shared_ptr&lt;Diagram>> diagrams;
+};
+/**
+* 線分を表現するクラス
+*/
+class Line : public Diagram {
+public:
+Line() { this->width = 10; }
+};
+/**
+* 三角形を表現するクラス
+*/
+class Triangle : public Diagram {
+public:
+Triangle() {
+this->width = 10;
+this->height = 5;
+}
+};
+/**
+* コマンドの抽象クラス
+*/
+class Command {
+public:
+Command(std::shared_ptr&lt;DesignPattern::CommandPattern::Canvas> canvas_)
+: canvas(canvas_) {}
+virtual void Execute() = 0;
+protected:
+std::shared_ptr&lt;Canvas> canvas;
+};
+/*
+* 線分の生成を担うコマンド
+*/
+class CreateLineDiagramCommand : public Command {
+public:
+CreateLineDiagramCommand(
+std::shared_ptr&lt;DesignPattern::CommandPattern::Canvas> canvas_)
+: Command(canvas_) {}
+virtual void Execute() {
+auto new_diagram = std::make_shared&lt;Line>();
+this->canvas->AddDiagram(new_diagram);
+}
+};
+/*
+* 三角形の生成を担うコマンド
+*/
+class CreateTriangleDiagramCommand : public Command {
+public:
+CreateTriangleDiagramCommand(
+std::shared_ptr&lt;DesignPattern::CommandPattern::Canvas> canvas_)
+: Command(canvas_) {
+auto new_diagram = std::make_shared&lt;Triangle>();
+this->canvas->AddDiagram(new_diagram);
+}
+virtual void Execute() {}
+};
+/*
+* 図形の移動を担うコマンド
+*/
+class MoveDiagramCommand : public Command {
+public:
+virtual void Execute() {}
+};
+/*
+* 図形のリサイズを担うコマンド
+*/
+class ResizeDiagramCommand : public Command {
+public:
+virtual void Execute() {}
+};
+} // namespace CommandPattern
+} // namespace DesignPattern
+using namespace DesignPattern::CommandPattern;
+int main() {
+auto canvas = std::make_shared&lt;Canvas>();
+auto execution_queue = std::queue&lt;std::shared_ptr&lt;Command>>();
+auto execution_history = std::list&lt;std::shared_ptr&lt;Command>>();
+std::cout &lt;&lt; "# initial state" &lt;&lt; std::endl;
+canvas->dump();
+execution_queue.push(std::make_shared&lt;CreateLineDiagramCommand>(canvas));
+execution_queue.push(std::make_shared&lt;CreateTriangleDiagramCommand>(canvas));
+while (execution_queue.size()) {
+auto command = execution_queue.front();
+command->Execute();
+execution_history.push_back(command);
+execution_queue.pop();
+}
+std::cout &lt;&lt; "# final state" &lt;&lt; std::endl;
+canvas->dump();
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="実行結果">実行結果&lt;/h3>
 &lt;pre>&lt;code>$ clang++ command_pattern.cpp -o command_pattern.out
 $ ./command_pattern.out
 # initial state
