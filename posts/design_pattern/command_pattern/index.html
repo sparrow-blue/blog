@@ -114,152 +114,152 @@ Design and Implementation
 <h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<pre><code>#include <algorithm>
-#include <iostream>
-#include <list>
-#include <memory>
-#include <queue>
-#include <sstream>
-
-namespace DesignPattern {
-namespace CommandPattern {
-/**
- * 描画される図形の抽象クラス
- */
-class Diagram {
- public:
-  Diagram() : height(0), width(0) {}
-  virtual ~Diagram() = 0;
-  int height;
-  int width;
-  std::string to_string() {
-    std::stringstream ss;
-    ss << typeid(this).name() << ": "
-       << "(" << this->height << "," << this->width << ")";
-    return ss.str();
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;list&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;queue&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sstream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> DesignPattern {
+<span style=color:#66d9ef>namespace</span> CommandPattern {
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 描画される図形の抽象クラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Diagram</span> {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  Diagram() <span style=color:#f92672>:</span> height(<span style=color:#ae81ff>0</span>), width(<span style=color:#ae81ff>0</span>) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Diagram() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+  <span style=color:#66d9ef>int</span> height;
+  <span style=color:#66d9ef>int</span> width;
+  std<span style=color:#f92672>::</span>string to_string() {
+    std<span style=color:#f92672>::</span>stringstream ss;
+    ss <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>typeid</span>(<span style=color:#66d9ef>this</span>).name() <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;: &#34;</span>
+       <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;,&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;)&#34;</span>;
+    <span style=color:#66d9ef>return</span> ss.str();
   }
 };
-Diagram::~Diagram() {}
+Diagram<span style=color:#f92672>::~</span>Diagram() {}
 
-/**
- * 図形が描画されるキャンバス
- */
-class Canvas {
- public:
-  void AddDiagram(std::shared_ptr<diagram> diagram) {
-    this->diagrams.push_back(diagram);
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 図形が描画されるキャンバス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Canvas</span> {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>void</span> AddDiagram(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram) {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.push_back(diagram);
   }
-  void dump() {
-    std::for_each(
-        this->diagrams.begin(), this->diagrams.end(),
-        [](auto diagram) { std::cout << diagram->to_string() << std::endl; });
+  <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>dump</span>() {
+    std<span style=color:#f92672>::</span>for_each(
+        <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.end(),
+        [](<span style=color:#66d9ef>auto</span> diagram) { std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> diagram<span style=color:#f92672>-&gt;</span>to_string() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl; });
   }
 
- private:
-  std::vector<std::shared_ptr<diagram>> diagrams;
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span> diagrams;
 };
 
-/**
- * 線分を表現するクラス
- */
-class Line : public Diagram {
- public:
-  Line() { this->width = 10; }
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 線分を表現するクラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Line</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  Line() { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>; }
 };
 
-/**
- * 三角形を表現するクラス
- */
-class Triangle : public Diagram {
- public:
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 三角形を表現するクラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Triangle</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   Triangle() {
-    this->width = 10;
-    this->height = 5;
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>;
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>;
   }
 };
 
-/**
- * コマンドの抽象クラス
- */
-class Command {
- public:
-  Command(std::shared_ptr<designpattern::commandpattern::canvas> canvas_)
-      : canvas(canvas_) {}
-  virtual void Execute() = 0;
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * コマンドの抽象クラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Command</span> {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  Command(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DesignPattern<span style=color:#f92672>::</span>CommandPattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_)
+      <span style=color:#f92672>:</span> canvas(canvas_) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
- protected:
-  std::shared_ptr<canvas> canvas;
+ <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
+  std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Canvas<span style=color:#f92672>&gt;</span> canvas;
 };
 
-/*
- * 線分の生成を担うコマンド
- */
-class CreateLineDiagramCommand : public Command {
- public:
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> * 線分の生成を担うコマンド
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CreateLineDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   CreateLineDiagramCommand(
-      std::shared_ptr<designpattern::commandpattern::canvas> canvas_)
-      : Command(canvas_) {}
-  virtual void Execute() {
-    auto new_diagram = std::make_shared<line>();
-    this->canvas->AddDiagram(new_diagram);
+      std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DesignPattern<span style=color:#f92672>::</span>CommandPattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_)
+      <span style=color:#f92672>:</span> Command(canvas_) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {
+    <span style=color:#66d9ef>auto</span> new_diagram <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span>();
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
   }
 };
 
-/*
- * 三角形の生成を担うコマンド
- */
-class CreateTriangleDiagramCommand : public Command {
- public:
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> * 三角形の生成を担うコマンド
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>CreateTriangleDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   CreateTriangleDiagramCommand(
-      std::shared_ptr<designpattern::commandpattern::canvas> canvas_)
-      : Command(canvas_) {
-    auto new_diagram = std::make_shared<triangle>();
-    this->canvas->AddDiagram(new_diagram);
+      std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DesignPattern<span style=color:#f92672>::</span>CommandPattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_)
+      <span style=color:#f92672>:</span> Command(canvas_) {
+    <span style=color:#66d9ef>auto</span> new_diagram <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>Triangle<span style=color:#f92672>&gt;</span>();
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
   }
-  virtual void Execute() {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {}
 };
 
-/*
- * 図形の移動を担うコマンド
- */
-class MoveDiagramCommand : public Command {
- public:
-  virtual void Execute() {}
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> * 図形の移動を担うコマンド
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MoveDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Execute() {}
 };
 
-/*
- * 図形のリサイズを担うコマンド
- */
-class ResizeDiagramCommand : public Command {
- public:
-  virtual void Execute() {}
+<span style=color:#75715e>/*
+</span><span style=color:#75715e> * 図形のリサイズを担うコマンド
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ResizeDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Execute() {}
 };
-}  // namespace CommandPattern
-}  // namespace DesignPattern
+}  <span style=color:#75715e>// namespace CommandPattern
+</span><span style=color:#75715e></span>}  <span style=color:#75715e>// namespace DesignPattern
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> DesignPattern<span style=color:#f92672>::</span>CommandPattern;
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#66d9ef>auto</span> canvas <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>Canvas<span style=color:#f92672>&gt;</span>();
+  <span style=color:#66d9ef>auto</span> execution_queue <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>queue<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Command<span style=color:#f92672>&gt;&gt;</span>();
+  <span style=color:#66d9ef>auto</span> execution_history <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>list<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Command<span style=color:#f92672>&gt;&gt;</span>();
 
-using namespace DesignPattern::CommandPattern;
-int main() {
-  auto canvas = std::make_shared<canvas>();
-  auto execution_queue = std::queue<std::shared_ptr<command>>();
-  auto execution_history = std::list<std::shared_ptr<command>>();
+  std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# initial state&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+  canvas<span style=color:#f92672>-&gt;</span>dump();
 
-  std::cout << "# initial state" << std::endl;
-  canvas->dump();
+  execution_queue.push(std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateLineDiagramCommand<span style=color:#f92672>&gt;</span>(canvas));
+  execution_queue.push(std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateTriangleDiagramCommand<span style=color:#f92672>&gt;</span>(canvas));
 
-  execution_queue.push(std::make_shared<createlinediagramcommand>(canvas));
-  execution_queue.push(std::make_shared<createtrianglediagramcommand>(canvas));
-
-  while (execution_queue.size()) {
-    auto command = execution_queue.front();
-    command->Execute();
+  <span style=color:#66d9ef>while</span> (execution_queue.size()) {
+    <span style=color:#66d9ef>auto</span> command <span style=color:#f92672>=</span> execution_queue.front();
+    command<span style=color:#f92672>-&gt;</span>Execute();
     execution_history.push_back(command);
     execution_queue.pop();
   }
 
-  std::cout << "# final state" << std::endl;
-  canvas->dump();
+  std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# final state&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+  canvas<span style=color:#f92672>-&gt;</span>dump();
 }
-</code></pre>
+</code></pre></div>
 <h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <pre><code>$ clang++ command_pattern.cpp  -o command_pattern.out
 $ ./command_pattern.out 
