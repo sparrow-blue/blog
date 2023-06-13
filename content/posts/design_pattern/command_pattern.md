@@ -64,7 +64,7 @@ categories: ["design"]
 
 ### 実装
 
-{{readFile "command_pattern.cpp"}}
+{{ os.ReadFile "command_pattern.cpp" }}
 
 ### 実行結果
 
