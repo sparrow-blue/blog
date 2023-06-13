@@ -6,4 +6,9 @@ tags: ["go", "markdown"]
 menu: main
 ---
 
-Who am I?
+| Field                   | Information |
+|-------------------------|-------------|
+| Name                    | KUMAZAWA    |
+| Photo                   | -           |
+| Contact Information     | [GitHub](https://github.com/sparrow-blue)           |
+| Personal Interests      | 写真を撮るのが好きです． |
