@@ -64,7 +64,7 @@ categories: ["design"]
 
 ### 実装
 
-{{< readFile file="command_pattern.cpp" markdown="true" >}}
+{{ os.ReadFile "README.md" }}
 
 ### 実行結果
 
