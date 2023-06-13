@@ -1,4 +1,42 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design and Implementation</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description/><content/></item><item><title>ブログを書くことにした</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとする</description><content>&lt;p>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとするとずいぶん昔の話である．&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design and Implementation</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;p>以下の観点で調査/検討する．&lt;/p>
+&lt;ol>
+&lt;li>どのようなシーンで使えるのか&lt;/li>
+&lt;li>なぜそのシーンで使えるのか&lt;/li>
+&lt;/ol>
+&lt;p>必要に応じてプログラムに起こす．&lt;/p>
+&lt;h2 id="調査">調査&lt;/h2>
+&lt;h3 id="語られる像">語られる像&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://ja.wikipedia.org/wiki/Command_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">Wikipedia - Command パターン&lt;/a>
+&lt;blockquote>
+&lt;p>リクエストのために必要な手続きとデータをCommandオブジェクトとしてカプセル化した上で取り回し[1]、必要に応じてExecute（実行）するパターンである。オブジェクトであることを生かして命令のキューイングやロギング、Undo等が可能になり[2]、Executeを分離したことで手続きと実行を疎結合にできる。&lt;/p>
+&lt;/blockquote>
+&lt;/li>
+&lt;li>&lt;a href="https://www.techscore.com/tech/DesignPattern/Command">TECHSCORE - 22. Commandパターン&lt;/a>
+&lt;blockquote>
+&lt;p>あるオブジェクトに対して要求を送るということは、そのオブジェクトのメソッドを呼び出すことと同じです。 そして、メソッドにどのような引数を渡すか、ということによって要求の内容は表現されます。さまざまな要求を送ろうとすると、引数の数や種類を増やさなければなりませんが、 それには限界があります。そこで要求自体をオブジェクトにしてしまい、そのオブジェクトを引数に渡すようにします。それがCommandパターンです。&lt;/p>
+&lt;/blockquote>
+&lt;/li>
+&lt;li>&lt;a href="https://zenn.dev/morinokami/books/learning-patterns-1/viewer/command-pattern">フロントエンドのデザインパターン - コマンドパターン&lt;/a>
+&lt;blockquote>
+&lt;p>コマンドパターン (command pattern) を用いると、あるタスクを実行するオブジェクトと、そのメソッドを呼び出すオブジェクトを切り離すことができことができます。&lt;/p>
+&lt;/blockquote>
+&lt;/li>
+&lt;li>&lt;a href="https://www.itsenka.com/contents/development/designpattern/command.html">IT専科 - Command パターン&lt;/a>
+&lt;blockquote>
+&lt;p>「Command」という英単語は、「命令」を意味します。
+このパターンでは、1つもしくは複数の命令を1つのオブジェクトで表現(命令の詳細処理をカプセル化)します。また、命令をオブジェクトとして管理するため、その命令の履歴管理、UNDO(取消し)機能の実装等が容易に行えます。&lt;/p>
+&lt;/blockquote>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="整理">整理&lt;/h3>
+&lt;h2 id="検討">検討&lt;/h2>
+&lt;h3 id="どのようなシーンで使えるのか">どのようなシーンで使えるのか&lt;/h3>
+&lt;h3 id="なぜそのシーンで使えるのか">なぜそのシーンで使えるのか&lt;/h3>
+&lt;h2 id="実例">実例&lt;/h2>
+&lt;h3 id="設計">設計&lt;/h3>
+&lt;h3 id="実装">実装&lt;/h3></content></item><item><title>ブログを書くことにした</title><link>https://sparrow-blue.github.io/blog/posts/2023-06-11/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/2023-06-11/</guid><description>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとする</description><content>&lt;p>何年ぶりだろうか．学生の時分，そのころプレイしていた MMORPG に関するブログを書いていた記憶がある．それが最後に書いたブログだと思われるが，だとするとずいぶん昔の話である．&lt;/p>
 &lt;p>これまでも気になったことを Twitter に書いてみたりしていたのだが，どうしても複数の投稿をまたぐ長文になってしまうし，そんなものはフォロワにとって興味のないものというのは想像の易く投稿に躊躇することがしばしばあった． とはいえ，考えたことを記録しておきたい場合もある．何らかの形で公開しようと試みることで考えが整理されることもあるだろう．&lt;/p>
 &lt;p>そんな折に Hugo を使うと GitHub Pages でブログが作れるという話を風の便りに聞き，試してみることにした．自分の好きなエディタで記事が書けるというのは助かる．&lt;/p>
 &lt;p>おそらく設計や開発の話になると思う．いわゆる技術ブログというものになるだろう．もしかしたら，はてなブログ，Qiita や Zenn がいいのかもしれない．しかし，もともとが Twitter の鍵垢で投稿しようとしていた内容を書く環境を作る，という目的だったことを考えると積極的に他者の目に触れる必要はない．積極的な理由ではないが GitHub Pages + Hugo でブログを書いてみようと思う．&lt;/p></content></item></channel></rss>

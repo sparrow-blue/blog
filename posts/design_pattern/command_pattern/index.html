@@ -3,7 +3,7 @@
 <title>Command Pattern :: Design and Implementation</title>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content>
+<meta name=description content="このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．">
 <meta name=keywords content>
 <meta name=robots content="noodp">
 <link rel=canonical href=https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/>
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Command Pattern">
-<meta property="og:description" content>
+<meta property="og:description" content="このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．">
 <meta property="og:url" content="https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/">
 <meta property="og:site_name" content="Design and Implementation">
 <meta property="og:image" content="https://sparrow-blue.github.io/blog/img/favicon/green.png">
@@ -43,10 +43,50 @@ Design and Implementation
 </h1>
 <div class=post-meta><time class=post-date>2023-06-13[Updated::2023-06-13]</time></div>
 <span class=post-tags>
-#<a href=https://sparrow-blue.github.io/blog/tags/command-pattern/>command pattern</a>&nbsp;
-#<a href=https://sparrow-blue.github.io/blog/tags/design-pattern/>design pattern</a>&nbsp;
+#<a href=https://sparrow-blue.github.io/blog/tags/command_pattern/>command_pattern</a>&nbsp;
+#<a href=https://sparrow-blue.github.io/blog/tags/design_pattern/>design_pattern</a>&nbsp;
 </span>
-<div class=post-content></div>
+<div class=post-content><div>
+<h2 id=このエントリの目指すところ>このエントリの目指すところ<a href=#このエントリの目指すところ class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>以下の観点で調査/検討する．</p>
+<ol>
+<li>どのようなシーンで使えるのか</li>
+<li>なぜそのシーンで使えるのか</li>
+</ol>
+<p>必要に応じてプログラムに起こす．</p>
+<h2 id=調査>調査<a href=#調査 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=語られる像>語られる像<a href=#語られる像 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<ul>
+<li><a href=https://ja.wikipedia.org/wiki/Command_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3>Wikipedia - Command パターン</a>
+<blockquote>
+<p>リクエストのために必要な手続きとデータをCommandオブジェクトとしてカプセル化した上で取り回し[1]、必要に応じてExecute（実行）するパターンである。オブジェクトであることを生かして命令のキューイングやロギング、Undo等が可能になり[2]、Executeを分離したことで手続きと実行を疎結合にできる。</p>
+</blockquote>
+</li>
+<li><a href=https://www.techscore.com/tech/DesignPattern/Command>TECHSCORE - 22. Commandパターン</a>
+<blockquote>
+<p>あるオブジェクトに対して要求を送るということは、そのオブジェクトのメソッドを呼び出すことと同じです。 そして、メソッドにどのような引数を渡すか、ということによって要求の内容は表現されます。さまざまな要求を送ろうとすると、引数の数や種類を増やさなければなりませんが、 それには限界があります。そこで要求自体をオブジェクトにしてしまい、そのオブジェクトを引数に渡すようにします。それがCommandパターンです。</p>
+</blockquote>
+</li>
+<li><a href=https://zenn.dev/morinokami/books/learning-patterns-1/viewer/command-pattern>フロントエンドのデザインパターン - コマンドパターン</a>
+<blockquote>
+<p>コマンドパターン (command pattern) を用いると、あるタスクを実行するオブジェクトと、そのメソッドを呼び出すオブジェクトを切り離すことができことができます。</p>
+</blockquote>
+</li>
+<li><a href=https://www.itsenka.com/contents/development/designpattern/command.html>IT専科 - Command パターン</a>
+<blockquote>
+<p>「Command」という英単語は、「命令」を意味します。
+このパターンでは、1つもしくは複数の命令を1つのオブジェクトで表現(命令の詳細処理をカプセル化)します。また、命令をオブジェクトとして管理するため、その命令の履歴管理、UNDO(取消し)機能の実装等が容易に行えます。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id=整理>整理<a href=#整理 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<h2 id=検討>検討<a href=#検討 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=どのようなシーンで使えるのか>どのようなシーンで使えるのか<a href=#どのようなシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<h3 id=なぜそのシーンで使えるのか>なぜそのシーンで使えるのか<a href=#なぜそのシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+</div></div>
 <div class=pagination>
 <div class=pagination__title>
 <span class=pagination__title-h>Read other posts</span>
