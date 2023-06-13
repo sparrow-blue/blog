@@ -114,7 +114,153 @@ Design and Implementation
 <h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<p>{{ os.ReadFile &ldquo;README.md&rdquo; }}</p>
+<p>#include
+#include
+#include
+#include
+#include
+#include </p>
+<p>namespace DesignPattern {
+namespace CommandPattern {
+/**</p>
+<ul>
+<li>描画される図形の抽象クラス
+*/
+class Diagram {
+public:
+Diagram() : height(0), width(0) {}
+virtual ~Diagram() = 0;
+int height;
+int width;
+std::string to_string() {
+std::stringstream ss;
+ss &#171; typeid(this).name() &#171; &ldquo;: "
+&#171; &ldquo;(&rdquo; &#171; this->height &#171; &ldquo;,&rdquo; &#171; this->width &#171; &ldquo;)";
+return ss.str();
+}
+};
+Diagram::~Diagram() {}</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>図形が描画されるキャンバス
+*/
+class Canvas {
+public:
+void AddDiagram(std::shared_ptr diagram) {
+this->diagrams.push_back(diagram);
+}
+void dump() {
+std::for_each(
+this->diagrams.begin(), this->diagrams.end(),
+[](auto diagram) { std::cout &#171; diagram->to_string() &#171; std::endl; });
+}</li>
+</ul>
+<p>private:
+std::vector&lt;std::shared_ptr> diagrams;
+};</p>
+<p>/**</p>
+<ul>
+<li>線分を表現するクラス
+*/
+class Line : public Diagram {
+public:
+Line() { this->width = 10; }
+};</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>三角形を表現するクラス
+*/
+class Triangle : public Diagram {
+public:
+Triangle() {
+this->width = 10;
+this->height = 5;
+}
+};</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>コマンドの抽象クラス
+*/
+class Command {
+public:
+Command(std::shared_ptr<a href=DesignPattern::CommandPattern::Canvas>DesignPattern::CommandPattern::Canvas</a> canvas_)
+: canvas(canvas_) {}
+virtual void Execute() = 0;</li>
+</ul>
+<p>protected:
+std::shared_ptr canvas;
+};</p>
+<p>/*</p>
+<ul>
+<li>線分の生成を担うコマンド
+*/
+class CreateLineDiagramCommand : public Command {
+public:
+CreateLineDiagramCommand(
+std::shared_ptr<a href=DesignPattern::CommandPattern::Canvas>DesignPattern::CommandPattern::Canvas</a> canvas_)
+: Command(canvas_) {}
+virtual void Execute() {
+auto new_diagram = std::make_shared();
+this->canvas->AddDiagram(new_diagram);
+}
+};</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>三角形の生成を担うコマンド
+*/
+class CreateTriangleDiagramCommand : public Command {
+public:
+CreateTriangleDiagramCommand(
+std::shared_ptr<a href=DesignPattern::CommandPattern::Canvas>DesignPattern::CommandPattern::Canvas</a> canvas_)
+: Command(canvas_) {
+auto new_diagram = std::make_shared();
+this->canvas->AddDiagram(new_diagram);
+}
+virtual void Execute() {}
+};</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>図形の移動を担うコマンド
+*/
+class MoveDiagramCommand : public Command {
+public:
+virtual void Execute() {}
+};</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>図形のリサイズを担うコマンド
+*/
+class ResizeDiagramCommand : public Command {
+public:
+virtual void Execute() {}
+};
+} // namespace CommandPattern
+} // namespace DesignPattern</li>
+</ul>
+<p>using namespace DesignPattern::CommandPattern;
+int main() {
+auto canvas = std::make_shared();
+auto execution_queue = std::queue&lt;std::shared_ptr>();
+auto execution_history = std::list&lt;std::shared_ptr>();</p>
+<p>std::cout &#171; &ldquo;# initial state&rdquo; &#171; std::endl;
+canvas->dump();</p>
+<p>execution_queue.push(std::make_shared(canvas));
+execution_queue.push(std::make_shared(canvas));</p>
+<p>while (execution_queue.size()) {
+auto command = execution_queue.front();
+command->Execute();
+execution_history.push_back(command);
+execution_queue.pop();
+}</p>
+<p>std::cout &#171; &ldquo;# final state&rdquo; &#171; std::endl;
+canvas->dump();
+}</p>
 <h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <pre><code>$ clang++ command_pattern.cpp  -o command_pattern.out
 $ ./command_pattern.out 
