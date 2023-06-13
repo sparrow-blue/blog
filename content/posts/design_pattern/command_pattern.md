@@ -20,7 +20,7 @@ categories: ["design"]
 
 以下の観点で調査/検討する．
 1. どのようなシーンで使えるのか
-2. なぜそのシーンで使えるのか
+1. なぜそのシーンで使えるのか
 
 必要に応じてプログラムに起こす．
 
@@ -40,6 +40,18 @@ categories: ["design"]
 
 ### 整理
 
+1. Command Pattern の典型的な用例として Undo/Redo が挙げられる
+1. 手続き一式を隠ぺいし，オブジェクトとして取り扱えるようにする
+1. 手続きがオブジェクトとして扱われることで，キューイングや呼び出し履歴の記録が可能になる
+1. ある手続きを定義したとして，それを実行する責務と分離される
+
+### 疑問
+
+1. Redo はともかく Undo をどのように実現するのか
+   - Command に対する入力と出力を保持しておくということか
+
+## 要点
+
 ## 検討
 
 ### どのようなシーンで使えるのか
@@ -51,3 +63,16 @@ categories: ["design"]
 ### 設計
 
 ### 実装
+
+{{readFile "command_pattern.cpp"}}
+
+### 実行結果
+
+```
+$ clang++ command_pattern.cpp  -o command_pattern.out
+$ ./command_pattern.out 
+# initial state
+# final state
+PN13DesignPattern14CommandPattern7DiagramE: (5,10)
+PN13DesignPattern14CommandPattern7DiagramE: (0,10)
+```
