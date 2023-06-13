@@ -1,9 +1,9 @@
 ---
 title: "Profile"
-date: 2021-01-01
+date: "2023-06-13"
 categories: ["hugo"]
 tags: ["go", "markdown"]
-# menu: main
+menu: main
 ---
 
 Who am I?
