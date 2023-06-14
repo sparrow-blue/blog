@@ -65,6 +65,19 @@ categories: ["design"]
 ### 環境
 
 ```
+$ cat /etc/os-release 
+PRETTY_NAME="Ubuntu 22.04.2 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.2 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
 $ clang++ --version
 Ubuntu clang version 14.0.0-1ubuntu1
 Target: x86_64-pc-linux-gnu
@@ -74,10 +87,10 @@ InstalledDir: /usr/bin
 
 ### 実装
 
-{{< readfile file="src/command_pattern.cpp" lang="cpp">}}
-{{< readfile file="src/command_pattern.hpp" lang="cpp">}}
-{{< readfile file="src/demangle.hpp" lang="cpp" is_open="true" >}}
-{{< readfile file="src/join.hpp" lang="cpp" is_open="false" >}}
+{{< readfile file="src/command_pattern.cpp" lang="cpp" is_open="false" >}}
+{{< readfile file="src/command_pattern.hpp" lang="cpp" >}}
+{{< readfile file="src/demangle.hpp" lang="cpp" >}}
+{{< readfile file="src/join.hpp" lang="cpp" >}}
 
 ### 実行結果
 
