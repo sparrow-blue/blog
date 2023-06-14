@@ -120,7 +120,7 @@ Target: x86_64-pc-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
 </code></pre><h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<h2 id=hahahugoshortcode-s0-hbhb>
+<p>
 src/command_pattern.cpp
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;command_pattern.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
@@ -132,28 +132,35 @@ src/command_pattern.cpp
   <span style=color:#66d9ef>auto</span> execution_history <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>list<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Command<span style=color:#f92672>&gt;&gt;</span>();
   <span style=color:#66d9ef>auto</span> executer <span style=color:#f92672>=</span> Executer();
 
-  <span style=color:#66d9ef>auto</span> dumper <span style=color:#f92672>=</span>
-      [<span style=color:#f92672>&amp;</span>canvas, <span style=color:#f92672>&amp;</span>executer]() {
-        std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# state&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-        std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;## canvas&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-        canvas<span style=color:#f92672>-&gt;</span>Dump();
+  <span style=color:#66d9ef>auto</span> dumper <span style=color:#f92672>=</span> [<span style=color:#f92672>&amp;</span>canvas, <span style=color:#f92672>&amp;</span>executer]() {
+    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# state&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;## canvas&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+    canvas<span style=color:#f92672>-&gt;</span>Dump();
 
-        std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;## executer&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-        executer.DumpExecutionHistory();
-      };
+    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;## executer&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+    executer.DumpExecutionHistory();
+  };
+  
+  <span style=color:#75715e>// 初期状態の出力
+</span><span style=color:#75715e></span>  dumper();
 
+  { <span style=color:#75715e>// 図形をキャンバスに追加する
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# add diagrams&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+    executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateLineDiagramCommand<span style=color:#f92672>&gt;</span>(canvas);
+    executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateTriangleDiagramCommand<span style=color:#f92672>&gt;</span>(canvas);
+  }
   dumper();
 
-  std<span style=color:#f92672>::</span>cout<span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# execution phase&#34;</span><span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
+  { <span style=color:#75715e>// 諸図形に対して操作する
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;# operate diagrams&#34;</span> <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
 
-  executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateLineDiagramCommand<span style=color:#f92672>&gt;</span>(canvas);
-  executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>CreateTriangleDiagramCommand<span style=color:#f92672>&gt;</span>(canvas);
-
+    executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>ResizeDiagramCommand<span style=color:#f92672>&gt;</span>(canvas, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>100</span>, <span style=color:#ae81ff>200</span>);
+    executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>MoveDiagramCommand<span style=color:#f92672>&gt;</span>(canvas, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>250</span>, <span style=color:#ae81ff>50</span>);
+    executer <span style=color:#f92672>+=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>MoveDiagramCommand<span style=color:#f92672>&gt;</span>(canvas, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>100</span>, <span style=color:#ae81ff>500</span>);
+  }
   dumper();
 }
 </code></pre></div>
-</h2>
-<h2 id=hahahugoshortcode-s1-hbhb>
 src/command_pattern.hpp
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
 </span><span style=color:#75715e>#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
@@ -166,8 +173,8 @@ src/command_pattern.hpp
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;queue&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sstream&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;join.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;demangle.hpp&#34;</span><span style=color:#75715e>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;demangle.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;join.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern {
 <span style=color:#66d9ef>namespace</span> command_pattern {
@@ -179,46 +186,87 @@ src/command_pattern.hpp
 <span style=color:#75715e>/**
 </span><span style=color:#75715e> * 描画される図形の抽象クラス
 </span><span style=color:#75715e> */</span>
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Diagram</span> <span style=color:#f92672>:</span> Receiver {
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Diagram</span> {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  Diagram() <span style=color:#f92672>:</span> height(<span style=color:#ae81ff>0</span>), width(<span style=color:#ae81ff>0</span>) {}
+  Diagram() <span style=color:#f92672>:</span> height_(<span style=color:#ae81ff>0</span>), width_(<span style=color:#ae81ff>0</span>) {}
   <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Diagram() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-  <span style=color:#66d9ef>int</span> height;
-  <span style=color:#66d9ef>int</span> width;
   std<span style=color:#f92672>::</span>string ToString() {
     std<span style=color:#f92672>::</span>stringstream ss;
     ss <span style=color:#f92672>&lt;&lt;</span> demangle(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34; &#34;</span>
-       <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;,&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;)&#34;</span>;
+       <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height() <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;,&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width() <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;)&#34;</span>;
     <span style=color:#66d9ef>return</span> ss.str();
   }
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height_; }
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width_; }
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Resize</span>(<span style=color:#66d9ef>int</span> height, <span style=color:#66d9ef>int</span> width) {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height_ <span style=color:#f92672>=</span> height;
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width_ <span style=color:#f92672>=</span> width;
+  }
+
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>int</span> height_;
+  <span style=color:#66d9ef>int</span> width_;
 };
 Diagram<span style=color:#f92672>::~</span>Diagram() {}
 
 <span style=color:#75715e>/**
 </span><span style=color:#75715e> * 図形が描画されるキャンバス
 </span><span style=color:#75715e> */</span>
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Canvas</span> <span style=color:#f92672>:</span> Receiver {
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Canvas</span> {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   <span style=color:#66d9ef>void</span> AddDiagram(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram) {
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.push_back(diagram);
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.push_back(std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span>(diagram));
   }
   <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Dump</span>() {
-    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> (<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.size() <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>ToString()
-                                             <span style=color:#f92672>:</span> std<span style=color:#f92672>::</span>string(<span style=color:#e6db74>&#34;empty&#34;</span>))
+    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> (<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.size() <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>ToString()
+                                                 <span style=color:#f92672>:</span> std<span style=color:#f92672>::</span>string(<span style=color:#e6db74>&#34;empty&#34;</span>))
               <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-    }
+  }
   std<span style=color:#f92672>::</span>string ToString() {
     <span style=color:#66d9ef>auto</span> messages <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>string<span style=color:#f92672>&gt;</span>();
-    std<span style=color:#f92672>::</span>transform(
-        <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagrams.end(),
-        std<span style=color:#f92672>::</span>back_inserter(messages),
-        [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram) { <span style=color:#66d9ef>return</span> diagram<span style=color:#f92672>-&gt;</span>ToString(); });
-
+    std<span style=color:#f92672>::</span>transform(diagram_sets.begin(), diagram_sets.end(),
+                   std<span style=color:#f92672>::</span>back_inserter(messages),
+                   [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span> diagram_set) {
+                     <span style=color:#66d9ef>return</span> diagram_set<span style=color:#f92672>-&gt;</span>ToString();
+                   });
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>Join</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, messages);
+  }
+  <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Move</span>(size_t index, <span style=color:#66d9ef>int</span> offset_x, <span style=color:#66d9ef>int</span> offset_y) {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.at(index)<span style=color:#f92672>-&gt;</span>Move(offset_x, offset_y);
+  }
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span> diagrams() {
+    <span style=color:#66d9ef>auto</span> result <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span>();
+    std<span style=color:#f92672>::</span>transform(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.end(),
+                   std<span style=color:#f92672>::</span>back_inserter(result),
+                   [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span> diagram_set_) {
+                     <span style=color:#66d9ef>return</span> diagram_set_<span style=color:#f92672>-&gt;</span>diagram();
+                   });
+    <span style=color:#66d9ef>return</span> result;
   }
 
  <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
-  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span> diagrams;
+  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DiagramSet</span> {
+   <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+    DiagramSet(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram, <span style=color:#66d9ef>int</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>int</span> y <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>)
+        <span style=color:#f92672>:</span> diagram_(diagram), x_(x), y_(y) {}
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Move</span>(<span style=color:#66d9ef>int</span> offset_x, <span style=color:#66d9ef>int</span> offset_y) {
+      <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>x_ <span style=color:#f92672>+=</span> offset_x;
+      <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>y_ <span style=color:#f92672>+=</span> offset_y;
+    }
+    std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_; };
+    std<span style=color:#f92672>::</span>string ToString() {
+      <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>0xFF</span>];
+      sprintf(buffer, <span style=color:#e6db74>&#34;x: %d, y: %d - %s&#34;</span>, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>x_, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>y_,
+              <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_<span style=color:#f92672>-&gt;</span>ToString().c_str());
+      <span style=color:#66d9ef>return</span> buffer;
+    }
+
+   <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+    std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram_;
+    <span style=color:#66d9ef>int</span> x_;
+    <span style=color:#66d9ef>int</span> y_;
+  };
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;&gt;</span> diagram_sets;
 };
 
 <span style=color:#75715e>/**
@@ -226,7 +274,11 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Line</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  Line() { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>; }
+  Line() { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>Resize(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>5</span>); }
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Resize</span>(<span style=color:#66d9ef>int</span> height, <span style=color:#66d9ef>int</span> width) <span style=color:#66d9ef>override</span> {
+    <span style=color:#75715e>// height は無視する
+</span><span style=color:#75715e></span>    Diagram<span style=color:#f92672>::</span>Resize(<span style=color:#ae81ff>0</span>, width);
+  }
 };
 
 <span style=color:#75715e>/**
@@ -234,10 +286,7 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Triangle</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  Triangle() {
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>;
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>;
-  }
+  Triangle() { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>Resize(<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>10</span>); }
 };
 
 <span style=color:#75715e>/**
@@ -246,12 +295,12 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Command</span> {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   Command(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>design_pattern<span style=color:#f92672>::</span>command_pattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_)
-      <span style=color:#f92672>:</span> canvas(canvas_) {}
+      <span style=color:#f92672>:</span> canvas_(canvas_) {}
   <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
   <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
  <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
-  std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Canvas<span style=color:#f92672>&gt;</span> canvas;
+  std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Canvas<span style=color:#f92672>&gt;</span> canvas_;
 };
 
 <span style=color:#75715e>/*
@@ -264,7 +313,7 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
       <span style=color:#f92672>:</span> Command(canvas_) {}
   <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {
     <span style=color:#66d9ef>auto</span> new_diagram <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span>();
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas_<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
   }
 
   <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() { <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>demangle</span>(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)); }
@@ -277,11 +326,11 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   CreateTriangleDiagramCommand(
       std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>design_pattern<span style=color:#f92672>::</span>command_pattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_)
-      <span style=color:#f92672>:</span> Command(canvas_) {
+      <span style=color:#f92672>:</span> Command(canvas_) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {
     <span style=color:#66d9ef>auto</span> new_diagram <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>Triangle<span style=color:#f92672>&gt;</span>();
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas_<span style=color:#f92672>-&gt;</span>AddDiagram(new_diagram);
   }
-  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {}
 
   <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() { <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>demangle</span>(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)); }
 };
@@ -291,9 +340,22 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>MoveDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Execute() {}
-
+  MoveDiagramCommand(
+      std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>design_pattern<span style=color:#f92672>::</span>command_pattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_,
+      size_t index, <span style=color:#66d9ef>int</span> offset_x, <span style=color:#66d9ef>int</span> offset_y)
+      <span style=color:#f92672>:</span> Command(canvas_),
+        index_(index),
+        offset_x_(offset_x),
+        offset_y_(offset_y) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {
+    canvas_<span style=color:#f92672>-&gt;</span>Move(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>index_, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>offset_x_, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>offset_y_);
+  }
   <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() { <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>demangle</span>(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)); }
+
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  size_t index_;
+  <span style=color:#66d9ef>int</span> offset_x_;
+  <span style=color:#66d9ef>int</span> offset_y_;
 };
 
 <span style=color:#75715e>/*
@@ -301,11 +363,31 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ResizeDiagramCommand</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Command {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Execute() {}
+  ResizeDiagramCommand(
+      std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>design_pattern<span style=color:#f92672>::</span>command_pattern<span style=color:#f92672>::</span>Canvas<span style=color:#f92672>&gt;</span> canvas_,
+      size_t index, <span style=color:#66d9ef>int</span> target_height, <span style=color:#66d9ef>int</span> target_width)
+      <span style=color:#f92672>:</span> Command(canvas_),
+        index_(index),
+        height_(target_height),
+        width_(target_width) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Execute</span>() {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>canvas_<span style=color:#f92672>-&gt;</span>diagrams().at(index_)<span style=color:#f92672>-&gt;</span>Resize(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>target_height(),
+                                                 <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>target_width());
+  }
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>target_height</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height_; }
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>target_width</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width_; }
 
   <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() { <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>demangle</span>(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)); }
+
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  size_t index_;
+  <span style=color:#66d9ef>int</span> height_;
+  <span style=color:#66d9ef>int</span> width_;
 };
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * コマンドの実行し，その履歴を保持する．
+</span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Executer</span> {
  <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
   std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Command<span style=color:#f92672>&gt;&gt;</span> execution_history_;
@@ -334,8 +416,6 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#endif
 </span></code></pre></div>
-</h2>
-<h2 id=hahahugoshortcode-s2-hbhb>
 src/demangle.hpp
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef DEMANGLE_HPP_
 </span><span style=color:#75715e>#define DEMANGLE_HPP_
@@ -359,7 +439,6 @@ std<span style=color:#f92672>::</span>string demangle(<span style=color:#66d9ef>
 
 <span style=color:#75715e>#endif
 </span></code></pre></div>
-</h2>
 src/join.hpp
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef JOIN_HPP_
 </span><span style=color:#75715e>#define JOIN_HPP_
@@ -377,21 +456,34 @@ std<span style=color:#f92672>::</span>string Join(<span style=color:#66d9ef>cons
 
 <span style=color:#75715e>#endif
 </span></code></pre></div>
+</p>
 <h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<pre><code>$ clang++ src/command_pattern.cpp  -o command_pattern.out &amp;&amp; ./command_pattern.out
+<pre><code>$ date; clang++ src/command_pattern.cpp  -o command_pattern.out &amp;&amp; ./command_pattern.out
+Thu Jun 15 01:50:06 JST 2023
 # state
 ## canvas
 empty
 ## executer
 empty
-# execution phase
+# add diagrams
 # state
 ## canvas
-design_pattern::command_pattern::Line (0,10)
-design_pattern::command_pattern::Triangle (5,10)
+x: 0, y: 0 - design_pattern::command_pattern::Line (0,5)
+x: 0, y: 0 - design_pattern::command_pattern::Triangle (5,10)
 ## executer
 0: design_pattern::command_pattern::CreateLineDiagramCommand
 1: design_pattern::command_pattern::CreateTriangleDiagramCommand
+# operate diagrams
+# state
+## canvas
+x: 100, y: 500 - design_pattern::command_pattern::Line (0,200)
+x: 250, y: 50 - design_pattern::command_pattern::Triangle (5,10)
+## executer
+0: design_pattern::command_pattern::CreateLineDiagramCommand
+1: design_pattern::command_pattern::CreateTriangleDiagramCommand
+2: design_pattern::command_pattern::ResizeDiagramCommand
+3: design_pattern::command_pattern::MoveDiagramCommand
+4: design_pattern::command_pattern::MoveDiagramCommand
 </code></pre>
 </div></div>
 <div class=pagination>
