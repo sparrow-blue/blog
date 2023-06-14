@@ -114,7 +114,20 @@ Design and Implementation
 <h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=環境>環境<a href=#環境 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<pre><code>$ clang++ --version
+<pre><code>$ cat /etc/os-release 
+PRETTY_NAME=&quot;Ubuntu 22.04.2 LTS&quot;
+NAME=&quot;Ubuntu&quot;
+VERSION_ID=&quot;22.04&quot;
+VERSION=&quot;22.04.2 LTS (Jammy Jellyfish)&quot;
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL=&quot;https://www.ubuntu.com/&quot;
+SUPPORT_URL=&quot;https://help.ubuntu.com/&quot;
+BUG_REPORT_URL=&quot;https://bugs.launchpad.net/ubuntu/&quot;
+PRIVACY_POLICY_URL=&quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&quot;
+UBUNTU_CODENAME=jammy
+$ clang++ --version
 Ubuntu clang version 14.0.0-1ubuntu1
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -420,7 +433,7 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 <span style=color:#75715e>#endif
 </span></code></pre></div>
 </details>
-<details open>
+<details>
 <summary>src/demangle.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef DEMANGLE_HPP_
 </span><span style=color:#75715e>#define DEMANGLE_HPP_
