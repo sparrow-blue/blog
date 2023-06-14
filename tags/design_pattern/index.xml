@@ -125,10 +125,6 @@ dumper();
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern {
 &lt;span style="color:#66d9ef">namespace&lt;/span> command_pattern {
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Receiver&lt;/span> {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">virtual&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>string ToString() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
-};
 &lt;span style="color:#75715e">/**
 &lt;/span>&lt;span style="color:#75715e"> * 描画される図形の抽象クラス
 &lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
@@ -188,6 +184,9 @@ std&lt;span style="color:#f92672">::&lt;/span>back_inserter(result),
 &lt;span style="color:#66d9ef">return&lt;/span> result;
 }
 &lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * Canvas が管理する Diagram のそれぞれがどの位置に存在するかを管理する
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
 &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">DiagramSet&lt;/span> {
 &lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
 DiagramSet(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> diagram, &lt;span style="color:#66d9ef">int&lt;/span> x &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span> y &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>)

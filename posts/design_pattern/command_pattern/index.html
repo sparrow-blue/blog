@@ -194,10 +194,6 @@ InstalledDir: /usr/bin
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern {
 <span style=color:#66d9ef>namespace</span> command_pattern {
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Receiver</span> {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> std<span style=color:#f92672>::</span>string ToString() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-};
 
 <span style=color:#75715e>/**
 </span><span style=color:#75715e> * 描画される図形の抽象クラス
@@ -261,6 +257,9 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
   }
 
  <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * Canvas が管理する Diagram のそれぞれがどの位置に存在するかを管理する
+</span><span style=color:#75715e>   */</span>
   <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DiagramSet</span> {
    <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
     DiagramSet(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram, <span style=color:#66d9ef>int</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>int</span> y <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>)
