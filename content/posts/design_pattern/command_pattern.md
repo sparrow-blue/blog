@@ -74,8 +74,8 @@ InstalledDir: /usr/bin
 
 ### 実装
 
-{{< readfile file="src/command_pattern.cpp" lang="cpp" >}}
-{{< readfile file="src/command_pattern.hpp" lang="cpp" >}}
+{{< readfile file="src/command_pattern.cpp" lang="cpp" colappse="open">}}
+{{< readfile file="src/command_pattern.hpp" lang="cpp" collapse="">}}
 {{< readfile file="src/demangle.hpp" lang="cpp" >}}
 {{< readfile file="src/join.hpp" lang="cpp" >}}
 
