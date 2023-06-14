@@ -3,4 +3,5 @@
 {{ $lang := .Get "lang" }}
 {{ $filepath := path.Join $path $file }}
 {{ $bytes := readFile $filepath }}
+<pre><code>{{ $file }}</code></pre>
 {{ highlight (print $bytes) $lang "" }}
