@@ -52,6 +52,138 @@
 &lt;h2 id="実例">実例&lt;/h2>
 &lt;h3 id="設計">設計&lt;/h3>
 &lt;h3 id="実装">実装&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;list&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;queue&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;sstream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">namespace&lt;/span> DesignPattern {
+&lt;span style="color:#66d9ef">namespace&lt;/span> CommandPattern {
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * 描画される図形の抽象クラス
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Diagram&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+Diagram() &lt;span style="color:#f92672">:&lt;/span> height(&lt;span style="color:#ae81ff">0&lt;/span>), width(&lt;span style="color:#ae81ff">0&lt;/span>) {}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#f92672">~&lt;/span>Diagram() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;span style="color:#66d9ef">int&lt;/span> height;
+&lt;span style="color:#66d9ef">int&lt;/span> width;
+std&lt;span style="color:#f92672">::&lt;/span>string to_string() {
+std&lt;span style="color:#f92672">::&lt;/span>stringstream ss;
+ss &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">typeid&lt;/span>(&lt;span style="color:#66d9ef">this&lt;/span>).name() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;: &amp;#34;&lt;/span>
+&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;(&amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>height &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;,&amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;)&amp;#34;&lt;/span>;
+&lt;span style="color:#66d9ef">return&lt;/span> ss.str();
+}
+};
+Diagram&lt;span style="color:#f92672">::~&lt;/span>Diagram() {}
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * 図形が描画されるキャンバス
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Canvas&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">void&lt;/span> AddDiagram(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> diagram) {
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>diagrams.push_back(diagram);
+}
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">dump&lt;/span>() {
+std&lt;span style="color:#f92672">::&lt;/span>for_each(
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>diagrams.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>diagrams.end(),
+[](&lt;span style="color:#66d9ef">auto&lt;/span> diagram) { std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> diagram&lt;span style="color:#f92672">-&amp;gt;&lt;/span>to_string() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl; });
+}
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> diagrams;
+};
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * 線分を表現するクラス
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Line&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Diagram {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+Line() { &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>; }
+};
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * 三角形を表現するクラス
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Triangle&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Diagram {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+Triangle() {
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>;
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>height &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>;
+}
+};
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * コマンドの抽象クラス
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Command&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+Command(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>DesignPattern&lt;span style="color:#f92672">::&lt;/span>CommandPattern&lt;span style="color:#f92672">::&lt;/span>Canvas&lt;span style="color:#f92672">&amp;gt;&lt;/span> canvas_)
+&lt;span style="color:#f92672">:&lt;/span> canvas(canvas_) {}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Execute&lt;/span>() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Canvas&lt;span style="color:#f92672">&amp;gt;&lt;/span> canvas;
+};
+&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> * 線分の生成を担うコマンド
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">CreateLineDiagramCommand&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Command {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+CreateLineDiagramCommand(
+std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>DesignPattern&lt;span style="color:#f92672">::&lt;/span>CommandPattern&lt;span style="color:#f92672">::&lt;/span>Canvas&lt;span style="color:#f92672">&amp;gt;&lt;/span> canvas_)
+&lt;span style="color:#f92672">:&lt;/span> Command(canvas_) {}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Execute&lt;/span>() {
+&lt;span style="color:#66d9ef">auto&lt;/span> new_diagram &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>canvas&lt;span style="color:#f92672">-&amp;gt;&lt;/span>AddDiagram(new_diagram);
+}
+};
+&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> * 三角形の生成を担うコマンド
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">CreateTriangleDiagramCommand&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Command {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+CreateTriangleDiagramCommand(
+std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>DesignPattern&lt;span style="color:#f92672">::&lt;/span>CommandPattern&lt;span style="color:#f92672">::&lt;/span>Canvas&lt;span style="color:#f92672">&amp;gt;&lt;/span> canvas_)
+&lt;span style="color:#f92672">:&lt;/span> Command(canvas_) {
+&lt;span style="color:#66d9ef">auto&lt;/span> new_diagram &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>Triangle&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>canvas&lt;span style="color:#f92672">-&amp;gt;&lt;/span>AddDiagram(new_diagram);
+}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Execute&lt;/span>() {}
+};
+&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> * 図形の移動を担うコマンド
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">MoveDiagramCommand&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Command {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Execute() {}
+};
+&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> * 図形のリサイズを担うコマンド
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ResizeDiagramCommand&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Command {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Execute() {}
+};
+} &lt;span style="color:#75715e">// namespace CommandPattern
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>} &lt;span style="color:#75715e">// namespace DesignPattern
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> DesignPattern&lt;span style="color:#f92672">::&lt;/span>CommandPattern;
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#66d9ef">auto&lt;/span> canvas &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>Canvas&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
+&lt;span style="color:#66d9ef">auto&lt;/span> execution_queue &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>queue&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Command&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span>();
+&lt;span style="color:#66d9ef">auto&lt;/span> execution_history &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>list&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Command&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span>();
+std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;# initial state&amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl;
+canvas&lt;span style="color:#f92672">-&amp;gt;&lt;/span>dump();
+execution_queue.push(std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>CreateLineDiagramCommand&lt;span style="color:#f92672">&amp;gt;&lt;/span>(canvas));
+execution_queue.push(std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>CreateTriangleDiagramCommand&lt;span style="color:#f92672">&amp;gt;&lt;/span>(canvas));
+&lt;span style="color:#66d9ef">while&lt;/span> (execution_queue.size()) {
+&lt;span style="color:#66d9ef">auto&lt;/span> command &lt;span style="color:#f92672">=&lt;/span> execution_queue.front();
+command&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Execute();
+execution_history.push_back(command);
+execution_queue.pop();
+}
+std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;# final state&amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl;
+canvas&lt;span style="color:#f92672">-&amp;gt;&lt;/span>dump();
+}
+&lt;/code>&lt;/pre>&lt;/div>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
 &lt;pre>&lt;code>$ clang++ command_pattern.cpp -o command_pattern.out
 $ ./command_pattern.out
