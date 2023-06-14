@@ -75,28 +75,37 @@ InstalledDir: /usr/bin
 ### 実装
 
 {{< readfile file="src/command_pattern.cpp" lang="cpp" >}}
----
 {{< readfile file="src/command_pattern.hpp" lang="cpp" >}}
----
 {{< readfile file="src/demangle.hpp" lang="cpp" >}}
----
 {{< readfile file="src/join.hpp" lang="cpp" >}}
 
 ### 実行結果
 
 ```
-$ clang++ src/command_pattern.cpp  -o command_pattern.out && ./command_pattern.out
+$ date; clang++ src/command_pattern.cpp  -o command_pattern.out && ./command_pattern.out
+Thu Jun 15 01:50:06 JST 2023
 # state
 ## canvas
 empty
 ## executer
 empty
-# execution phase
+# add diagrams
 # state
 ## canvas
-design_pattern::command_pattern::Line (0,10)
-design_pattern::command_pattern::Triangle (5,10)
+x: 0, y: 0 - design_pattern::command_pattern::Line (0,5)
+x: 0, y: 0 - design_pattern::command_pattern::Triangle (5,10)
 ## executer
 0: design_pattern::command_pattern::CreateLineDiagramCommand
 1: design_pattern::command_pattern::CreateTriangleDiagramCommand
+# operate diagrams
+# state
+## canvas
+x: 100, y: 500 - design_pattern::command_pattern::Line (0,200)
+x: 250, y: 50 - design_pattern::command_pattern::Triangle (5,10)
+## executer
+0: design_pattern::command_pattern::CreateLineDiagramCommand
+1: design_pattern::command_pattern::CreateTriangleDiagramCommand
+2: design_pattern::command_pattern::ResizeDiagramCommand
+3: design_pattern::command_pattern::MoveDiagramCommand
+4: design_pattern::command_pattern::MoveDiagramCommand
 ```
