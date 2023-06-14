@@ -3,27 +3,34 @@
 
 #include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <list>
 #include <memory>
 #include <queue>
 #include <sstream>
 
+#include "join.hpp"
 #include "demangle.hpp"
 
 namespace design_pattern {
 namespace command_pattern {
+class Receiver {
+ public:
+  virtual std::string ToString() = 0;
+};
+
 /**
  * 描画される図形の抽象クラス
  */
-class Diagram {
+class Diagram : Receiver {
  public:
   Diagram() : height(0), width(0) {}
   virtual ~Diagram() = 0;
   int height;
   int width;
-  std::string to_string() {
+  std::string ToString() {
     std::stringstream ss;
-    ss << demangle(typeid(*this)) << ": "
+    ss << demangle(typeid(*this)) << " "
        << "(" << this->height << "," << this->width << ")";
     return ss.str();
   }
@@ -33,15 +40,24 @@ Diagram::~Diagram() {}
 /**
  * 図形が描画されるキャンバス
  */
-class Canvas {
+class Canvas : Receiver {
  public:
   void AddDiagram(std::shared_ptr<Diagram> diagram) {
     this->diagrams.push_back(diagram);
   }
-  void dump() {
-    std::for_each(
+  void Dump() {
+    std::cout << (this->diagrams.size() != 0 ? this->ToString()
+                                             : std::string("empty"))
+              << std::endl;
+    }
+  std::string ToString() {
+    auto messages = std::vector<std::string>();
+    std::transform(
         this->diagrams.begin(), this->diagrams.end(),
-        [](auto diagram) { std::cout << diagram->to_string() << std::endl; });
+        std::back_inserter(messages),
+        [](std::shared_ptr<Diagram> diagram) { return diagram->ToString(); });
+
+    return Join("\n", messages);
   }
 
  private:
@@ -75,7 +91,7 @@ class Command {
   Command(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_)
       : canvas(canvas_) {}
   virtual void Execute() = 0;
-  virtual std::string to_string() = 0;
+  virtual std::string ToString() = 0;
 
  protected:
   std::shared_ptr<Canvas> canvas;
@@ -94,7 +110,7 @@ class CreateLineDiagramCommand : public Command {
     this->canvas->AddDiagram(new_diagram);
   }
 
-  virtual std::string to_string() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -110,7 +126,7 @@ class CreateTriangleDiagramCommand : public Command {
   }
   virtual void Execute() {}
 
-  virtual std::string to_string() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -120,7 +136,7 @@ class MoveDiagramCommand : public Command {
  public:
   virtual void Execute() {}
 
-  virtual std::string to_string() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -130,8 +146,32 @@ class ResizeDiagramCommand : public Command {
  public:
   virtual void Execute() {}
 
-  virtual std::string to_string() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return demangle(typeid(*this)); }
 };
+
+class Executer {
+ private:
+  std::vector<std::shared_ptr<Command>> execution_history_;
+
+ public:
+  Executer &operator+=(std::shared_ptr<Command> &&command) {
+    command->Execute();
+    this->execution_history_.push_back(command);
+    return *this;
+  }
+
+  void DumpExecutionHistory() {
+    if (this->execution_history_.size())
+      std::for_each(
+          this->execution_history_.begin(), this->execution_history_.end(),
+          [idx = 0](auto &command) mutable {
+            std::cout << idx++ << ": " << command->ToString() << std::endl;
+          });
+    else
+      std::cout << "empty" << std::endl;
+  }
+};
+
 }  // namespace command_pattern
 }  // namespace design_pattern
 
