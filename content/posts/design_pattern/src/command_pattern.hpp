@@ -14,10 +14,6 @@
 
 namespace design_pattern {
 namespace command_pattern {
-class Receiver {
- public:
-  virtual std::string ToString() = 0;
-};
 
 /**
  * 描画される図形の抽象クラス
@@ -81,6 +77,9 @@ class Canvas {
   }
 
  private:
+  /**
+   * Canvas が管理する Diagram のそれぞれがどの位置に存在するかを管理する
+   */
   class DiagramSet {
    public:
     DiagramSet(std::shared_ptr<Diagram> diagram, int x = 0, int y = 0)
