@@ -120,7 +120,7 @@ Target: x86_64-pc-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
 </code></pre><h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<h2 id=hahahugoshortcode-s0-hbhb>
+<p>
 <pre>src/command_pattern.cpp</pre>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;command_pattern.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
@@ -152,8 +152,6 @@ InstalledDir: /usr/bin
   dumper();
 }
 </code></pre></div>
-</h2>
-<h2 id=hahahugoshortcode-s1-hbhb>
 <pre>src/command_pattern.hpp</pre>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
 </span><span style=color:#75715e>#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
@@ -334,8 +332,6 @@ Diagram<span style=color:#f92672>::~</span>Diagram() {}
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#endif
 </span></code></pre></div>
-</h2>
-<h2 id=hahahugoshortcode-s2-hbhb>
 <pre>src/demangle.hpp</pre>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef DEMANGLE_HPP_
 </span><span style=color:#75715e>#define DEMANGLE_HPP_
@@ -359,7 +355,6 @@ std<span style=color:#f92672>::</span>string demangle(<span style=color:#66d9ef>
 
 <span style=color:#75715e>#endif
 </span></code></pre></div>
-</h2>
 <pre>src/join.hpp</pre>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef JOIN_HPP_
 </span><span style=color:#75715e>#define JOIN_HPP_
@@ -377,6 +372,7 @@ std<span style=color:#f92672>::</span>string Join(<span style=color:#66d9ef>cons
 
 <span style=color:#75715e>#endif
 </span></code></pre></div>
+</p>
 <h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <pre><code>$ clang++ src/command_pattern.cpp  -o command_pattern.out &amp;&amp; ./command_pattern.out
 # state
