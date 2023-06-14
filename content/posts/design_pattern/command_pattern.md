@@ -76,8 +76,8 @@ InstalledDir: /usr/bin
 
 {{< readfile file="src/command_pattern.cpp" lang="cpp">}}
 {{< readfile file="src/command_pattern.hpp" lang="cpp">}}
-{{< readfile file="src/demangle.hpp" lang="cpp" is_open="true">}}
-{{< readfile file="src/join.hpp" lang="cpp" is_open="false">}}
+{{< readfile file="src/demangle.hpp" lang="cpp" is_open="true" >}}
+{{< readfile file="src/join.hpp" lang="cpp" is_open="false" >}}
 
 ### 実行結果
 
