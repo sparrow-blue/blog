@@ -4,7 +4,7 @@
 {{ $is_open := .Get "is_open" }}
 {{ $filepath := path.Join $path $file }}
 {{ $bytes := readFile $filepath }}
-<details {{ if eq $is_open "true" }}open{{ end }}></details>
+<details {{ if eq $is_open "true" }}open{{ end }}>
   <summary>{{ $file }}</summary>
   {{ highlight (print $bytes) $lang "" }}
 </details>
