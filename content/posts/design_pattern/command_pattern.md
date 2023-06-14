@@ -74,10 +74,10 @@ InstalledDir: /usr/bin
 
 ### 実装
 
-{{< readfile file="src/command_pattern.cpp" lang="cpp" collappse="open">}}
-{{< readfile file="src/command_pattern.hpp" lang="cpp" collapse="">}}
-{{< readfile file="src/demangle.hpp" lang="cpp" >}}
-{{< readfile file="src/join.hpp" lang="cpp" >}}
+{{< readfile file="src/command_pattern.cpp" lang="cpp" is_open=true>}}
+{{< readfile file="src/command_pattern.hpp" lang="cpp" is_open=false>}}
+{{< readfile file="src/demangle.hpp" lang="cpp" is_open="true">}}
+{{< readfile file="src/join.hpp" lang="cpp" is_open="false">}}
 
 ### 実行結果
 

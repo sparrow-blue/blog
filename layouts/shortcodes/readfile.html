@@ -1,10 +1,10 @@
 {{ $path := .Page.File.Dir }}
 {{ $file := .Get "file" }}
 {{ $lang := .Get "lang" }}
-{{ $collapse := .Get "collapse" }}
+{{ $is_open := .Get "is_open" }}
 {{ $filepath := path.Join $path $file }}
 {{ $bytes := readFile $filepath }}
-<details>
+<details open="{{ $is_open }}"">
   <summary>{{ $file }}</summary>
   {{ highlight (print $bytes) $lang "" }}
 </details>
