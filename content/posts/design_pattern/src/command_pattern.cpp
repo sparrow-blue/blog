@@ -6,27 +6,24 @@ int main() {
   auto canvas = std::make_shared<Canvas>();
   auto execution_queue = std::queue<std::shared_ptr<Command>>();
   auto execution_history = std::list<std::shared_ptr<Command>>();
+  auto executer = Executer();
 
-  std::cout << "# initial state" << std::endl;
-  canvas->dump();
+  auto dumper =
+      [&canvas, &executer]() {
+        std::cout << "# state" << std::endl;
+        std::cout << "## canvas" << std::endl;
+        canvas->Dump();
 
-  execution_queue.push(std::make_shared<CreateLineDiagramCommand>(canvas));
-  execution_queue.push(std::make_shared<CreateTriangleDiagramCommand>(canvas));
+        std::cout << "## executer" << std::endl;
+        executer.DumpExecutionHistory();
+      };
 
-  while (execution_queue.size()) {
-    auto command = execution_queue.front();
-    command->Execute();
-    execution_history.push_back(command);
-    execution_queue.pop();
-  }
+  dumper();
 
-  std::cout << "# final state" << std::endl;
-  canvas->dump();
+  std::cout<< "# execution phase"<< std::endl;
 
-  std::cout << "# history" << std::endl;
-  std::for_each(execution_history.begin(), execution_history.end(),
-                [idx = 0](auto& command) mutable {
-                  std::cout << idx++ << ": " << command->to_string()
-                            << std::endl;
-                });
+  executer += std::make_shared<CreateLineDiagramCommand>(canvas);
+  executer += std::make_shared<CreateTriangleDiagramCommand>(canvas);
+
+  dumper();
 }

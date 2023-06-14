@@ -75,18 +75,28 @@ InstalledDir: /usr/bin
 ### 実装
 
 {{< readfile file="src/command_pattern.cpp" lang="cpp" >}}
+---
 {{< readfile file="src/command_pattern.hpp" lang="cpp" >}}
+---
 {{< readfile file="src/demangle.hpp" lang="cpp" >}}
+---
+{{< readfile file="src/join.hpp" lang="cpp" >}}
 
 ### 実行結果
 
 ```
-$ clang++ ./src/command_pattern.cpp  -o command_pattern.out && ./command_pattern.out 
-# initial state
-# final state
-design_pattern::command_pattern::Triangle: (5,10)
-design_pattern::command_pattern::Line: (0,10)
-# history
+$ clang++ src/command_pattern.cpp  -o command_pattern.out && ./command_pattern.out
+# state
+## canvas
+empty
+## executer
+empty
+# execution phase
+# state
+## canvas
+design_pattern::command_pattern::Line (0,10)
+design_pattern::command_pattern::Triangle (5,10)
+## executer
 0: design_pattern::command_pattern::CreateLineDiagramCommand
 1: design_pattern::command_pattern::CreateTriangleDiagramCommand
 ```
