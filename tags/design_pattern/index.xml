@@ -59,7 +59,8 @@ Thread model: posix
 InstalledDir: /usr/bin
 &lt;/code>&lt;/pre>&lt;h3 id="実装">実装&lt;/h3>
 &lt;p>
-src/command_pattern.cpp
+&lt;details ZgotmplZ>
+&lt;summary>src/command_pattern.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>command_pattern;
@@ -92,7 +93,9 @@ executer &lt;span style="color:#f92672">+=&lt;/span> std&lt;span style="color:#f
 dumper();
 }
 &lt;/code>&lt;/pre>&lt;/div>
-src/command_pattern.hpp
+&lt;/details>
+&lt;details ZgotmplZ>
+&lt;summary>src/command_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -325,7 +328,9 @@ std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#endif
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
-src/demangle.hpp
+&lt;/details>
+&lt;details ZgotmplZ>
+&lt;summary>src/demangle.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef DEMANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DEMANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -345,7 +350,9 @@ free(demangled_name);
 }
 &lt;span style="color:#75715e">#endif
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
-src/join.hpp
+&lt;/details>
+&lt;details ZgotmplZ>
+&lt;summary>src/join.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -361,6 +368,7 @@ std&lt;span style="color:#f92672">::&lt;/span>next(messages.begin()), messages.e
 }
 &lt;span style="color:#75715e">#endif
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
 &lt;/p>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
 &lt;pre>&lt;code>$ date; clang++ src/command_pattern.cpp -o command_pattern.out &amp;amp;&amp;amp; ./command_pattern.out
