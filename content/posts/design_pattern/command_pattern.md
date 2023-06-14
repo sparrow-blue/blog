@@ -62,17 +62,31 @@ categories: ["design"]
 
 ### 設計
 
+### 環境
+
+```
+$ clang++ --version
+Ubuntu clang version 14.0.0-1ubuntu1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+```
+
 ### 実装
 
-{{< readfile file="command_pattern.cpp" lang="cpp" >}}
+{{< readfile file="src/command_pattern.cpp" lang="cpp" >}}
+{{< readfile file="src/command_pattern.hpp" lang="cpp" >}}
+{{< readfile file="src/demangle.hpp" lang="cpp" >}}
 
 ### 実行結果
 
 ```
-$ clang++ command_pattern.cpp  -o command_pattern.out
-$ ./command_pattern.out 
+$ clang++ ./src/command_pattern.cpp  -o command_pattern.out && ./command_pattern.out 
 # initial state
 # final state
-PN13DesignPattern14CommandPattern7DiagramE: (5,10)
-PN13DesignPattern14CommandPattern7DiagramE: (0,10)
+design_pattern::command_pattern::Triangle: (5,10)
+design_pattern::command_pattern::Line: (0,10)
+# history
+0: design_pattern::command_pattern::CreateLineDiagramCommand
+1: design_pattern::command_pattern::CreateTriangleDiagramCommand
 ```

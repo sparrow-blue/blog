@@ -1,3 +1,6 @@
+#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+
 #include <algorithm>
 #include <iostream>
 #include <list>
@@ -5,8 +8,10 @@
 #include <queue>
 #include <sstream>
 
-namespace DesignPattern {
-namespace CommandPattern {
+#include "demangle.hpp"
+
+namespace design_pattern {
+namespace command_pattern {
 /**
  * 描画される図形の抽象クラス
  */
@@ -18,7 +23,7 @@ class Diagram {
   int width;
   std::string to_string() {
     std::stringstream ss;
-    ss << typeid(this).name() << ": "
+    ss << demangle(typeid(*this)) << ": "
        << "(" << this->height << "," << this->width << ")";
     return ss.str();
   }
@@ -67,9 +72,10 @@ class Triangle : public Diagram {
  */
 class Command {
  public:
-  Command(std::shared_ptr<DesignPattern::CommandPattern::Canvas> canvas_)
+  Command(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_)
       : canvas(canvas_) {}
   virtual void Execute() = 0;
+  virtual std::string to_string() = 0;
 
  protected:
   std::shared_ptr<Canvas> canvas;
@@ -81,12 +87,14 @@ class Command {
 class CreateLineDiagramCommand : public Command {
  public:
   CreateLineDiagramCommand(
-      std::shared_ptr<DesignPattern::CommandPattern::Canvas> canvas_)
+      std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_)
       : Command(canvas_) {}
   virtual void Execute() {
     auto new_diagram = std::make_shared<Line>();
     this->canvas->AddDiagram(new_diagram);
   }
+
+  virtual std::string to_string() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -95,12 +103,14 @@ class CreateLineDiagramCommand : public Command {
 class CreateTriangleDiagramCommand : public Command {
  public:
   CreateTriangleDiagramCommand(
-      std::shared_ptr<DesignPattern::CommandPattern::Canvas> canvas_)
+      std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_)
       : Command(canvas_) {
     auto new_diagram = std::make_shared<Triangle>();
     this->canvas->AddDiagram(new_diagram);
   }
   virtual void Execute() {}
+
+  virtual std::string to_string() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -109,6 +119,8 @@ class CreateTriangleDiagramCommand : public Command {
 class MoveDiagramCommand : public Command {
  public:
   virtual void Execute() {}
+
+  virtual std::string to_string() { return demangle(typeid(*this)); }
 };
 
 /*
@@ -117,29 +129,10 @@ class MoveDiagramCommand : public Command {
 class ResizeDiagramCommand : public Command {
  public:
   virtual void Execute() {}
+
+  virtual std::string to_string() { return demangle(typeid(*this)); }
 };
-}  // namespace CommandPattern
-}  // namespace DesignPattern
+}  // namespace command_pattern
+}  // namespace design_pattern
 
-using namespace DesignPattern::CommandPattern;
-int main() {
-  auto canvas = std::make_shared<Canvas>();
-  auto execution_queue = std::queue<std::shared_ptr<Command>>();
-  auto execution_history = std::list<std::shared_ptr<Command>>();
-
-  std::cout << "# initial state" << std::endl;
-  canvas->dump();
-
-  execution_queue.push(std::make_shared<CreateLineDiagramCommand>(canvas));
-  execution_queue.push(std::make_shared<CreateTriangleDiagramCommand>(canvas));
-
-  while (execution_queue.size()) {
-    auto command = execution_queue.front();
-    command->Execute();
-    execution_history.push_back(command);
-    execution_queue.pop();
-  }
-
-  std::cout << "# final state" << std::endl;
-  canvas->dump();
-}
+#endif
