@@ -67,9 +67,17 @@ InstalledDir: /usr/bin
 
 {{< readfile file="src/observer_pattern.cpp" lang="cpp" is_open="false" >}}
 {{< readfile file="src/observer_pattern.hpp" lang="cpp" >}}
+{{< readfile file="src/join.hpp.hpp" lang="cpp" >}}
+
+Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．
 
 ### 実行結果
 
 ```
+$ date; clang++ src/observer_pattern.cpp -o observer_pattern.out && ./observer_pattern.out 
+Fri Jun 16 04:14:40 JST 2023
+design_pattern::observer_pattern::Line (0,100)
+design_pattern::observer_pattern::Line (0,0)
+design_pattern::observer_pattern::Line (0,101)
 ```
 
