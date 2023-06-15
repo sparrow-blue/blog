@@ -46,10 +46,15 @@
 &lt;/li>
 &lt;/ol>
 &lt;h2 id="要点">要点&lt;/h2>
-&lt;h2 id="検討">検討&lt;/h2>
-&lt;h3 id="どのようなシーンで使えるのか">どのようなシーンで使えるのか&lt;/h3>
-&lt;h3 id="なぜそのシーンで使えるのか">なぜそのシーンで使えるのか&lt;/h3>
+&lt;p>Command Pattern の要点は大きく以下 2 つであると考える．&lt;/p>
+&lt;ol>
+&lt;li>一連の処理をオブジェクトに隠蔽できる&lt;/li>
+&lt;li>処理の定義とその実行をそれぞれ別の責務として扱える&lt;/li>
+&lt;/ol>
+&lt;p>この結果，Command を実行する責務を負う Invoker で Execute したという事実が保持でき，条件さえそろえば実行履歴やその順序を保持できる．実行の順序が保持できていれば工夫次第で Redo/Undo も実現できる．&lt;/p>
+&lt;p>一連の処理をオブジェクトにすることを目的と据えるのであれば Redu/Undo は結果的に導かれるだけであって，例えば非同期に実行するタスクを積む一種の Producer-Consumer Pattern のベースとも考えられる．&lt;/p>
 &lt;h2 id="実例">実例&lt;/h2>
+&lt;p>キャンバスに図形を描くプログラムを考える．Canvas に対して Line や Triangle などの図形を配置する Command，図形を Move したり Resize したりする Command も定義し，これらの実行履歴を保持する Invoker を定義する．&lt;/p>
 &lt;h3 id="設計">設計&lt;/h3>
 &lt;h3 id="環境">環境&lt;/h3>
 &lt;pre>&lt;code>$ cat /etc/os-release

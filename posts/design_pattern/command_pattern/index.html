@@ -108,10 +108,15 @@ Design and Implementation
 </li>
 </ol>
 <h2 id=要点>要点<a href=#要点 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<h2 id=検討>検討<a href=#検討 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<h3 id=どのようなシーンで使えるのか>どのようなシーンで使えるのか<a href=#どのようなシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<h3 id=なぜそのシーンで使えるのか>なぜそのシーンで使えるのか<a href=#なぜそのシーンで使えるのか class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>Command Pattern の要点は大きく以下 2 つであると考える．</p>
+<ol>
+<li>一連の処理をオブジェクトに隠蔽できる</li>
+<li>処理の定義とその実行をそれぞれ別の責務として扱える</li>
+</ol>
+<p>この結果，Command を実行する責務を負う Invoker で Execute したという事実が保持でき，条件さえそろえば実行履歴やその順序を保持できる．実行の順序が保持できていれば工夫次第で Redo/Undo も実現できる．</p>
+<p>一連の処理をオブジェクトにすることを目的と据えるのであれば Redu/Undo は結果的に導かれるだけであって，例えば非同期に実行するタスクを積む一種の Producer-Consumer Pattern のベースとも考えられる．</p>
 <h2 id=実例>実例<a href=#実例 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>キャンバスに図形を描くプログラムを考える．Canvas に対して Line や Triangle などの図形を配置する Command，図形を Move したり Resize したりする Command も定義し，これらの実行履歴を保持する Invoker を定義する．</p>
 <h3 id=設計>設計<a href=#設計 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=環境>環境<a href=#環境 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <pre><code>$ cat /etc/os-release 
