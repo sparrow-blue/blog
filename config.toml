@@ -27,7 +27,7 @@ paginate = 20
   # readingTime = false # default
   # Toc = false # default
   # TocTitle = "Table of Contents" # default
-  enableGitInfo=true
+  enableGitInfo = true
 
 [languages]
   [languages.en]
