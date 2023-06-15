@@ -24,7 +24,7 @@ class Diagram {
   virtual ~Diagram() = 0;
   std::string ToString() {
     std::stringstream ss;
-    ss << demangle(typeid(*this)) << " "
+    ss << Demangle(typeid(*this)) << " "
        << "(" << this->height() << "," << this->width() << ")";
     return ss.str();
   }
@@ -151,7 +151,7 @@ class CreateLineDiagramCommand : public Command {
     this->canvas_->AddDiagram(new_diagram);
   }
 
-  virtual std::string ToString() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return Demangle(typeid(*this)); }
 };
 
 /*
@@ -167,7 +167,7 @@ class CreateTriangleDiagramCommand : public Command {
     this->canvas_->AddDiagram(new_diagram);
   }
 
-  virtual std::string ToString() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return Demangle(typeid(*this)); }
 };
 
 /*
@@ -185,7 +185,7 @@ class MoveDiagramCommand : public Command {
   virtual void Execute() {
     canvas_->Move(this->index_, this->offset_x_, this->offset_y_);
   }
-  virtual std::string ToString() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return Demangle(typeid(*this)); }
 
  private:
   size_t index_;
@@ -212,7 +212,7 @@ class ResizeDiagramCommand : public Command {
   int target_height() { return this->height_; }
   int target_width() { return this->width_; }
 
-  virtual std::string ToString() { return demangle(typeid(*this)); }
+  virtual std::string ToString() { return Demangle(typeid(*this)); }
 
  private:
   size_t index_;
