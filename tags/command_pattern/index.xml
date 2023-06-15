@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>command_pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/command_pattern/</link><description>Recent content in command_pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/command_pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>command_pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/command_pattern/</link><description>Recent content in command_pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/command_pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Observer Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</link><pubDate>Fri, 16 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</guid><description>このエントリの目指すところ Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える． データモデルとそれに</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;p>Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える．&lt;/p>
+&lt;ol>
+&lt;li>データモデルとそれに対する操作の参照関係を &lt;code>1..*&lt;/code> を実現しつつ操作同士を疎結合に保つ
+&lt;ul>
+&lt;li>Subject が Model だとすると，そのモデルが保持する値の変更に伴って処理を担う ViewModel や Controller が呼ばれなければならない．しかし Model のある値が変化したからといって，Model 自身はどんな処理をすべきかは知らない (知るべきではない)．&lt;/li>
+&lt;li>したがって Model は「値が変化した」という事実を外部に公開し，それをトリガとして操作を受け付ける必要がある．これを実現する典型的な実装が Callback の登録である．&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>例にもれず実装はする．&lt;/p>
+&lt;h2 id="調査">調査&lt;/h2>
+&lt;h3 id="語られる像">語られる像&lt;/h3>
+&lt;h3 id="整理">整理&lt;/h3>
+&lt;h3 id="疑問">疑問&lt;/h3>
+&lt;h2 id="要点">要点&lt;/h2>
+&lt;h2 id="実例">実例&lt;/h2>
+&lt;h3 id="設計">設計&lt;/h3>
+&lt;h3 id="環境">環境&lt;/h3>
+&lt;pre>&lt;code>$ cat /etc/os-release
+PRETTY_NAME=&amp;quot;Ubuntu 22.04.2 LTS&amp;quot;
+NAME=&amp;quot;Ubuntu&amp;quot;
+VERSION_ID=&amp;quot;22.04&amp;quot;
+VERSION=&amp;quot;22.04.2 LTS (Jammy Jellyfish)&amp;quot;
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL=&amp;quot;https://www.ubuntu.com/&amp;quot;
+SUPPORT_URL=&amp;quot;https://help.ubuntu.com/&amp;quot;
+BUG_REPORT_URL=&amp;quot;https://bugs.launchpad.net/ubuntu/&amp;quot;
+PRIVACY_POLICY_URL=&amp;quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&amp;quot;
+UBUNTU_CODENAME=jammy
+$ clang++ --version
+Ubuntu clang version 14.0.0-1ubuntu1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+&lt;/code>&lt;/pre>&lt;h3 id="実装">実装&lt;/h3>
+&lt;p>
+&lt;details >
+&lt;summary>src/observer_pattern.cpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observer_pattern;
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;details >
+&lt;summary>src/observer_pattern.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern {
+&lt;span style="color:#66d9ef">namespace&lt;/span> observer_pattern {
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Observer&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#f92672">~&lt;/span>Observer() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+};
+Observer&lt;span style="color:#f92672">::~&lt;/span>Observer() {}
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Subject&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#f92672">~&lt;/span>Subject() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+};
+Subject&lt;span style="color:#f92672">::~&lt;/span>Subject() {}
+} &lt;span style="color:#75715e">// namespace observer_pattern
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>} &lt;span style="color:#75715e">// namespace design_pattern
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#endif
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;/p>
+&lt;h3 id="実行結果">実行結果&lt;/h3>
+&lt;pre>&lt;code>&lt;/code>&lt;/pre></content></item><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>以下の観点で調査/検討する．&lt;/p>
 &lt;ol>
 &lt;li>どのようなシーンで使えるのか&lt;/li>
