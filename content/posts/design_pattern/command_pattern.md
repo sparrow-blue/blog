@@ -1,11 +1,11 @@
 ---
-# date: "2023-06-13"
+date: "2023-06-13"
 description: ""
 draft: false
 # expiryDate: ""
 keywords: []
 # lastmod: ""
-publishDate: "2023-06-13"
+# publishDate: "2023-06-13"
 # slug: ""
 # summary: ""
 title : "Command Pattern"
@@ -52,13 +52,18 @@ categories: ["design"]
 
 ## 要点
 
-## 検討
+Command Pattern の要点は大きく以下 2 つであると考える．
 
-### どのようなシーンで使えるのか
+1. 一連の処理をオブジェクトに隠蔽できる
+2. 処理の定義とその実行をそれぞれ別の責務として扱える
 
-### なぜそのシーンで使えるのか
+この結果，Command を実行する責務を負う Invoker で Execute したという事実が保持でき，条件さえそろえば実行履歴やその順序を保持できる．実行の順序が保持できていれば工夫次第で Redo/Undo も実現できる．
+
+一連の処理をオブジェクトにすることを目的と据えるのであれば Redu/Undo は結果的に導かれるだけであって，例えば非同期に実行するタスクを積む一種の Producer-Consumer Pattern のベースとも考えられる．
 
 ## 実例
+
+キャンバスに図形を描くプログラムを考える．Canvas に対して Line や Triangle などの図形を配置する Command，図形を Move したり Resize したりする Command も定義し，これらの実行履歴を保持する Invoker を定義する．
 
 ### 設計
 
