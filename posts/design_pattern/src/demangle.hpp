@@ -15,7 +15,7 @@
  * @details
  * gcc および clang コンパイラでマングル化された型名をデマングル化します．
  */
-std::string demangle(const std::type_info& id) {
+std::string Demangle(const std::type_info& id) {
   int status;
   char* demangled_name = abi::__cxa_demangle(id.name(), 0, 0, &status);
 
