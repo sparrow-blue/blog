@@ -3,6 +3,7 @@ baseURL = "https://sparrow-blue.github.io/blog/"
 languageCode = "en-us"
 HasCJKLanguage = true
 enableRobotsTXT = true
+enableGitInfo = true
 
 theme = "terminal"
 paginate = 20
@@ -27,7 +28,6 @@ paginate = 20
   # readingTime = false # default
   # Toc = false # default
   # TocTitle = "Table of Contents" # default
-  enableGitInfo = true
 
 [languages]
   [languages.en]
