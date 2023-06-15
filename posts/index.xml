@@ -42,13 +42,31 @@ InstalledDir: /usr/bin
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observer_pattern;
-&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {}
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#66d9ef">auto&lt;/span> display &lt;span style="color:#f92672">=&lt;/span> Display();
+&lt;span style="color:#66d9ef">auto&lt;/span> line &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>make_shared&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
+&lt;span style="color:#75715e">// この時点で購読開始
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> display.Register(line);
+&lt;span style="color:#75715e">// line の状態を変化させるごとに自動的に dump される．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> line&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style="color:#ae81ff">100&lt;/span>, &lt;span style="color:#ae81ff">100&lt;/span>);
+line&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>);
+line&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style="color:#ae81ff">101&lt;/span>, &lt;span style="color:#ae81ff">101&lt;/span>);
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+}
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >
 &lt;summary>src/observer_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;functional&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;join.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern {
 &lt;span style="color:#66d9ef">namespace&lt;/span> observer_pattern {
@@ -60,17 +78,96 @@ Observer&lt;span style="color:#f92672">::~&lt;/span>Observer() {}
 &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Subject&lt;/span> {
 &lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
 &lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#f92672">~&lt;/span>Subject() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Subscribe&lt;/span>(std&lt;span style="color:#f92672">::&lt;/span>function&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">void&lt;/span>(&lt;span style="color:#66d9ef">void&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span>func) {
+subscribers_.push_back(func);
+}
+&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">void&lt;/span> Notify() {
+std&lt;span style="color:#f92672">::&lt;/span>for_each(&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>subscribers_.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>subscribers_.end(),
+[](&lt;span style="color:#66d9ef">auto&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>func) { func(); });
+}
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>function&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">void&lt;/span>(&lt;span style="color:#66d9ef">void&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> subscribers_;
 };
 Subject&lt;span style="color:#f92672">::~&lt;/span>Subject() {}
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Line&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Subject, &lt;span style="color:#66d9ef">public&lt;/span> command_pattern&lt;span style="color:#f92672">::&lt;/span>Line {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Resize(&lt;span style="color:#66d9ef">int&lt;/span> height, &lt;span style="color:#66d9ef">int&lt;/span> width) &lt;span style="color:#66d9ef">override&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> (command_pattern&lt;span style="color:#f92672">::&lt;/span>Line&lt;span style="color:#f92672">::&lt;/span>height() &lt;span style="color:#f92672">==&lt;/span> height &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span>
+command_pattern&lt;span style="color:#f92672">::&lt;/span>Line&lt;span style="color:#f92672">::&lt;/span>width() &lt;span style="color:#f92672">==&lt;/span> width)
+&lt;span style="color:#66d9ef">return&lt;/span>;
+command_pattern&lt;span style="color:#f92672">::&lt;/span>Line&lt;span style="color:#f92672">::&lt;/span>Resize(height, width);
+Notify();
+}
+};
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Display&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Observer {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">void&lt;/span> Register(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span> subject) {
+subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Subscribe([&lt;span style="color:#66d9ef">this&lt;/span>]() { &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Dump(); });
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.push_back(subject);
+}
+&lt;span style="color:#75715e">// void Unregister(std::shared_ptr&amp;lt;Subject&amp;gt; subject) {
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// 実現には工夫が必要だ．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// }
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> objects_;
+std&lt;span style="color:#f92672">::&lt;/span>string ToString() {
+&lt;span style="color:#66d9ef">auto&lt;/span> messages &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
+std&lt;span style="color:#f92672">::&lt;/span>transform(
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.end(),
+std&lt;span style="color:#f92672">::&lt;/span>back_inserter(messages), [](std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>subject) {
+&lt;span style="color:#66d9ef">return&lt;/span> subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString();
+});
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#ae81ff">\n&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>, messages);
+}
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Dump&lt;/span>() { std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl; }
+};
 } &lt;span style="color:#75715e">// namespace observer_pattern
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>} &lt;span style="color:#75715e">// namespace design_pattern
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#endif
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
+&lt;details >
+&lt;summary>src/join.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef JOIN_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;numeric&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;string&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">/**
+&lt;/span>&lt;span style="color:#75715e"> * @brief 文字列の配列を指定したデリミタで結合する．
+&lt;/span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;span style="color:#75715e"> * @param delimitor 文字列を連結する際の区切り文字
+&lt;/span>&lt;span style="color:#75715e"> * @param messages 連結する文字列の配列
+&lt;/span>&lt;span style="color:#75715e"> * @return std::string 連結された文字列
+&lt;/span>&lt;span style="color:#75715e"> *
+&lt;/span>&lt;span style="color:#75715e"> * @details
+&lt;/span>&lt;span style="color:#75715e"> * 指定したデリミタで文字列の配列を連結する．
+&lt;/span>&lt;span style="color:#75715e"> * デリミタに &amp;#34;,&amp;#34; を指定し，文字列の配列として {&amp;#34;Hello&amp;#34;, * &amp;#34;World&amp;#34;}
+&lt;/span>&lt;span style="color:#75715e"> * を指定した場合，&amp;#34;Hello,World&amp;#34;を返します．
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+std&lt;span style="color:#f92672">::&lt;/span>string Join(&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>string &lt;span style="color:#f92672">&amp;amp;&lt;/span>delimitor,
+&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>messages) {
+&lt;span style="color:#66d9ef">return&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>accumulate(
+std&lt;span style="color:#f92672">::&lt;/span>next(messages.begin()), messages.end(), messages[&lt;span style="color:#ae81ff">0&lt;/span>],
+[delimitor](std&lt;span style="color:#f92672">::&lt;/span>string a, std&lt;span style="color:#f92672">::&lt;/span>string b) { &lt;span style="color:#66d9ef">return&lt;/span> a &lt;span style="color:#f92672">+&lt;/span> delimitor &lt;span style="color:#f92672">+&lt;/span> b; });
+}
+&lt;span style="color:#75715e">#endif
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
 &lt;/p>
+&lt;p>Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．&lt;/p>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
-&lt;pre>&lt;code>&lt;/code>&lt;/pre></content></item><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;pre>&lt;code>$ date; clang++ src/observer_pattern.cpp -o observer_pattern.out &amp;amp;&amp;amp; ./observer_pattern.out
+Fri Jun 16 04:14:40 JST 2023
+design_pattern::observer_pattern::Line (0,100)
+design_pattern::observer_pattern::Line (0,0)
+design_pattern::observer_pattern::Line (0,101)
+&lt;/code>&lt;/pre></content></item><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>以下の観点で調査/検討する．&lt;/p>
 &lt;ol>
 &lt;li>どのようなシーンで使えるのか&lt;/li>
