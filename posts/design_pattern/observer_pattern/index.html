@@ -116,16 +116,26 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 <span style=color:#66d9ef>using</span> design_pattern<span style=color:#f92672>::</span>observer_pattern<span style=color:#f92672>::</span>ObservableLine;
 <span style=color:#66d9ef>using</span> design_pattern<span style=color:#f92672>::</span>observer_pattern<span style=color:#f92672>::</span>ObservableTriangle;
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 画面上に図形を配置するようなケースを考える．
+</span><span style=color:#75715e> * ObservableDiagram がモデル，Display はモデルを利用するプレゼンテーションのイメージである．
+</span><span style=color:#75715e> * モデルの状態が変化すると Display に通知され，モデルが自動的に操作 (画面更新，ここでは標準出力) される．
+</span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
-  <span style=color:#66d9ef>auto</span> display <span style=color:#f92672>=</span> Display();
-  <span style=color:#66d9ef>auto</span> line <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>ObservableLine<span style=color:#f92672>&gt;</span>();
+  <span style=color:#75715e>// モデルを利用するオブジェクト (Observer)
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>auto</span> display <span style=color:#f92672>=</span> Display();
+
+  <span style=color:#75715e>// 描画するモデルを生成する．
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>auto</span> line <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>ObservableLine<span style=color:#f92672>&gt;</span>();
   <span style=color:#66d9ef>auto</span> triangle <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>ObservableTriangle<span style=color:#f92672>&gt;</span>();
 
-  <span style=color:#75715e>// この時点で購読開始
+  <span style=color:#75715e>// 画面に図形を配置する．実態は Observer が Obsavable なオブジェクトの購読を始める．
 </span><span style=color:#75715e></span>  display.Register(line);
   display.Register(triangle);
 
-  <span style=color:#75715e>// line の状態を変化させるごとに自動的に dump される．
+  <span style=color:#75715e>// diagram の状態を変化させるごとに自動的に dump される．
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// モデルは自身がどう扱われるか気にしないが Observer が状態を監視しており，状態が変化した後になされる操作が
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// 自動的に実行される．プログラマもモデルの状態を変化させるだけでよく，そのあと行われる処理は別の文脈で考えればよい．
 </span><span style=color:#75715e></span>  line<span style=color:#f92672>-&gt;</span>Resize(<span style=color:#ae81ff>100</span>, <span style=color:#ae81ff>100</span>);
   line<span style=color:#f92672>-&gt;</span>Resize(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>);
   line<span style=color:#f92672>-&gt;</span>Resize(<span style=color:#ae81ff>101</span>, <span style=color:#ae81ff>101</span>);
@@ -167,7 +177,6 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iterator&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
 </span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;vector&gt;</span><span style=color:#75715e>
@@ -179,13 +188,13 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
 
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Display</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Observer {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>void</span> Register(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span> subject) {
-    subject<span style=color:#f92672>-&gt;</span>Subscribe([<span style=color:#66d9ef>this</span>, subject](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> sender) {
-      std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>static_pointer_cast<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span>(sender)<span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-    });
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.push_back(subject);
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 簡易的にプレゼンテーションを表現する．モデルが変更されるたびに画面を更新する．
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Display</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Observer<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span> {
+ <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>void</span> OnPublished(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> sender) <span style=color:#66d9ef>override</span> {
+    std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>static_pointer_cast<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span>(sender)<span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
   }
 
  <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
@@ -219,6 +228,9 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 監視可能なオブジェクトを表現する
+</span><span style=color:#75715e> */</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Observable</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> std<span style=color:#f92672>::</span>enable_shared_from_this<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   <span style=color:#66d9ef>void</span> Subscribe(std<span style=color:#f92672>::</span>function<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>void</span>(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span>)<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;&amp;</span>func) { subscribers_.push_back(func); }
@@ -257,6 +269,10 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 <span style=color:#66d9ef>using</span> design_pattern<span style=color:#f92672>::</span>component<span style=color:#f92672>::</span>Diagram;
 
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
+
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 監視可能な図形を表現する．
+</span><span style=color:#75715e>*/</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableDiagram</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Observable {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Resize(<span style=color:#66d9ef>int</span> height, <span style=color:#66d9ef>int</span> width) {
@@ -297,6 +313,9 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 監視可能な線分を表現する．
+</span><span style=color:#75715e>*/</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableLine</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> ObservableDiagram {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   ObservableLine() <span style=color:#f92672>:</span> ObservableDiagram(std<span style=color:#f92672>::</span>make_unique<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span>()) {}
@@ -325,6 +344,9 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 監視可能な三角形を表現する．
+</span><span style=color:#75715e>*/</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableTriangle</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> ObservableDiagram {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   ObservableTriangle() <span style=color:#f92672>:</span> ObservableDiagram(std<span style=color:#f92672>::</span>make_unique<span style=color:#f92672>&lt;</span>Triangle<span style=color:#f92672>&gt;</span>()) {}
@@ -344,13 +366,33 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 <span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
 </span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
 </span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;vector&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
 
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 監視する責務を負う抽象クラスである．
+</span><span style=color:#75715e> * テンプレートの型は Observable を継承したクラスでなければならない．
+</span><span style=color:#75715e>*/</span>
+<span style=color:#66d9ef>template</span> <span style=color:#f92672>&lt;</span><span style=color:#66d9ef>typename</span> T<span style=color:#f92672>&gt;</span>
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Observer</span> {
+  <span style=color:#66d9ef>static_assert</span>(std<span style=color:#f92672>::</span>is_base_of<span style=color:#f92672>&lt;</span>Observable, T<span style=color:#f92672>&gt;::</span>value, <span style=color:#e6db74>&#34;T must inherit from Observable&#34;</span>);
+
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Observer() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-};
-Observer<span style=color:#f92672>::~</span>Observer() {}
+  <span style=color:#75715e>// NOLINTNEXTLINE(readability/inheritance)
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Register(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>T<span style=color:#f92672>&gt;</span> subject) <span style=color:#66d9ef>final</span> {
+    subject<span style=color:#f92672>-&gt;</span>Subscribe([<span style=color:#66d9ef>this</span>](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> sender) { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>OnPublished(sender); });
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.push_back(subject);
+  }
+
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>OnPublished</span>(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> sender) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+
+  <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Observer() {}
+
+ <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>weak_ptr<span style=color:#f92672>&lt;</span>T<span style=color:#f92672>&gt;&gt;</span> objects_;  <span style=color:#75715e>// Weak pointers to avoid circular references
+</span><span style=color:#75715e></span>};
 
 }  <span style=color:#75715e>// namespace design_pattern::observer_pattern
 </span><span style=color:#75715e></span>
