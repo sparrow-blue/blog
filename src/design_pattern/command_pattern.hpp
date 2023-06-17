@@ -12,38 +12,21 @@
 #include <memory>
 #include <queue>
 #include <sstream>
+#include <string>
+#include <vector>
 
 #include "../demangle.hpp"
 #include "../join.hpp"
+#include "component/Canvas.hpp"
+#include "component/Diagram.hpp"
+#include "component/Line.hpp"
+#include "component/Triangle.hpp"
 
-namespace design_pattern {
-namespace command_pattern {
+using design_pattern::component::Diagram;
+using design_pattern::component::Line;
+using design_pattern::component::Triangle;
 
-/**
- * 描画される図形の抽象クラス
- */
-class Diagram {
- public:
-  Diagram() : height_(0), width_(0) {}
-  virtual ~Diagram() = 0;
-  std::string ToString() {
-    std::stringstream ss;
-    ss << Demangle(typeid(*this)) << " "
-       << "(" << this->height() << "," << this->width() << ")";
-    return ss.str();
-  }
-  int height() { return this->height_; }
-  int width() { return this->width_; }
-  virtual void Resize(int height, int width) {
-    this->height_ = height;
-    this->width_ = width;
-  }
-
- private:
-  int height_;
-  int width_;
-};
-Diagram::~Diagram() {}
+namespace design_pattern::command_pattern {
 
 /**
  * 図形が描画されるキャンバス
@@ -74,12 +57,12 @@ class Canvas {
    */
   class DiagramSet {
    public:
-    DiagramSet(std::shared_ptr<Diagram> diagram, int x = 0, int y = 0) : diagram_(diagram), x_(x), y_(y) {}
+    explicit DiagramSet(std::shared_ptr<Diagram> diagram, int x = 0, int y = 0) : diagram_(diagram), x_(x), y_(y) {}
     void Move(int offset_x, int offset_y) {
       this->x_ += offset_x;
       this->y_ += offset_y;
     }
-    std::shared_ptr<Diagram> diagram() { return this->diagram_; };
+    std::shared_ptr<Diagram> diagram() { return this->diagram_; }
     std::string ToString() {
       char buffer[0xFF];
       sprintf(buffer, "x: %d, y: %d - %s", this->x_, this->y_, this->diagram_->ToString().c_str());
@@ -95,31 +78,11 @@ class Canvas {
 };
 
 /**
- * 線分を表現するクラス
- */
-class Line : public Diagram {
- public:
-  Line() { this->Resize(0, 5); }
-  virtual void Resize(int height, int width) override {
-    // height は無視する
-    Diagram::Resize(0, width);
-  }
-};
-
-/**
- * 三角形を表現するクラス
- */
-class Triangle : public Diagram {
- public:
-  Triangle() { this->Resize(5, 10); }
-};
-
-/**
  * コマンドの抽象クラス
  */
 class Command {
  public:
-  Command(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_) : canvas_(canvas_) {}
+  explicit Command(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas) : canvas_(canvas) {}
   virtual void Execute() = 0;
   virtual std::string ToString() = 0;
 
@@ -132,7 +95,8 @@ class Command {
  */
 class CreateLineDiagramCommand : public Command {
  public:
-  CreateLineDiagramCommand(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_) : Command(canvas_) {}
+  explicit CreateLineDiagramCommand(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas)
+      : Command(canvas) {}
   virtual void Execute() {
     auto new_diagram = std::make_shared<Line>();
     this->canvas_->AddDiagram(new_diagram);
@@ -146,7 +110,8 @@ class CreateLineDiagramCommand : public Command {
  */
 class CreateTriangleDiagramCommand : public Command {
  public:
-  CreateTriangleDiagramCommand(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_) : Command(canvas_) {}
+  explicit CreateTriangleDiagramCommand(std::shared_ptr<design_pattern::command_pattern::Canvas> canvas_)
+      : Command(canvas_) {}
   virtual void Execute() {
     auto new_diagram = std::make_shared<Triangle>();
     this->canvas_->AddDiagram(new_diagram);
@@ -207,16 +172,16 @@ class Executor {
   }
 
   void DumpExecutionHistory() {
-    if (this->execution_history_.size())
+    if (this->execution_history_.size()) {
       std::for_each(this->execution_history_.begin(), this->execution_history_.end(), [idx = 0](auto &command) mutable {
         std::cout << idx++ << ": " << command->ToString() << std::endl;
       });
-    else
+    } else {
       std::cout << "empty" << std::endl;
+    }
   }
 };
 
-}  // namespace command_pattern
-}  // namespace design_pattern
+}  // namespace design_pattern::command_pattern
 
-#endif
+#endif  // DESIGN_PATTERN_COMMAND_PATTERN_HPP_
