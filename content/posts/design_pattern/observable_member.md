@@ -59,6 +59,15 @@ InstalledDir: /usr/bin
 
 ### 実装
 
+{{< readfile file="design_pattern/observable_member.cpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observable_method/observable_member.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observable_method/EventHandler.hpp" lang="cpp" >}}
 
 ### 実行結果
+
+```
+$ date && ./content/build/design_pattern/observable_member
+Sun Jun 18 00:23:48 JST 2023
+Height Changed: 10 -> 9
+Width Changed: 10 -> 0
+```
