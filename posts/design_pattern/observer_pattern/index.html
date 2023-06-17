@@ -103,6 +103,7 @@ SCons by Steven Knight et al.:
         SCons path: ['/usr/lib/python3/dist-packages/SCons']
 Copyright (c) 2001 - 2020 The SCons Foundation
 </code></pre><h3 id=実装>実装<a href=#実装 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>関連するファイル数が多いため，重要と思われるファイルをデフォルトで展開するようにした．</p>
 <p>
 <details open>
 <summary>design_pattern/observer_pattern.cpp</summary>
@@ -213,7 +214,7 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 <span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVER_PATTERN_DISPLAY_HPP_
 </span></code></pre></div>
 </details>
-<details>
+<details open>
 <summary>design_pattern/observer_pattern/Observable.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
@@ -357,7 +358,7 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 <span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLETRIANGLE_HPP_
 </span></code></pre></div>
 </details>
-<details>
+<details open>
 <summary>design_pattern/observer_pattern/Observer.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
@@ -397,6 +398,187 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 }  <span style=color:#75715e>// namespace design_pattern::observer_pattern
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/component/Canvas.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;vector&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iterator&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sstream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;../demangle.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;../join.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;Diagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>component {
+
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 図形が描画されるキャンバス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Canvas</span> {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>void</span> AddDiagram(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram) {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.push_back(std<span style=color:#f92672>::</span>make_shared<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span>(diagram));
+  }
+  <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Dump</span>() { std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> (<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.size() <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>?</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>:</span> std<span style=color:#f92672>::</span>string(<span style=color:#e6db74>&#34;empty&#34;</span>)) <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl; }
+  std<span style=color:#f92672>::</span>string ToString() {
+    <span style=color:#66d9ef>auto</span> messages <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>string<span style=color:#f92672>&gt;</span>();
+    std<span style=color:#f92672>::</span>transform(diagram_sets.begin(), diagram_sets.end(), std<span style=color:#f92672>::</span>back_inserter(messages),
+                   [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span> diagram_set) { <span style=color:#66d9ef>return</span> diagram_set<span style=color:#f92672>-&gt;</span>ToString(); });
+    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>Join</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, messages);
+  }
+  <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Move</span>(size_t index, <span style=color:#66d9ef>int</span> offset_x, <span style=color:#66d9ef>int</span> offset_y) { <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.at(index)<span style=color:#f92672>-&gt;</span>Move(offset_x, offset_y); }
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span> diagrams() {
+    <span style=color:#66d9ef>auto</span> result <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;&gt;</span>();
+    std<span style=color:#f92672>::</span>transform(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_sets.end(), std<span style=color:#f92672>::</span>back_inserter(result),
+                   [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;</span> diagram_set_) { <span style=color:#66d9ef>return</span> diagram_set_<span style=color:#f92672>-&gt;</span>diagram(); });
+    <span style=color:#66d9ef>return</span> result;
+  }
+
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * Canvas が管理する Diagram のそれぞれがどの位置に存在するかを管理する
+</span><span style=color:#75715e>   */</span>
+  <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>DiagramSet</span> {
+   <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+    <span style=color:#66d9ef>explicit</span> DiagramSet(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram, <span style=color:#66d9ef>int</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>int</span> y <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>) <span style=color:#f92672>:</span> diagram_(diagram), x_(x), y_(y) {}
+    <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Move</span>(<span style=color:#66d9ef>int</span> offset_x, <span style=color:#66d9ef>int</span> offset_y) {
+      <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>x_ <span style=color:#f92672>+=</span> offset_x;
+      <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>y_ <span style=color:#f92672>+=</span> offset_y;
+    }
+    std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_; }
+    std<span style=color:#f92672>::</span>string ToString() {
+      <span style=color:#66d9ef>char</span> buffer[<span style=color:#ae81ff>0xFF</span>];
+      sprintf(buffer, <span style=color:#e6db74>&#34;x: %d, y: %d - %s&#34;</span>, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>x_, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>y_, <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_<span style=color:#f92672>-&gt;</span>ToString().c_str());
+      <span style=color:#66d9ef>return</span> buffer;
+    }
+
+   <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+    std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram_;
+    <span style=color:#66d9ef>int</span> x_;
+    <span style=color:#66d9ef>int</span> y_;
+  };
+  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>DiagramSet<span style=color:#f92672>&gt;&gt;</span> diagram_sets;
+};
+
+}  <span style=color:#75715e>// namespace design_pattern::component
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/component/Diagram.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_COMPONENT_DIAGRAM_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_COMPONENT_DIAGRAM_HPP_
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;sstream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;../demangle.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>component {
+
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 描画される図形の抽象クラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Diagram</span> {
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  Diagram() <span style=color:#f92672>:</span> height_(<span style=color:#ae81ff>0</span>), width_(<span style=color:#ae81ff>0</span>) {}
+  <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Diagram() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * 自身の型と大きさを文字列で表現する．
+</span><span style=color:#75715e>   */</span>
+  std<span style=color:#f92672>::</span>string ToString() {
+    std<span style=color:#f92672>::</span>stringstream ss;
+    ss <span style=color:#f92672>&lt;&lt;</span> Demangle(<span style=color:#66d9ef>typeid</span>(<span style=color:#f92672>*</span><span style=color:#66d9ef>this</span>)) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34; &#34;</span>
+       <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;(&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height() <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;,&#34;</span> <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width() <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;)&#34;</span>;
+    <span style=color:#66d9ef>return</span> ss.str();
+  }
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * 自身の高さを返す．
+</span><span style=color:#75715e>   */</span>
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height_; }
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * 自身の幅を返す．
+</span><span style=color:#75715e>   */</span>
+  <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width_; }
+  <span style=color:#75715e>/**
+</span><span style=color:#75715e>   * リサイズする．
+</span><span style=color:#75715e>   */</span>
+  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Resize</span>(<span style=color:#66d9ef>int</span> height, <span style=color:#66d9ef>int</span> width) {
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>height_ <span style=color:#f92672>=</span> height;
+    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>width_ <span style=color:#f92672>=</span> width;
+  }
+
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>int</span> height_;
+  <span style=color:#66d9ef>int</span> width_;
+};
+Diagram<span style=color:#f92672>::~</span>Diagram() {}
+
+}  <span style=color:#75715e>// namespace design_pattern::component
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_COMPONENT_DIAGRAM_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/component/Line.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_COMPONENT_LINE_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_COMPONENT_LINE_HPP_
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;Diagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>component {
+
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 線分を表現するクラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Line</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {};
+
+}  <span style=color:#75715e>// namespace design_pattern::component
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_COMPONENT_LINE_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/component/Triangle.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_COMPONENT_TRIANGLE_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_COMPONENT_TRIANGLE_HPP_
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;Diagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>component {
+<span style=color:#75715e>/**
+</span><span style=color:#75715e> * 三角形を表現するクラス
+</span><span style=color:#75715e> */</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Triangle</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Diagram {};
+
+}  <span style=color:#75715e>// namespace design_pattern::component
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_COMPONENT_TRIANGLE_HPP_
 </span></code></pre></div>
 </details>
 <details>
@@ -474,7 +656,6 @@ std<span style=color:#f92672>::</span>string Join(<span style=color:#66d9ef>cons
 </span></code></pre></div>
 </details>
 </p>
-<p>Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．</p>
 <h3 id=実行結果>実行結果<a href=#実行結果 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <pre><code>$ ./content/build/design_pattern/observer_pattern
 design_pattern::component::Line (100,100)
