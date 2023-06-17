@@ -5,13 +5,33 @@
 #ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
 #define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
 
+#include <memory>
+#include <vector>
+
 namespace design_pattern::observer_pattern {
 
+/**
+ * 監視する責務を負う抽象クラスである．
+ * テンプレートの型は Observable を継承したクラスでなければならない．
+*/
+template <typename T>
 class Observer {
+  static_assert(std::is_base_of<Observable, T>::value, "T must inherit from Observable");
+
  public:
-  virtual ~Observer() = 0;
+  // NOLINTNEXTLINE(readability/inheritance)
+  virtual void Register(std::shared_ptr<T> subject) final {
+    subject->Subscribe([this](std::shared_ptr<Observable> sender) { this->OnPublished(sender); });
+    this->objects_.push_back(subject);
+  }
+
+  virtual void OnPublished(std::shared_ptr<Observable> sender) = 0;
+
+  virtual ~Observer() {}
+
+ protected:
+  std::vector<std::weak_ptr<T>> objects_;  // Weak pointers to avoid circular references
 };
-Observer::~Observer() {}
 
 }  // namespace design_pattern::observer_pattern
 

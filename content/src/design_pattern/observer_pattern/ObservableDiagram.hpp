@@ -15,6 +15,10 @@
 using design_pattern::component::Diagram;
 
 namespace design_pattern::observer_pattern {
+
+/**
+ * 監視可能な図形を表現する．
+*/
 class ObservableDiagram : public Observable {
  public:
   virtual void Resize(int height, int width) {

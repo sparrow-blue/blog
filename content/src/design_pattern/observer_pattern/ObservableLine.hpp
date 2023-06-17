@@ -14,6 +14,9 @@ using design_pattern::component::Line;
 
 namespace design_pattern::observer_pattern {
 
+/**
+ * 監視可能な線分を表現する．
+*/
 class ObservableLine : public ObservableDiagram {
  public:
   ObservableLine() : ObservableDiagram(std::make_unique<Line>()) {}

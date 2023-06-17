@@ -14,6 +14,9 @@ using design_pattern::component::Triangle;
 
 namespace design_pattern::observer_pattern {
 
+/**
+ * 監視可能な三角形を表現する．
+*/
 class ObservableTriangle : public ObservableDiagram {
  public:
   ObservableTriangle() : ObservableDiagram(std::make_unique<Triangle>()) {}

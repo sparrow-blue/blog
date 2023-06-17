@@ -7,7 +7,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <iterator>
 #include <memory>
 #include <string>
 #include <vector>
@@ -19,13 +18,13 @@
 
 namespace design_pattern::observer_pattern {
 
-class Display : public Observer {
- public:
-  void Register(std::shared_ptr<ObservableDiagram> subject) {
-    subject->Subscribe([this, subject](std::shared_ptr<Observable> sender) {
-      std::cout << std::static_pointer_cast<ObservableDiagram>(sender)->ToString() << std::endl;
-    });
-    this->objects_.push_back(subject);
+/**
+ * 簡易的にプレゼンテーションを表現する．モデルが変更されるたびに画面を更新する．
+ */
+class Display : public Observer<ObservableDiagram> {
+ protected:
+  void OnPublished(std::shared_ptr<Observable> sender) override {
+    std::cout << std::static_pointer_cast<ObservableDiagram>(sender)->ToString() << std::endl;
   }
 
  private:

@@ -11,6 +11,9 @@
 
 namespace design_pattern::observer_pattern {
 
+/**
+ * 監視可能なオブジェクトを表現する
+ */
 class Observable : public std::enable_shared_from_this<Observable> {
  public:
   void Subscribe(std::function<void(std::shared_ptr<Observable>)> &&func) { subscribers_.push_back(func); }
