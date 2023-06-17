@@ -11,10 +11,7 @@ namespace design_pattern::component {
 /**
  * 三角形を表現するクラス
  */
-class Triangle : public Diagram {
- public:
-  Triangle() {}
-};
+class Triangle : public Diagram {};
 
 }  // namespace design_pattern::component
 

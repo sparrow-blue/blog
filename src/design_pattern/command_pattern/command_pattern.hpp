@@ -2,8 +2,8 @@
 // This source code is licensed under the BSD 3-Clause License.
 // See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 
-#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
-#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+#ifndef DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
+#define DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
 
 #include <algorithm>
 #include <iostream>
@@ -184,4 +184,4 @@ class Executor {
 
 }  // namespace design_pattern::command_pattern
 
-#endif  // DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+#endif  // DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_

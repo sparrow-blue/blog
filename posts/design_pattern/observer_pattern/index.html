@@ -105,7 +105,7 @@ InstalledDir: /usr/bin
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
 </span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern.hpp&#34;</span><span style=color:#75715e>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/observer_pattern.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>using</span> design_pattern<span style=color:#f92672>::</span>observer_pattern<span style=color:#f92672>::</span>Display;
 <span style=color:#66d9ef>using</span> design_pattern<span style=color:#f92672>::</span>observer_pattern<span style=color:#f92672>::</span>ObservableLine;
@@ -133,99 +133,22 @@ InstalledDir: /usr/bin
 </code></pre></div>
 </details>
 <details>
-<summary>design_pattern/observer_pattern.hpp</summary>
+<summary>design_pattern/observer_pattern/observer_pattern.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
 </span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
-</span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;functional&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;utility&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;vector&gt;</span><span style=color:#75715e>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/Display.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/Observable.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/ObservableDiagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/ObservableLine.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/ObservableTriangle.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observer_pattern/Observer.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;../join.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;command_pattern.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;component/Canvas.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;component/Diagram.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;component/Line.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;component/Triangle.hpp&#34;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observer_pattern {
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Observer</span> {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>Observer() <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-};
-Observer<span style=color:#f92672>::~</span>Observer() {}
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Observable</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> std<span style=color:#f92672>::</span>enable_shared_from_this<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>void</span> Subscribe(std<span style=color:#f92672>::</span>function<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>void</span>(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span>)<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;&amp;</span>func) { subscribers_.push_back(func); }
-
- <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>void</span> Notify() {
-    std<span style=color:#f92672>::</span>for_each(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>subscribers_.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>subscribers_.end(),
-                  [<span style=color:#66d9ef>this</span>](<span style=color:#66d9ef>auto</span> <span style=color:#f92672>&amp;</span>func) { func(shared_from_this()); });
-  }
-
- <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
-  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>function<span style=color:#f92672>&lt;</span><span style=color:#66d9ef>void</span>(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span>)<span style=color:#f92672>&gt;&gt;</span> subscribers_;
-};
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableDiagram</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Observable {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> Resize(<span style=color:#66d9ef>int</span> height, <span style=color:#66d9ef>int</span> width) {
-    <span style=color:#66d9ef>if</span> (diagram()<span style=color:#f92672>-&gt;</span>height() <span style=color:#f92672>==</span> height <span style=color:#f92672>&amp;&amp;</span> diagram()<span style=color:#f92672>-&gt;</span>width() <span style=color:#f92672>==</span> width) <span style=color:#66d9ef>return</span>;
-    diagram()<span style=color:#f92672>-&gt;</span>Resize(height, width);
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>Notify();
-  }
-  std<span style=color:#f92672>::</span>string ToString() { <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>diagram</span>()<span style=color:#f92672>-&gt;</span>ToString(); }
-
- <span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>explicit</span> ObservableDiagram(std<span style=color:#f92672>::</span>unique_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram) <span style=color:#f92672>:</span> diagram_(std<span style=color:#f92672>::</span>move(diagram)) {}
-  <span style=color:#66d9ef>const</span> std<span style=color:#f92672>::</span>unique_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;</span>diagram() { <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>diagram_; }
-
- <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>const</span> std<span style=color:#f92672>::</span>unique_ptr<span style=color:#f92672>&lt;</span>Diagram<span style=color:#f92672>&gt;</span> diagram_;
-};
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableLine</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> ObservableDiagram {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  ObservableLine() <span style=color:#f92672>:</span> ObservableDiagram(std<span style=color:#f92672>::</span>make_unique<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span>()) {}
-};
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableTriangle</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> ObservableDiagram {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  ObservableTriangle() <span style=color:#f92672>:</span> ObservableDiagram(std<span style=color:#f92672>::</span>make_unique<span style=color:#f92672>&lt;</span>Triangle<span style=color:#f92672>&gt;</span>()) {}
-};
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Display</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> Observer {
- <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
-  <span style=color:#66d9ef>void</span> Register(std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span> subject) {
-    subject<span style=color:#f92672>-&gt;</span>Subscribe([<span style=color:#66d9ef>this</span>, subject](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Observable<span style=color:#f92672>&gt;</span> sender) {
-      std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>static_pointer_cast<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span>(sender)<span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl;
-    });
-    <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.push_back(subject);
-  }
-
- <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
-  std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;&gt;</span> objects_;
-  std<span style=color:#f92672>::</span>string ToString() {
-    <span style=color:#66d9ef>auto</span> messages <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>string<span style=color:#f92672>&gt;</span>();
-    std<span style=color:#f92672>::</span>transform(<span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.end(), std<span style=color:#f92672>::</span>back_inserter(messages),
-                   [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>ObservableDiagram<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;</span>subject) { <span style=color:#66d9ef>return</span> subject<span style=color:#f92672>-&gt;</span>ToString(); });
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>Join</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, messages);
-  }
-  <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Dump</span>() { std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl; }
-};
-
-}  <span style=color:#75715e>// namespace design_pattern::observer_pattern
-</span><span style=color:#75715e></span>
-<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
 </span></code></pre></div>
 </details>
 <details>

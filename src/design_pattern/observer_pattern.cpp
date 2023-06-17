@@ -2,7 +2,7 @@
 // This source code is licensed under the BSD 3-Clause License.
 // See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 
-#include "observer_pattern.hpp"
+#include "observer_pattern/observer_pattern.hpp"
 
 using design_pattern::observer_pattern::Display;
 using design_pattern::observer_pattern::ObservableLine;

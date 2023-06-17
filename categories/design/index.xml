@@ -43,7 +43,7 @@ InstalledDir: /usr/bin
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
 &lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/observer_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observer_pattern&lt;span style="color:#f92672">::&lt;/span>Display;
 &lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observer_pattern&lt;span style="color:#f92672">::&lt;/span>ObservableLine;
@@ -67,88 +67,22 @@ triangle&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style=
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >
-&lt;summary>design_pattern/observer_pattern.hpp&lt;/summary>
+&lt;summary>design_pattern/observer_pattern/observer_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
 &lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
-&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;functional&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;string&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;utility&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/Display.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/Observable.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/ObservableDiagram.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/ObservableLine.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/ObservableTriangle.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/Observer.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;../join.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;component/Canvas.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;component/Diagram.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;component/Line.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;component/Triangle.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observer_pattern {
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Observer&lt;/span> {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#f92672">~&lt;/span>Observer() &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
-};
-Observer&lt;span style="color:#f92672">::~&lt;/span>Observer() {}
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Observable&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>enable_shared_from_this&lt;span style="color:#f92672">&amp;lt;&lt;/span>Observable&lt;span style="color:#f92672">&amp;gt;&lt;/span> {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">void&lt;/span> Subscribe(std&lt;span style="color:#f92672">::&lt;/span>function&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">void&lt;/span>(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Observable&lt;span style="color:#f92672">&amp;gt;&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span>func) { subscribers_.push_back(func); }
-&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">void&lt;/span> Notify() {
-std&lt;span style="color:#f92672">::&lt;/span>for_each(&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>subscribers_.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>subscribers_.end(),
-[&lt;span style="color:#66d9ef">this&lt;/span>](&lt;span style="color:#66d9ef">auto&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>func) { func(shared_from_this()); });
-}
-&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>function&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">void&lt;/span>(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Observable&lt;span style="color:#f92672">&amp;gt;&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> subscribers_;
-};
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableDiagram&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Observable {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Resize(&lt;span style="color:#66d9ef">int&lt;/span> height, &lt;span style="color:#66d9ef">int&lt;/span> width) {
-&lt;span style="color:#66d9ef">if&lt;/span> (diagram()&lt;span style="color:#f92672">-&amp;gt;&lt;/span>height() &lt;span style="color:#f92672">==&lt;/span> height &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> diagram()&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width() &lt;span style="color:#f92672">==&lt;/span> width) &lt;span style="color:#66d9ef">return&lt;/span>;
-diagram()&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(height, width);
-&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Notify();
-}
-std&lt;span style="color:#f92672">::&lt;/span>string ToString() { &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">diagram&lt;/span>()&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString(); }
-&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">explicit&lt;/span> ObservableDiagram(std&lt;span style="color:#f92672">::&lt;/span>unique_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> diagram) &lt;span style="color:#f92672">:&lt;/span> diagram_(std&lt;span style="color:#f92672">::&lt;/span>move(diagram)) {}
-&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>unique_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>diagram() { &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>diagram_; }
-&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>unique_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Diagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> diagram_;
-};
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableLine&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> ObservableDiagram {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-ObservableLine() &lt;span style="color:#f92672">:&lt;/span> ObservableDiagram(std&lt;span style="color:#f92672">::&lt;/span>make_unique&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span>()) {}
-};
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableTriangle&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> ObservableDiagram {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-ObservableTriangle() &lt;span style="color:#f92672">:&lt;/span> ObservableDiagram(std&lt;span style="color:#f92672">::&lt;/span>make_unique&lt;span style="color:#f92672">&amp;lt;&lt;/span>Triangle&lt;span style="color:#f92672">&amp;gt;&lt;/span>()) {}
-};
-&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Display&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> Observer {
-&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-&lt;span style="color:#66d9ef">void&lt;/span> Register(std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>ObservableDiagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> subject) {
-subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Subscribe([&lt;span style="color:#66d9ef">this&lt;/span>, subject](std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Observable&lt;span style="color:#f92672">&amp;gt;&lt;/span> sender) {
-std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>static_pointer_cast&lt;span style="color:#f92672">&amp;lt;&lt;/span>ObservableDiagram&lt;span style="color:#f92672">&amp;gt;&lt;/span>(sender)&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl;
-});
-&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.push_back(subject);
-}
-&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
-std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>ObservableDiagram&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> objects_;
-std&lt;span style="color:#f92672">::&lt;/span>string ToString() {
-&lt;span style="color:#66d9ef">auto&lt;/span> messages &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
-std&lt;span style="color:#f92672">::&lt;/span>transform(&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.end(), std&lt;span style="color:#f92672">::&lt;/span>back_inserter(messages),
-[](std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>ObservableDiagram&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>subject) { &lt;span style="color:#66d9ef">return&lt;/span> subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString(); });
-&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#ae81ff">\n&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>, messages);
-}
-&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Dump&lt;/span>() { std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl; }
-};
-} &lt;span style="color:#75715e">// namespace design_pattern::observer_pattern
-&lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVER_PATTERN_HPP_
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >
@@ -278,7 +212,7 @@ InstalledDir: /usr/bin
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
 &lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern/command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>command_pattern&lt;span style="color:#f92672">::&lt;/span>Canvas;
 &lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>command_pattern&lt;span style="color:#f92672">::&lt;/span>Command;
@@ -318,13 +252,13 @@ dumper();
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >
-&lt;summary>design_pattern/command_pattern.hpp&lt;/summary>
+&lt;summary>design_pattern/command_pattern/command_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
 &lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMMAND_PATTERN_HPP_
-&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
@@ -486,7 +420,7 @@ std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672
 };
 } &lt;span style="color:#75715e">// namespace design_pattern::command_pattern
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_COMMAND_PATTERN_HPP_
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >

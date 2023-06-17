@@ -2,7 +2,7 @@
 // This source code is licensed under the BSD 3-Clause License.
 // See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
 
-#include "command_pattern.hpp"
+#include "command_pattern/command_pattern.hpp"
 
 using design_pattern::command_pattern::Canvas;
 using design_pattern::command_pattern::Command;
