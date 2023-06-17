@@ -1,0 +1,26 @@
+# SConstruct
+import os
+
+env = Environment()
+
+build_dir = '../build'
+src_dir = '.'
+
+env.VariantDir(build_dir, src_dir, duplicate=False)
+build_env = env.Clone()
+
+design_pattern_dir = os.path.join(build_dir, 'design_pattern')
+
+build_env.Append(CPPPATH=[os.path.join(Dir('#').abspath, design_pattern_dir)])
+
+command_pattern = build_env.Program(
+    target = os.path.join(design_pattern_dir, "command_pattern"),
+    source = [os.path.join(design_pattern_dir, "command_pattern.cpp")]
+)
+
+observer_pattern = build_env.Program(
+    target = os.path.join(design_pattern_dir, "observer_pattern"),
+    source = [os.path.join(design_pattern_dir, "observer_pattern.cpp")]
+)
+
+Default(command_pattern, observer_pattern)
