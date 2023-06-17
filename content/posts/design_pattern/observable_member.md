@@ -60,8 +60,8 @@ InstalledDir: /usr/bin
 ### 実装
 
 {{< readfile file="design_pattern/observable_member.cpp" lang="cpp" >}}
-{{< readfile file="design_pattern/observable_method/observable_member.hpp" lang="cpp" >}}
-{{< readfile file="design_pattern/observable_method/EventHandler.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observable_member/observable_member.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observable_member/EventHandler.hpp" lang="cpp" >}}
 
 ### 実行結果
 
