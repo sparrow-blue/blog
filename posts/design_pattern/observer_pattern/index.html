@@ -187,9 +187,8 @@ Subject<span style=color:#f92672>::~</span>Subject() {}
     <span style=color:#66d9ef>auto</span> messages <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>vector<span style=color:#f92672>&lt;</span>std<span style=color:#f92672>::</span>string<span style=color:#f92672>&gt;</span>();
     std<span style=color:#f92672>::</span>transform(
         <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.begin(), <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>objects_.end(),
-        std<span style=color:#f92672>::</span>back_inserter(messages), [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;</span>subject) {
-          <span style=color:#66d9ef>return</span> subject<span style=color:#f92672>-&gt;</span>ToString();
-        });
+        std<span style=color:#f92672>::</span>back_inserter(messages),
+        [](std<span style=color:#f92672>::</span>shared_ptr<span style=color:#f92672>&lt;</span>Line<span style=color:#f92672>&gt;</span> <span style=color:#f92672>&amp;</span>subject) { <span style=color:#66d9ef>return</span> subject<span style=color:#f92672>-&gt;</span>ToString(); });
     <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>Join</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, messages);
   }
   <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>Dump</span>() { std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>-&gt;</span>ToString() <span style=color:#f92672>&lt;&lt;</span> std<span style=color:#f92672>::</span>endl; }
@@ -203,7 +202,29 @@ Subject<span style=color:#f92672>::~</span>Subject() {}
 </details>
 <details>
 <summary>src/join.hpp</summary>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#ifndef JOIN_HPP_
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>/*
+</span><span style=color:#75715e> Copyright (c) 2023 Kumazawa
+</span><span style=color:#75715e>
+</span><span style=color:#75715e> Permission is hereby granted, free of charge, to any person obtaining a copy of
+</span><span style=color:#75715e> this software and associated documentation files (the &#34;Software&#34;), to deal in
+</span><span style=color:#75715e> the Software without restriction, including without limitation the rights to
+</span><span style=color:#75715e> use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+</span><span style=color:#75715e> of the Software, and to permit persons to whom the Software is furnished to do
+</span><span style=color:#75715e> so, subject to the following conditions:
+</span><span style=color:#75715e>
+</span><span style=color:#75715e> The above copyright notice and this permission notice shall be included in all
+</span><span style=color:#75715e> copies or substantial portions of the Software.
+</span><span style=color:#75715e>
+</span><span style=color:#75715e> THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+</span><span style=color:#75715e> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+</span><span style=color:#75715e> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+</span><span style=color:#75715e> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+</span><span style=color:#75715e> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+</span><span style=color:#75715e> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+</span><span style=color:#75715e> SOFTWARE.
+</span><span style=color:#75715e> */</span>
+
+<span style=color:#75715e>#ifndef JOIN_HPP_
 </span><span style=color:#75715e>#define JOIN_HPP_
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;numeric&gt;</span><span style=color:#75715e>
@@ -229,7 +250,7 @@ std<span style=color:#f92672>::</span>string Join(<span style=color:#66d9ef>cons
       [delimitor](std<span style=color:#f92672>::</span>string a, std<span style=color:#f92672>::</span>string b) { <span style=color:#66d9ef>return</span> a <span style=color:#f92672>+</span> delimitor <span style=color:#f92672>+</span> b; });
 }
 
-<span style=color:#75715e>#endif
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// JOIN_HPP_
 </span></code></pre></div>
 </details>
 </p>

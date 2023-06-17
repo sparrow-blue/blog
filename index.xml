@@ -116,9 +116,8 @@ std&lt;span style="color:#f92672">::&lt;/span>string ToString() {
 &lt;span style="color:#66d9ef">auto&lt;/span> messages &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&lt;/span>();
 std&lt;span style="color:#f92672">::&lt;/span>transform(
 &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.begin(), &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>objects_.end(),
-std&lt;span style="color:#f92672">::&lt;/span>back_inserter(messages), [](std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>subject) {
-&lt;span style="color:#66d9ef">return&lt;/span> subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString();
-});
+std&lt;span style="color:#f92672">::&lt;/span>back_inserter(messages),
+[](std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Line&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>subject) { &lt;span style="color:#66d9ef">return&lt;/span> subject&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString(); });
 &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#ae81ff">\n&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&lt;/span>, messages);
 }
 &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Dump&lt;/span>() { std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>ToString() &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl; }
@@ -131,7 +130,28 @@ std&lt;span style="color:#f92672">::&lt;/span>back_inserter(messages), [](std&lt
 &lt;/details>
 &lt;details >
 &lt;summary>src/join.hpp&lt;/summary>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef JOIN_HPP_
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> Copyright (c) 2023 Kumazawa
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> Permission is hereby granted, free of charge, to any person obtaining a copy of
+&lt;/span>&lt;span style="color:#75715e"> this software and associated documentation files (the &amp;#34;Software&amp;#34;), to deal in
+&lt;/span>&lt;span style="color:#75715e"> the Software without restriction, including without limitation the rights to
+&lt;/span>&lt;span style="color:#75715e"> use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+&lt;/span>&lt;span style="color:#75715e"> of the Software, and to permit persons to whom the Software is furnished to do
+&lt;/span>&lt;span style="color:#75715e"> so, subject to the following conditions:
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> The above copyright notice and this permission notice shall be included in all
+&lt;/span>&lt;span style="color:#75715e"> copies or substantial portions of the Software.
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> THE SOFTWARE IS PROVIDED &amp;#34;AS IS&amp;#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+&lt;/span>&lt;span style="color:#75715e"> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+&lt;/span>&lt;span style="color:#75715e"> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+&lt;/span>&lt;span style="color:#75715e"> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+&lt;/span>&lt;span style="color:#75715e"> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+&lt;/span>&lt;span style="color:#75715e"> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+&lt;/span>&lt;span style="color:#75715e"> SOFTWARE.
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#75715e">#ifndef JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;numeric&amp;gt;&lt;/span>&lt;span style="color:#75715e">
@@ -156,7 +176,7 @@ std&lt;span style="color:#f92672">::&lt;/span>string Join(&lt;span style="color:
 std&lt;span style="color:#f92672">::&lt;/span>next(messages.begin()), messages.end(), messages[&lt;span style="color:#ae81ff">0&lt;/span>],
 [delimitor](std&lt;span style="color:#f92672">::&lt;/span>string a, std&lt;span style="color:#f92672">::&lt;/span>string b) { &lt;span style="color:#66d9ef">return&lt;/span> a &lt;span style="color:#f92672">+&lt;/span> delimitor &lt;span style="color:#f92672">+&lt;/span> b; });
 }
-&lt;span style="color:#75715e">#endif
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// JOIN_HPP_
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;/p>
@@ -549,7 +569,28 @@ free(demangled_name);
 &lt;/details>
 &lt;details >
 &lt;summary>src/join.hpp&lt;/summary>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">#ifndef JOIN_HPP_
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">/*
+&lt;/span>&lt;span style="color:#75715e"> Copyright (c) 2023 Kumazawa
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> Permission is hereby granted, free of charge, to any person obtaining a copy of
+&lt;/span>&lt;span style="color:#75715e"> this software and associated documentation files (the &amp;#34;Software&amp;#34;), to deal in
+&lt;/span>&lt;span style="color:#75715e"> the Software without restriction, including without limitation the rights to
+&lt;/span>&lt;span style="color:#75715e"> use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+&lt;/span>&lt;span style="color:#75715e"> of the Software, and to permit persons to whom the Software is furnished to do
+&lt;/span>&lt;span style="color:#75715e"> so, subject to the following conditions:
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> The above copyright notice and this permission notice shall be included in all
+&lt;/span>&lt;span style="color:#75715e"> copies or substantial portions of the Software.
+&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e"> THE SOFTWARE IS PROVIDED &amp;#34;AS IS&amp;#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+&lt;/span>&lt;span style="color:#75715e"> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+&lt;/span>&lt;span style="color:#75715e"> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+&lt;/span>&lt;span style="color:#75715e"> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+&lt;/span>&lt;span style="color:#75715e"> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+&lt;/span>&lt;span style="color:#75715e"> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+&lt;/span>&lt;span style="color:#75715e"> SOFTWARE.
+&lt;/span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;span style="color:#75715e">#ifndef JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;numeric&amp;gt;&lt;/span>&lt;span style="color:#75715e">
@@ -574,7 +615,7 @@ std&lt;span style="color:#f92672">::&lt;/span>string Join(&lt;span style="color:
 std&lt;span style="color:#f92672">::&lt;/span>next(messages.begin()), messages.end(), messages[&lt;span style="color:#ae81ff">0&lt;/span>],
 [delimitor](std&lt;span style="color:#f92672">::&lt;/span>string a, std&lt;span style="color:#f92672">::&lt;/span>string b) { &lt;span style="color:#66d9ef">return&lt;/span> a &lt;span style="color:#f92672">+&lt;/span> delimitor &lt;span style="color:#f92672">+&lt;/span> b; });
 }
-&lt;span style="color:#75715e">#endif
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// JOIN_HPP_
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;/p>
