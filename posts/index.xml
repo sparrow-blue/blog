@@ -42,7 +42,7 @@ SCons path: ['/usr/lib/python3/dist-packages/SCons']
 Copyright (c) 2001 - 2020 The SCons Foundation
 &lt;/code>&lt;/pre>&lt;h3 id="実装">実装&lt;/h3>
 &lt;p>
-&lt;details >
+&lt;details open>
 &lt;summary>design_pattern/observer_pattern.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
