@@ -9,7 +9,7 @@
 #include <queue>
 #include <sstream>
 
-#include "demangle.hpp"
+#include "../demangle.hpp"
 #include "../join.hpp"
 
 namespace design_pattern {
