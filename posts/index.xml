@@ -52,6 +52,8 @@ std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672
 &lt;span style="color:#75715e">// 値の変更をトリガにイベントを発火する．
 &lt;/span>&lt;span style="color:#75715e">&lt;/span> observable_line.height(&lt;span style="color:#ae81ff">9&lt;/span>);
 observable_line.width(&lt;span style="color:#ae81ff">0&lt;/span>);
+observable_line.width(&lt;span style="color:#ae81ff">3&lt;/span>);
+observable_line.height(&lt;span style="color:#ae81ff">7&lt;/span>);
 &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
 }
 &lt;/code>&lt;/pre>&lt;/div>
@@ -149,9 +151,11 @@ std&lt;span style="color:#f92672">::&lt;/span>for_each(subscribers_&lt;span styl
 &lt;/p>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
 &lt;pre>&lt;code>$ date &amp;amp;&amp;amp; ./content/build/design_pattern/observable_member
-Sun Jun 18 00:23:48 JST 2023
+Sun Jun 18 00:29:26 JST 2023
 Height Changed: 10 -&amp;gt; 9
 Width Changed: 10 -&amp;gt; 0
+Width Changed: 0 -&amp;gt; 3
+Height Changed: 9 -&amp;gt; 7
 &lt;/code>&lt;/pre></content></item><item><title>Observer Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</link><pubDate>Fri, 16 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</guid><description>このエントリの目指すところ Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える． データモデルとそれに</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える．&lt;/p>
 &lt;ol>
