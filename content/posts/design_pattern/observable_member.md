@@ -67,7 +67,9 @@ InstalledDir: /usr/bin
 
 ```
 $ date && ./content/build/design_pattern/observable_member
-Sun Jun 18 00:23:48 JST 2023
+Sun Jun 18 00:29:26 JST 2023
 Height Changed: 10 -> 9
 Width Changed: 10 -> 0
+Width Changed: 0 -> 3
+Height Changed: 9 -> 7
 ```

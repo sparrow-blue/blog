@@ -22,5 +22,7 @@ int main() {
   // 値の変更をトリガにイベントを発火する．
   observable_line.height(9);
   observable_line.width(0);
+  observable_line.width(3);
+  observable_line.height(7);
   return 0;
 }
