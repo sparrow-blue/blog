@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "(gdb) observer pattern",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/content/build/design_pattern/observer_pattern",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "scons: clean build"
+        }
+    ]
+}

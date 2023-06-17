@@ -5,19 +5,25 @@
 #include "observer_pattern.hpp"
 
 using design_pattern::observer_pattern::Display;
-using design_pattern::observer_pattern::Line;
+using design_pattern::observer_pattern::ObservableLine;
+using design_pattern::observer_pattern::ObservableTriangle;
 
 int main() {
   auto display = Display();
-  auto line = std::make_shared<Line>();
+  auto line = std::make_shared<ObservableLine>();
+  auto triangle = std::make_shared<ObservableTriangle>();
 
   // この時点で購読開始
   display.Register(line);
+  display.Register(triangle);
 
   // line の状態を変化させるごとに自動的に dump される．
   line->Resize(100, 100);
   line->Resize(0, 0);
   line->Resize(101, 101);
+  triangle->Resize(100, 100);
+  triangle->Resize(0, 0);
+  triangle->Resize(101, 101);
 
   return 0;
 }

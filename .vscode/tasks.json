@@ -1,0 +1,52 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "scons: clean",
+			"command": "scons",
+			"args": [
+				"-C",
+				"content/src",
+				"-c"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"type": "shell",
+			"label": "scons: build",
+			"command": "scons",
+			"args": [
+				"-j$(nproc)",
+				"-C",
+				"content/src"
+			],
+			"options": {
+				"env": {
+				}
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "scons: clean build",
+			"type": "shell",
+			"dependsOn": [
+				"scons: clean",
+				"scons: build"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		}
+	]
+}
