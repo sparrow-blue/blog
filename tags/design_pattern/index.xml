@@ -1,4 +1,158 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>design_pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/design_pattern/</link><description>Recent content in design_pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/design_pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Observer Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</link><pubDate>Fri, 16 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</guid><description>このエントリの目指すところ Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える． データモデルとそれに</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>design_pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/design_pattern/</link><description>Recent content in design_pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 17 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/design_pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Observable Method</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する．&lt;/p>
+&lt;h2 id="調査">調査&lt;/h2>
+&lt;h3 id="語られる像">語られる像&lt;/h3>
+&lt;h3 id="整理">整理&lt;/h3>
+&lt;h3 id="疑問">疑問&lt;/h3>
+&lt;h2 id="要点">要点&lt;/h2>
+&lt;h2 id="実例">実例&lt;/h2>
+&lt;h3 id="設計">設計&lt;/h3>
+&lt;h3 id="環境">環境&lt;/h3>
+&lt;pre>&lt;code>$ cat /etc/os-release
+PRETTY_NAME=&amp;quot;Ubuntu 22.04.2 LTS&amp;quot;
+NAME=&amp;quot;Ubuntu&amp;quot;
+VERSION_ID=&amp;quot;22.04&amp;quot;
+VERSION=&amp;quot;22.04.2 LTS (Jammy Jellyfish)&amp;quot;
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL=&amp;quot;https://www.ubuntu.com/&amp;quot;
+SUPPORT_URL=&amp;quot;https://help.ubuntu.com/&amp;quot;
+BUG_REPORT_URL=&amp;quot;https://bugs.launchpad.net/ubuntu/&amp;quot;
+PRIVACY_POLICY_URL=&amp;quot;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&amp;quot;
+UBUNTU_CODENAME=jammy
+$ clang++ --version
+Ubuntu clang version 14.0.0-1ubuntu1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+&lt;/code>&lt;/pre>&lt;h3 id="実装">実装&lt;/h3>
+&lt;p>
+&lt;details >
+&lt;summary>design_pattern/observable_member.cpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observable_member/observable_member.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member&lt;span style="color:#f92672">::&lt;/span>EventHandler;
+&lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member&lt;span style="color:#f92672">::&lt;/span>EventArgs;
+&lt;span style="color:#66d9ef">using&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member&lt;span style="color:#f92672">::&lt;/span>ObservableLine;
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#66d9ef">auto&lt;/span> observable_line &lt;span style="color:#f92672">=&lt;/span> ObservableLine(&lt;span style="color:#ae81ff">10&lt;/span>, &lt;span style="color:#ae81ff">10&lt;/span>);
+observable_line.HeightChanged &lt;span style="color:#f92672">+=&lt;/span> [](&lt;span style="color:#66d9ef">void&lt;/span>&lt;span style="color:#f92672">*&lt;/span> sender, EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> e) {
+std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Height Changed: &amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> e.old_value &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34; -&amp;gt; &amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> e.new_value &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl;
+};
+observable_line.WidthChanged &lt;span style="color:#f92672">+=&lt;/span> [](&lt;span style="color:#66d9ef">void&lt;/span>&lt;span style="color:#f92672">*&lt;/span> sender, EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> e) {
+std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Width Changed: &amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> e.old_value &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> &lt;span style="color:#e6db74">&amp;#34; -&amp;gt; &amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> e.new_value &lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>endl;
+};
+&lt;span style="color:#75715e">// 値の変更をトリガにイベントを発火する．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> observable_line.height(&lt;span style="color:#ae81ff">9&lt;/span>);
+observable_line.width(&lt;span style="color:#ae81ff">0&lt;/span>);
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;details >
+&lt;summary>design_pattern/observable_member/observable_member.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;EventHandler.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member {
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableDiagram&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+ObservableDiagram(&lt;span style="color:#66d9ef">int&lt;/span> width, &lt;span style="color:#66d9ef">int&lt;/span> height) &lt;span style="color:#f92672">:&lt;/span> width_(width), height_(height) {}
+&lt;span style="color:#75715e">#pragma region width
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+EventHandler&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> WidthChanged;
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">width&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> width) {
+&lt;span style="color:#66d9ef">auto&lt;/span> event_args &lt;span style="color:#f92672">=&lt;/span> EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>(width, width_);
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width_ &lt;span style="color:#f92672">=&lt;/span> width;
+WidthChanged.Invoke(&lt;span style="color:#66d9ef">this&lt;/span>, event_args);
+}
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">width&lt;/span>() { &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>width_; }
+&lt;span style="color:#75715e">#pragma endregion
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#pragma region height
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+EventHandler&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> HeightChanged;
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">height&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> height) {
+&lt;span style="color:#66d9ef">auto&lt;/span> event_args &lt;span style="color:#f92672">=&lt;/span> EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>(height, height_);
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>height_ &lt;span style="color:#f92672">=&lt;/span> height;
+HeightChanged.Invoke(&lt;span style="color:#66d9ef">this&lt;/span>, event_args);
+}
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">height&lt;/span>() { &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>height_; }
+&lt;span style="color:#75715e">#pragma endregion
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">int&lt;/span> width_;
+&lt;span style="color:#66d9ef">int&lt;/span> height_;
+};
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableLine&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> ObservableDiagram {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+ObservableLine(&lt;span style="color:#66d9ef">int&lt;/span> width, &lt;span style="color:#66d9ef">int&lt;/span> height) &lt;span style="color:#f92672">:&lt;/span> ObservableDiagram(width, height) {}
+};
+} &lt;span style="color:#75715e">// namespace design_pattern::observable_member
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;details >
+&lt;summary>design_pattern/observable_member/EventHandler.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;functional&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member {
+&lt;span style="color:#66d9ef">template&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">typename&lt;/span> T&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">EventArgs&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+EventArgs(T after, T before) &lt;span style="color:#f92672">:&lt;/span> new_value(after), old_value(before) {}
+T new_value;
+T old_value;
+};
+&lt;span style="color:#66d9ef">template&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">typename&lt;/span> T&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">EventHandler&lt;/span> {
+&lt;span style="color:#66d9ef">using&lt;/span> Event &lt;span style="color:#f92672">=&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>function&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">void&lt;/span>(&lt;span style="color:#66d9ef">void&lt;/span>&lt;span style="color:#f92672">*&lt;/span>, EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>T&lt;span style="color:#f92672">&amp;gt;&lt;/span>)&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+EventHandler() &lt;span style="color:#f92672">:&lt;/span> subscribers_(std&lt;span style="color:#f92672">::&lt;/span>make_unique&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>Event&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span>()) {}
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Invoke&lt;/span>(&lt;span style="color:#66d9ef">void&lt;/span>&lt;span style="color:#f92672">*&lt;/span> sender, EventArgs&lt;span style="color:#f92672">&amp;lt;&lt;/span>T&lt;span style="color:#f92672">&amp;gt;&lt;/span> event_args) {
+std&lt;span style="color:#f92672">::&lt;/span>for_each(subscribers_&lt;span style="color:#f92672">-&amp;gt;&lt;/span>begin(), subscribers_&lt;span style="color:#f92672">-&amp;gt;&lt;/span>end(),
+[&lt;span style="color:#f92672">&amp;amp;&lt;/span>sender, &lt;span style="color:#f92672">&amp;amp;&lt;/span>event_args](Event&lt;span style="color:#f92672">&amp;amp;&lt;/span> subscriber) { subscriber(sender, event_args); });
+}
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Subscribe&lt;/span>(Event event) { subscribers_&lt;span style="color:#f92672">-&amp;gt;&lt;/span>push_back(event); }
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#66d9ef">operator&lt;/span>&lt;span style="color:#f92672">+=&lt;/span>(Event&lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> event) { Subscribe(event); }
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>unique_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>Event&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> subscribers_;
+};
+} &lt;span style="color:#75715e">// namespace design_pattern::observable_member
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;/p>
+&lt;h3 id="実行結果">実行結果&lt;/h3>
+&lt;pre>&lt;code>$ date &amp;amp;&amp;amp; ./content/build/design_pattern/observable_member
+Sun Jun 18 00:23:48 JST 2023
+Height Changed: 10 -&amp;gt; 9
+Width Changed: 10 -&amp;gt; 0
+&lt;/code>&lt;/pre></content></item><item><title>Observer Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</link><pubDate>Fri, 16 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observer_pattern/</guid><description>このエントリの目指すところ Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える． データモデルとそれに</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>Observer Pattern は大きく以下の観点があると仮説をたて，それが妥当なのか，あるいは過不足があるのかを考える．&lt;/p>
 &lt;ol>
 &lt;li>データモデルとそれに対する操作の参照関係を &lt;code>1..*&lt;/code> を実現しつつ操作同士を疎結合に保つ
@@ -319,12 +473,12 @@ std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f9267
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iterator&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;sstream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;string&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;../demangle.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;../join.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">

@@ -319,12 +319,12 @@ std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f9267
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;algorithm&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
-&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iterator&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;sstream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;string&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;vector&amp;gt;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;../demangle.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;../join.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">

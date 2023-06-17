@@ -6,12 +6,12 @@
 #define DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
 
 #include <algorithm>
-#include <memory>
-#include <vector>
 #include <iostream>
 #include <iterator>
+#include <memory>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "../demangle.hpp"
 #include "../join.hpp"

@@ -24,4 +24,9 @@ observer_pattern = build_env.Program(
     source = [os.path.join(design_pattern_dir, "observer_pattern.cpp")]
 )
 
-Default(command_pattern, observer_pattern)
+observable_member = build_env.Program(
+    target = os.path.join(design_pattern_dir, "observable_member"),
+    source = [os.path.join(design_pattern_dir, "observable_member.cpp")]
+)
+
+Default(command_pattern, observer_pattern, observable_member)
