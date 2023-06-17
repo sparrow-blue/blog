@@ -35,6 +35,11 @@ Ubuntu clang version 14.0.0-1ubuntu1
 Target: x86_64-pc-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
+$ scons --version
+SCons by Steven Knight et al.:
+SCons: v4.0.1.c289977f8b34786ab6c334311e232886da7e8df1, 2020-07-17 01:50:03, by bdbaddog on ProDog2020
+SCons path: ['/usr/lib/python3/dist-packages/SCons']
+Copyright (c) 2001 - 2020 The SCons Foundation
 &lt;/code>&lt;/pre>&lt;h3 id="実装">実装&lt;/h3>
 &lt;p>
 &lt;details >
@@ -340,11 +345,13 @@ std&lt;span style="color:#f92672">::&lt;/span>next(messages.begin()), messages.e
 &lt;/p>
 &lt;p>Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．&lt;/p>
 &lt;h3 id="実行結果">実行結果&lt;/h3>
-&lt;pre>&lt;code>$ date; clang++ src/observer_pattern.cpp -o observer_pattern.out &amp;amp;&amp;amp; ./observer_pattern.out
-Fri Jun 16 04:14:40 JST 2023
-design_pattern::observer_pattern::Line (0,100)
-design_pattern::observer_pattern::Line (0,0)
-design_pattern::observer_pattern::Line (0,101)
+&lt;pre>&lt;code>$ ./content/build/design_pattern/observer_pattern
+design_pattern::component::Line (100,100)
+design_pattern::component::Line (0,0)
+design_pattern::component::Line (101,101)
+design_pattern::component::Triangle (100,100)
+design_pattern::component::Triangle (0,0)
+design_pattern::component::Triangle (101,101)
 &lt;/code>&lt;/pre></content></item><item><title>Command Pattern</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</link><pubDate>Tue, 13 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/command_pattern/</guid><description>このエントリの目指すところ 以下の観点で調査/検討する． どのようなシーンで使えるのか なぜそのシーンで使えるのか 必要に応じてプログラムに起こす．</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>以下の観点で調査/検討する．&lt;/p>
 &lt;ol>
