@@ -93,7 +93,7 @@ InstalledDir: /usr/bin
 ### 実装
 
 {{< readfile file="design_pattern/command_pattern.cpp" lang="cpp" is_open="false" >}}
-{{< readfile file="design_pattern/command_pattern.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/command_pattern/command_pattern.hpp" lang="cpp" >}}
 {{< readfile file="demangle.hpp" lang="cpp" >}}
 {{< readfile file="join.hpp" lang="cpp" >}}
 
