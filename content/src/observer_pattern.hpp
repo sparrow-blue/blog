@@ -62,9 +62,8 @@ class Display : public Observer {
     auto messages = std::vector<std::string>();
     std::transform(
         this->objects_.begin(), this->objects_.end(),
-        std::back_inserter(messages), [](std::shared_ptr<Line> &subject) {
-          return subject->ToString();
-        });
+        std::back_inserter(messages),
+        [](std::shared_ptr<Line> &subject) { return subject->ToString(); });
     return Join("\n", messages);
   }
   void Dump() { std::cout << this->ToString() << std::endl; }

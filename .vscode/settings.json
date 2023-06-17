@@ -1,3 +1,7 @@
 {
-    "C_Cpp.clang_format_style": "Google"
+    "C_Cpp.clang_format_style": "Google",
+    "cpplint.repository": "${workspaceFolder}/content/src",
+    "cpplint.root": "${workspaceFolder}/content/include",
+    "copyrightInserter.license": "mit",
+    "cpplint.lineLength": 120
 }
