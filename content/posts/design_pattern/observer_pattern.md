@@ -70,18 +70,22 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 
 ### 実装
 
+関連するファイル数が多いため，重要と思われるファイルをデフォルトで展開するようにした．
+
 {{< readfile file="design_pattern/observer_pattern.cpp" lang="cpp" is_open="true" >}}
 {{< readfile file="design_pattern/observer_pattern/observer_pattern.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observer_pattern/Display.hpp" lang="cpp" >}}
-{{< readfile file="design_pattern/observer_pattern/Observable.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/Observable.hpp" lang="cpp" is_open="true" >}}
 {{< readfile file="design_pattern/observer_pattern/ObservableDiagram.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observer_pattern/ObservableLine.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observer_pattern/ObservableTriangle.hpp" lang="cpp" >}}
-{{< readfile file="design_pattern/observer_pattern/Observer.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/Observer.hpp" lang="cpp" is_open="true" >}}
+{{< readfile file="design_pattern/component/Canvas.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/component/Diagram.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/component/Line.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/component/Triangle.hpp" lang="cpp" >}}
 {{< readfile file="demangle.hpp" lang="cpp" >}}
 {{< readfile file="join.hpp" lang="cpp" >}}
-
-Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．
 
 ### 実行結果
 
