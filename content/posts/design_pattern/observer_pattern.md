@@ -70,7 +70,7 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 
 ### 実装
 
-{{< readfile file="design_pattern/observer_pattern.cpp" lang="cpp" is_open="false" >}}
+{{< readfile file="design_pattern/observer_pattern.cpp" lang="cpp" is_open="true" >}}
 {{< readfile file="design_pattern/observer_pattern/observer_pattern.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observer_pattern/Display.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observer_pattern/Observable.hpp" lang="cpp" >}}
