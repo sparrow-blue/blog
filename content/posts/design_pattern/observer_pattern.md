@@ -65,9 +65,9 @@ InstalledDir: /usr/bin
 
 ### 実装
 
-{{< readfile file="src/observer_pattern.cpp" lang="cpp" is_open="false" >}}
-{{< readfile file="src/observer_pattern.hpp" lang="cpp" >}}
-{{< readfile file="src/join.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern.cpp" lang="cpp" is_open="false" >}}
+{{< readfile file="design_pattern/observer_pattern.hpp" lang="cpp" >}}
+{{< readfile file="join.hpp" lang="cpp" >}}
 
 Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．
 
