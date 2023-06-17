@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "command_pattern.hpp"
-#include "join.hpp"
+#include "../join.hpp"
 
 namespace design_pattern {
 namespace observer_pattern {

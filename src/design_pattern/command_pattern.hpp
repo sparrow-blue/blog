@@ -10,7 +10,7 @@
 #include <sstream>
 
 #include "demangle.hpp"
-#include "join.hpp"
+#include "../join.hpp"
 
 namespace design_pattern {
 namespace command_pattern {
