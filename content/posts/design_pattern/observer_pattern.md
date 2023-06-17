@@ -61,6 +61,11 @@ Ubuntu clang version 14.0.0-1ubuntu1
 Target: x86_64-pc-linux-gnu
 Thread model: posix
 InstalledDir: /usr/bin
+$ scons --version
+SCons by Steven Knight et al.:
+        SCons: v4.0.1.c289977f8b34786ab6c334311e232886da7e8df1, 2020-07-17 01:50:03, by bdbaddog on ProDog2020
+        SCons path: ['/usr/lib/python3/dist-packages/SCons']
+Copyright (c) 2001 - 2020 The SCons Foundation
 ```
 
 ### 実装
@@ -81,10 +86,11 @@ Command Pattern のコードを流用している．そちらの詳細は当該�
 ### 実行結果
 
 ```
-$ date; clang++ src/observer_pattern.cpp -o observer_pattern.out && ./observer_pattern.out 
-Fri Jun 16 04:14:40 JST 2023
-design_pattern::observer_pattern::Line (0,100)
-design_pattern::observer_pattern::Line (0,0)
-design_pattern::observer_pattern::Line (0,101)
+$ ./content/build/design_pattern/observer_pattern
+design_pattern::component::Line (100,100)
+design_pattern::component::Line (0,0)
+design_pattern::component::Line (101,101)
+design_pattern::component::Triangle (100,100)
+design_pattern::component::Triangle (0,0)
+design_pattern::component::Triangle (101,101)
 ```
-
