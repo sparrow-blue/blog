@@ -67,6 +67,13 @@ InstalledDir: /usr/bin
 
 {{< readfile file="design_pattern/observer_pattern.cpp" lang="cpp" is_open="false" >}}
 {{< readfile file="design_pattern/observer_pattern/observer_pattern.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/Display.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/Observable.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/ObservableDiagram.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/ObservableLine.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/ObservableTriangle.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observer_pattern/Observer.hpp" lang="cpp" >}}
+{{< readfile file="demangle.hpp" lang="cpp" >}}
 {{< readfile file="join.hpp" lang="cpp" >}}
 
 Command Pattern のコードを流用している．そちらの詳細は当該記事を別途確認のこと．
