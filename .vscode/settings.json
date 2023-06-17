@@ -1,7 +1,12 @@
 {
-    "C_Cpp.clang_format_style": "Google",
+    "C_Cpp.clang_format_style": "file",
+    "C_Cpp.formatting": "clangFormat",
     "cpplint.repository": "${workspaceFolder}/content/src",
     "cpplint.root": "${workspaceFolder}/content/include",
     "copyrightInserter.license": "mit",
-    "cpplint.lineLength": 120
+    "cpplint.lineLength": 120,
+    "files.associations": {
+        "ostream": "cpp"
+    },
+    "editor.rulers": [120]
 }
