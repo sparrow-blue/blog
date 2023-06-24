@@ -112,6 +112,14 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 }
 </code></pre></div>
 </details>
+<h3 id=singleton-pattern-の定義>Singleton Pattern の定義<a href=#singleton-pattern-の定義 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>書籍において Singleton Pattern を以下のように定義している (P.177)．</p>
+<blockquote>
+<p>Singleton パターンは，クラスがインスタンスを 1 つしか持たないことを保証し，そのインスタンスにアクセスするグローバルポイントを提供する．</p>
+</blockquote>
+<p>書籍内には「グローバル」という言葉に対する定義は記述されていないが，ここでいうグローバルは「あるプロセスの中」と解釈して差し支えないとは思うが必ずしもプロセスである必要はないだろう．<br>
+// 極端なことをいえば Singleton Pattern の概念自体は現実世界に拡張できるだろう．</p>
+<p>一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において <code>internal class Singleton {}</code> のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．</p>
 <h2 id=感想>感想<a href=#感想 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．</p>
 <p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．</p>
