@@ -1,1 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design Pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/design-pattern/</link><description>Recent content in Design Pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/design-pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Title</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>Title</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/</guid><description/><content/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design Pattern on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/design-pattern/</link><description>Recent content in Design Pattern on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/design-pattern/index.xml" rel="self" type="application/rss+xml"/><item><title>Head First Design Patterns</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/</guid><description>以下の書籍を読み，その内容をまとめる． 項目 内容 著者 Eric Freeman, Elisabeth Robson 監訳者 佐藤 直生 訳 木下 哲也 題 Head Firstデザインパターン 第2版 原題 Head First Design Patterns, 2nd Edition 発行 オ</description><content>&lt;p>以下の書籍を読み，その内容をまとめる．&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>項目&lt;/th>
+&lt;th>内容&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>著者&lt;/td>
+&lt;td>Eric Freeman, Elisabeth Robson&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>監訳者&lt;/td>
+&lt;td>佐藤 直生&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>訳&lt;/td>
+&lt;td>木下 哲也&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>題&lt;/td>
+&lt;td>Head Firstデザインパターン 第2版&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>原題&lt;/td>
+&lt;td>Head First Design Patterns, 2nd Edition&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>発行&lt;/td>
+&lt;td>オライリージャパン&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>出版年月&lt;/td>
+&lt;td>2022年06月&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>ISBN&lt;/td>
+&lt;td>978-4-87311-976-2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>URL&lt;/td>
+&lt;td>&lt;a href="https://www.oreilly.co.jp/books/9784873119762/">発行元 Web サイト&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></content></item><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/05_one_of_a_king_objects/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/05_one_of_a_king_objects/</guid><description/><content/></item></channel></rss>
