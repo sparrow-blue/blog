@@ -14,9 +14,13 @@ title : "唯一のオブジェクト / One of a king object"
 # weight: 
 tags: ["Design Pattern", "Head First Design Patterns", "Singleton"]
 categories: ["book", "design"]
+
+h_title: "Singleton Pattern の定義"
+h_define: "Singleton Pattern の定義"
+h_report: "感想"
 ---
 
-## Singleton Pattern
+## {{< param h_title>}}
 
 インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する．
 
@@ -33,9 +37,9 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
 {{< readfile file="head_first_design_patterns/one_of_a_king_object/singleton.cpp" lang="cpp" is_open="true" >}}
 
 
-### Singleton Pattern の定義
+### {{< param h_define >}}
 
-書籍において Singleton Pattern を以下のように定義している (P.177)．
+本書において Singleton Pattern を以下のように定義されている (P.177)．
 
 > Singleton パターンは，クラスがインスタンスを 1 つしか持たないことを保証し，そのインスタンスにアクセスするグローバルポイントを提供する．
 
@@ -44,7 +48,21 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
 
 一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において `internal class Singleton {}` のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．
 
-## 感想
+### Thread-safe な実装
+
+本書でも指摘されているが `GetInstance()` が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．
+
+この問題に対する解決策を述べる．
+
+1. `GetInsntance()` への同時アクセスを許容しない  
+    - 言語によって実装は異なるが本書では Java を扱っているので synchronized 修飾子を例に挙げている  
+    - C++ では `std::mutex` で排他処理を行うことになるだろう
+    - 同期処理はパフォーマンスへの影響が大きくなるため，頻繁に呼ばれるような処理ではなるべく避けたい
+1. 遅延インスタンス生成から先行インスタンス生成に変える
+    - 書籍中では `GetInstance()` が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については[{{< param h_report>}}](#{{< h_report >}})で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，
+
+
+### {{< param h_report >}}
 
 Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．
 
