@@ -3,7 +3,7 @@
 <title>唯一のオブジェクト / One of a king object :: Design and Implementation</title>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool Cache Dialogbox Logger">
+<meta name=description content="Singleton Pattern の定義 インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool">
 <meta name=keywords content>
 <meta name=robots content="noodp">
 <link rel=canonical href=https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/>
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:type" content="article">
 <meta property="og:title" content="唯一のオブジェクト / One of a king object">
-<meta property="og:description" content="Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool Cache Dialogbox Logger">
+<meta property="og:description" content="Singleton Pattern の定義 インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool">
 <meta property="og:url" content="https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/">
 <meta property="og:site_name" content="Design and Implementation">
 <meta property="og:image" content="https://sparrow-blue.github.io/blog/img/favicon/green.png">
@@ -64,7 +64,7 @@ Design and Implementation
 #<a href=https://sparrow-blue.github.io/blog/tags/singleton/>Singleton</a>&nbsp;
 </span>
 <div class=post-content><div>
-<h2 id=singleton-pattern>Singleton Pattern<a href=#singleton-pattern class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h2 id=hahahugoshortcode-s0-hbhb>Singleton Pattern の定義<a href=#hahahugoshortcode-s0-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <p>インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する．</p>
 <ul>
 <li>Thread pool</li>
@@ -112,15 +112,33 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 }
 </code></pre></div>
 </details>
-<h3 id=singleton-pattern-の定義>Singleton Pattern の定義<a href=#singleton-pattern-の定義 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<p>書籍において Singleton Pattern を以下のように定義している (P.177)．</p>
+<h3 id=hahahugoshortcode-s2-hbhb>Singleton Pattern の定義<a href=#hahahugoshortcode-s2-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>本書において Singleton Pattern を以下のように定義されている (P.177)．</p>
 <blockquote>
 <p>Singleton パターンは，クラスがインスタンスを 1 つしか持たないことを保証し，そのインスタンスにアクセスするグローバルポイントを提供する．</p>
 </blockquote>
 <p>書籍内には「グローバル」という言葉に対する定義は記述されていないが，ここでいうグローバルは「あるプロセスの中」と解釈して差し支えないとは思うが必ずしもプロセスである必要はないだろう．<br>
 // 極端なことをいえば Singleton Pattern の概念自体は現実世界に拡張できるだろう．</p>
 <p>一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において <code>internal class Singleton {}</code> のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．</p>
-<h2 id=感想>感想<a href=#感想 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=hahahugoshortcode-s3-hbhb>Thread-safe な実装<a href=#hahahugoshortcode-s3-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>本書でも指摘されているが <code>GetInstance()</code> が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．</p>
+<p>この問題に対する解決策を述べる．</p>
+<ol>
+<li><code>GetInsntance()</code> への同時アクセスを許容しない
+<ul>
+<li>言語によって実装は異なるが本書では Java を扱っているので synchronized 修飾子を例に挙げている</li>
+<li>C++ では <code>std::mutex</code> で排他処理を行うことになるだろう</li>
+<li>同期処理はパフォーマンスへの影響が大きくなるため，頻繁に呼ばれるような処理ではなるべく避けたい</li>
+</ul>
+</li>
+<li>遅延インスタンス生成から先行インスタンス生成に変える
+<ul>
+<li>書籍中では <code>GetInstance()</code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については<a href=#感想>感想</a>で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，</li>
+<li>端的にいえば <code>GetInstance()</code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．</li>
+</ul>
+</li>
+</ol>
+<h3 id=hahahugoshortcode-s6-hbhb>感想<a href=#hahahugoshortcode-s6-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．</p>
 <p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．</p>
 <p>例えば P.170 に以下の記載がある．</p>

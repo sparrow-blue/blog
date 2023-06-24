@@ -78,7 +78,7 @@
 &lt;td>&lt;a href="https://gihyo.jp/dp/ebook/2012/978-4-7741-5272-1">発行元 Web サイト&lt;/a>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
-&lt;/table></content></item><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool Cache Dialogbox Logger</description><content>&lt;h2 id="singleton-pattern">Singleton Pattern&lt;/h2>
+&lt;/table></content></item><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern の定義 インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool</description><content>&lt;h2 id="hahahugoshortcode-s0-hbhb">Singleton Pattern の定義&lt;/h2>
 &lt;p>インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する．&lt;/p>
 &lt;ul>
 &lt;li>Thread pool&lt;/li>
@@ -122,15 +122,33 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 }
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
-&lt;h3 id="singleton-pattern-の定義">Singleton Pattern の定義&lt;/h3>
-&lt;p>書籍において Singleton Pattern を以下のように定義している (P.177)．&lt;/p>
+&lt;h3 id="hahahugoshortcode-s2-hbhb">Singleton Pattern の定義&lt;/h3>
+&lt;p>本書において Singleton Pattern を以下のように定義されている (P.177)．&lt;/p>
 &lt;blockquote>
 &lt;p>Singleton パターンは，クラスがインスタンスを 1 つしか持たないことを保証し，そのインスタンスにアクセスするグローバルポイントを提供する．&lt;/p>
 &lt;/blockquote>
 &lt;p>書籍内には「グローバル」という言葉に対する定義は記述されていないが，ここでいうグローバルは「あるプロセスの中」と解釈して差し支えないとは思うが必ずしもプロセスである必要はないだろう．&lt;br>
 // 極端なことをいえば Singleton Pattern の概念自体は現実世界に拡張できるだろう．&lt;/p>
 &lt;p>一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において &lt;code>internal class Singleton {}&lt;/code> のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．&lt;/p>
-&lt;h2 id="感想">感想&lt;/h2>
+&lt;h3 id="hahahugoshortcode-s3-hbhb">Thread-safe な実装&lt;/h3>
+&lt;p>本書でも指摘されているが &lt;code>GetInstance()&lt;/code> が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．&lt;/p>
+&lt;p>この問題に対する解決策を述べる．&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>GetInsntance()&lt;/code> への同時アクセスを許容しない
+&lt;ul>
+&lt;li>言語によって実装は異なるが本書では Java を扱っているので synchronized 修飾子を例に挙げている&lt;/li>
+&lt;li>C++ では &lt;code>std::mutex&lt;/code> で排他処理を行うことになるだろう&lt;/li>
+&lt;li>同期処理はパフォーマンスへの影響が大きくなるため，頻繁に呼ばれるような処理ではなるべく避けたい&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>遅延インスタンス生成から先行インスタンス生成に変える
+&lt;ul>
+&lt;li>書籍中では &lt;code>GetInstance()&lt;/code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については&lt;a href="#感想">感想&lt;/a>で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，&lt;/li>
+&lt;li>端的にいえば &lt;code>GetInstance()&lt;/code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="hahahugoshortcode-s6-hbhb">感想&lt;/h3>
 &lt;p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
 &lt;p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．&lt;/p>
 &lt;p>例えば P.170 に以下の記載がある．&lt;/p>
