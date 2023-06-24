@@ -133,11 +133,49 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 </li>
 <li>遅延インスタンス生成から先行インスタンス生成に変える
 <ul>
-<li>書籍中では <code>GetInstance()</code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については<a href=#感想>感想</a>で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，</li>
+<li>書籍中では <code>GetInstance()</code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については感想で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，</li>
 <li>端的にいえば <code>GetInstance()</code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．</li>
 </ul>
 </li>
 </ol>
+<details open>
+<summary>head_first_design_patterns/one_of_a_king_object/singleton_static_initializer.cpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;memory&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Singleton</span> {
+ <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+  <span style=color:#75715e>// 外部からのインスタンス化を禁ずる．
+</span><span style=color:#75715e></span>  Singleton() {}
+  <span style=color:#66d9ef>static</span> Singleton<span style=color:#f92672>*</span> singleton_;
+
+ <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+  <span style=color:#66d9ef>static</span> Singleton<span style=color:#f92672>*</span> GetInstance() {
+    <span style=color:#75715e>// 起動時に初期化されているため null check が不要である．
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> singleton_;
+  }
+
+  <span style=color:#75715e>// コピーコンストラクタなどは delete で禁止しなければならない．
+</span><span style=color:#75715e></span>  Singleton(<span style=color:#66d9ef>const</span> Singleton<span style=color:#f92672>&amp;</span> other) <span style=color:#f92672>=</span> <span style=color:#66d9ef>delete</span>;
+  <span style=color:#66d9ef>void</span> <span style=color:#66d9ef>operator</span><span style=color:#f92672>=</span>(<span style=color:#66d9ef>const</span> Singleton<span style=color:#f92672>&amp;</span>) <span style=color:#f92672>=</span> <span style=color:#66d9ef>delete</span>;
+};
+
+<span style=color:#75715e>// null でなくインスタンスで初期化する．
+</span><span style=color:#75715e></span>Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>::</span>singleton_ <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> Singleton();
+
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
+  <span style=color:#75715e>// コンストラクタが private なので外部からインスタンス化できない．
+</span><span style=color:#75715e></span>  <span style=color:#75715e>// auto singleton = new Singleton();
+</span><span style=color:#75715e></span>
+  <span style=color:#75715e>// static なメンバ関数からのみインスタンス化できる．
+</span><span style=color:#75715e></span>  <span style=color:#66d9ef>auto</span> singleton <span style=color:#f92672>=</span> Singleton<span style=color:#f92672>::</span>GetInstance();
+}
+</code></pre></div>
+</details>
 <h3 id=hahahugoshortcode-s6-hbhb>感想<a href=#hahahugoshortcode-s6-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．</p>
 <p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．</p>

@@ -143,11 +143,45 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;/li>
 &lt;li>遅延インスタンス生成から先行インスタンス生成に変える
 &lt;ul>
-&lt;li>書籍中では &lt;code>GetInstance()&lt;/code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については&lt;a href="#感想">感想&lt;/a>で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，&lt;/li>
+&lt;li>書籍中では &lt;code>GetInstance()&lt;/code> が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については感想で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，&lt;/li>
 &lt;li>端的にいえば &lt;code>GetInstance()&lt;/code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;/ol>
+&lt;details open>
+&lt;summary>head_first_design_patterns/one_of_a_king_object/singleton_static_initializer.cpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Singleton&lt;/span> {
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#75715e">// 外部からのインスタンス化を禁ずる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> Singleton() {}
+&lt;span style="color:#66d9ef">static&lt;/span> Singleton&lt;span style="color:#f92672">*&lt;/span> singleton_;
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">static&lt;/span> Singleton&lt;span style="color:#f92672">*&lt;/span> GetInstance() {
+&lt;span style="color:#75715e">// 起動時に初期化されているため null check が不要である．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> singleton_;
+}
+&lt;span style="color:#75715e">// コピーコンストラクタなどは delete で禁止しなければならない．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> Singleton(&lt;span style="color:#66d9ef">const&lt;/span> Singleton&lt;span style="color:#f92672">&amp;amp;&lt;/span> other) &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">delete&lt;/span>;
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#66d9ef">operator&lt;/span>&lt;span style="color:#f92672">=&lt;/span>(&lt;span style="color:#66d9ef">const&lt;/span> Singleton&lt;span style="color:#f92672">&amp;amp;&lt;/span>) &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">delete&lt;/span>;
+};
+&lt;span style="color:#75715e">// null でなくインスタンスで初期化する．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>singleton_ &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Singleton();
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#75715e">// コンストラクタが private なので外部からインスタンス化できない．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// auto singleton = new Singleton();
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">// static なメンバ関数からのみインスタンス化できる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">auto&lt;/span> singleton &lt;span style="color:#f92672">=&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>GetInstance();
+}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
 &lt;h3 id="hahahugoshortcode-s6-hbhb">感想&lt;/h3>
 &lt;p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
 &lt;p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．&lt;/p>
