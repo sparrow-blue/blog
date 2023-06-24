@@ -1,9 +1,9 @@
 <!doctype html><html lang=en>
 <head>
-<title>Observable Method :: Design and Implementation</title>
+<title>Observable Member :: Design and Implementation</title>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する． 調査">
+<meta name=description content="このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査">
 <meta name=keywords content>
 <meta name=robots content="noodp">
 <link rel=canonical href=https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/>
@@ -13,8 +13,8 @@
 <meta name=twitter:card content="summary">
 <meta property="og:locale" content="en">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Observable Method">
-<meta property="og:description" content="このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する． 調査">
+<meta property="og:title" content="Observable Member">
+<meta property="og:description" content="このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査">
 <meta property="og:url" content="https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/">
 <meta property="og:site_name" content="Design and Implementation">
 <meta property="og:image" content="https://sparrow-blue.github.io/blog/img/favicon/green.png">
@@ -52,15 +52,15 @@ Design and Implementation
 <div class=content>
 <article class=post>
 <h1 class=post-title>
-<a href=https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/>Observable Method</a>
+<a href=https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/>Observable Member</a>
 </h1>
-<div class=post-meta><time class=post-date>2023-06-17[Updated::2023-06-18]</time></div>
+<div class=post-meta><time class=post-date>2023-06-17[Updated::2023-06-24]</time></div>
 <span class=post-tags>
 #<a href=https://sparrow-blue.github.io/blog/tags/design_pattern/>design_pattern</a>&nbsp;
 </span>
 <div class=post-content><div>
 <h2 id=このエントリの目指すところ>このエントリの目指すところ<a href=#このエントリの目指すところ class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する．</p>
+<p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．</p>
 <h2 id=調査>調査<a href=#調査 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
 <h3 id=語られる像>語られる像<a href=#語られる像 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
 <h3 id=整理>整理<a href=#整理 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
@@ -93,7 +93,7 @@ InstalledDir: /usr/bin
 <summary>design_pattern/observable_member.cpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
-</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;observable_member/observable_member.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
@@ -125,14 +125,31 @@ InstalledDir: /usr/bin
 <summary>design_pattern/observable_member/observable_member.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
-</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
 </span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
 </span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;ObservableDiagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;ObservableLine.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;EventHandler.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/observable_member/ObservableDiagram.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
+</span><span style=color:#75715e></span>
 <span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;EventHandler.hpp&#34;</span><span style=color:#75715e>
 </span><span style=color:#75715e></span>
 <span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observable_member {
+
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableDiagram</span> {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   ObservableDiagram(<span style=color:#66d9ef>int</span> width, <span style=color:#66d9ef>int</span> height) <span style=color:#f92672>:</span> width_(width), height_(height) {}
@@ -170,6 +187,24 @@ InstalledDir: /usr/bin
   <span style=color:#66d9ef>int</span> height_;
 };
 
+}  <span style=color:#75715e>// namespace design_pattern::observable_member
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
+</span></code></pre></div>
+</details>
+<details>
+<summary>design_pattern/observable_member/ObservableLine.hpp</summary>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
+</span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
+</span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;ObservableDiagram.hpp&#34;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>namespace</span> design_pattern<span style=color:#f92672>::</span>observable_member {
+
 <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ObservableLine</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> ObservableDiagram {
  <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
   ObservableLine(<span style=color:#66d9ef>int</span> width, <span style=color:#66d9ef>int</span> height) <span style=color:#f92672>:</span> ObservableDiagram(width, height) {}
@@ -177,14 +212,14 @@ InstalledDir: /usr/bin
 
 }  <span style=color:#75715e>// namespace design_pattern::observable_member
 </span><span style=color:#75715e></span>
-<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+<span style=color:#75715e>#endif  </span><span style=color:#75715e>// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
 </span></code></pre></div>
 </details>
 <details>
 <summary>design_pattern/observable_member/EventHandler.hpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
 </span><span style=color:#75715e>// This source code is licensed under the BSD 3-Clause License.
-</span><span style=color:#75715e>// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+</span><span style=color:#75715e>// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 </span><span style=color:#75715e></span>
 <span style=color:#75715e>#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
 </span><span style=color:#75715e>#define DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_

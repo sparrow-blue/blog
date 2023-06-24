@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>test 1 on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/posts/</link><description>Recent content in test 1 on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://sparrow-blue.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Observable Method</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
-&lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する．&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>test 1 on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/posts/</link><description>Recent content in test 1 on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://sparrow-blue.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．&lt;/p>
 &lt;h2 id="調査">調査&lt;/h2>
 &lt;h3 id="語られる像">語られる像&lt;/h3>
 &lt;h3 id="整理">整理&lt;/h3>
@@ -32,7 +32,7 @@ InstalledDir: /usr/bin
 &lt;summary>design_pattern/observable_member.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observable_member/observable_member.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -62,10 +62,26 @@ observable_line.height(&lt;span style="color:#ae81ff">7&lt;/span>);
 &lt;summary>design_pattern/observable_member/observable_member.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;ObservableDiagram.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;ObservableLine.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;EventHandler.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;details >
+&lt;summary>design_pattern/observable_member/ObservableDiagram.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;EventHandler.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -99,20 +115,37 @@ HeightChanged.Invoke(&lt;span style="color:#66d9ef">this&lt;/span>, event_args);
 &lt;span style="color:#66d9ef">int&lt;/span> width_;
 &lt;span style="color:#66d9ef">int&lt;/span> height_;
 };
+} &lt;span style="color:#75715e">// namespace design_pattern::observable_member
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLEDIAGRAM_HPP_
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;details >
+&lt;summary>design_pattern/observable_member/ObservableLine.hpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
+&lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;ObservableDiagram.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">namespace&lt;/span> design_pattern&lt;span style="color:#f92672">::&lt;/span>observable_member {
 &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ObservableLine&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> ObservableDiagram {
 &lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
 ObservableLine(&lt;span style="color:#66d9ef">int&lt;/span> width, &lt;span style="color:#66d9ef">int&lt;/span> height) &lt;span style="color:#f92672">:&lt;/span> ObservableDiagram(width, height) {}
 };
 } &lt;span style="color:#75715e">// namespace design_pattern::observable_member
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
-&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLE_MEMBER_HPP_
+&lt;span style="color:#75715e">#endif &lt;/span>&lt;span style="color:#75715e">// DESIGN_PATTERN_OBSERVABLE_MEMBER_OBSERVABLELINE_HPP_
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
 &lt;details >
 &lt;summary>design_pattern/observable_member/EventHandler.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVABLE_MEMBER_EVENTHANDLER_HPP_
@@ -205,7 +238,7 @@ Copyright (c) 2001 - 2020 The SCons Foundation
 &lt;summary>design_pattern/observer_pattern.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;observer_pattern/observer_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -243,7 +276,7 @@ triangle&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style=
 &lt;summary>design_pattern/observer_pattern/observer_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_PATTERN_HPP_
@@ -262,7 +295,7 @@ triangle&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Resize(&lt;span style=
 &lt;summary>design_pattern/observer_pattern/Display.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_DISPLAY_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_DISPLAY_HPP_
@@ -306,7 +339,7 @@ std&lt;span style="color:#f92672">::&lt;/span>transform(&lt;span style="color:#6
 &lt;summary>design_pattern/observer_pattern/Observable.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLE_HPP_
@@ -339,7 +372,7 @@ std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f9267
 &lt;summary>design_pattern/observer_pattern/ObservableDiagram.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLEDIAGRAM_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLEDIAGRAM_HPP_
@@ -379,7 +412,7 @@ std&lt;span style="color:#f92672">::&lt;/span>string ToString() { &lt;span style
 &lt;summary>design_pattern/observer_pattern/ObservableLine.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLELINE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLELINE_HPP_
@@ -407,7 +440,7 @@ ObservableLine() &lt;span style="color:#f92672">:&lt;/span> ObservableDiagram(st
 &lt;summary>design_pattern/observer_pattern/ObservableTriangle.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLETRIANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVABLETRIANGLE_HPP_
@@ -435,7 +468,7 @@ ObservableTriangle() &lt;span style="color:#f92672">:&lt;/span> ObservableDiagra
 &lt;summary>design_pattern/observer_pattern/Observer.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_OBSERVER_PATTERN_OBSERVER_HPP_
@@ -471,7 +504,7 @@ std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f9267
 &lt;summary>design_pattern/component/Canvas.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_CANVAS_HPP_
@@ -544,7 +577,7 @@ std&lt;span style="color:#f92672">::&lt;/span>vector&lt;span style="color:#f9267
 &lt;summary>design_pattern/component/Diagram.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMPONENT_DIAGRAM_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_DIAGRAM_HPP_
@@ -600,7 +633,7 @@ Diagram&lt;span style="color:#f92672">::~&lt;/span>Diagram() {}
 &lt;summary>design_pattern/component/Line.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMPONENT_LINE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_LINE_HPP_
@@ -621,7 +654,7 @@ Diagram&lt;span style="color:#f92672">::~&lt;/span>Diagram() {}
 &lt;summary>design_pattern/component/Triangle.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMPONENT_TRIANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMPONENT_TRIANGLE_HPP_
@@ -642,7 +675,7 @@ Diagram&lt;span style="color:#f92672">::~&lt;/span>Diagram() {}
 &lt;summary>demangle.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DEMANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DEMANGLE_HPP_
@@ -678,7 +711,7 @@ free(demangled_name);
 &lt;summary>join.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
@@ -800,7 +833,7 @@ InstalledDir: /usr/bin
 &lt;summary>design_pattern/command_pattern.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;#34;command_pattern/command_pattern.hpp&amp;#34;&lt;/span>&lt;span style="color:#75715e">
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
@@ -845,7 +878,7 @@ dumper();
 &lt;summary>design_pattern/command_pattern/command_pattern.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DESIGN_PATTERN_COMMAND_PATTERN_COMMAND_PATTERN_HPP_
@@ -1017,7 +1050,7 @@ std&lt;span style="color:#f92672">::&lt;/span>cout &lt;span style="color:#f92672
 &lt;summary>demangle.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef DEMANGLE_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define DEMANGLE_HPP_
@@ -1053,7 +1086,7 @@ free(demangled_name);
 &lt;summary>join.hpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
-&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/imageimporter/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>
 &lt;span style="color:#75715e">#ifndef JOIN_HPP_
 &lt;/span>&lt;span style="color:#75715e">#define JOIN_HPP_
