@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Singleton on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/singleton/</link><description>Recent content in Singleton on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/singleton/index.xml" rel="self" type="application/rss+xml"/><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern の定義 インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool</description><content>&lt;h2 id="hahahugoshortcode-s0-hbhb">Singleton Pattern の定義&lt;/h2>
-&lt;p>インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する．&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Singleton on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/singleton/</link><description>Recent content in Singleton on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/singleton/index.xml" rel="self" type="application/rss+xml"/><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトが存在する．その場合，複数のインスタンスを生成するとかえって問題になることがある． Thread pool Cache Dialogbox</description><content>&lt;h2 id="hahahugoshortcode-s0-hbhb">Singleton Pattern&lt;/h2>
+&lt;p>インスタンスを 1 つしか必要としないオブジェクトが存在する．その場合，複数のインスタンスを生成するとかえって問題になることがある．&lt;/p>
 &lt;ul>
 &lt;li>Thread pool&lt;/li>
 &lt;li>Cache&lt;/li>
@@ -7,7 +7,7 @@
 &lt;li>Logger&lt;/li>
 &lt;li>etc.&lt;/li>
 &lt;/ul>
-&lt;p>Singleton Pattern はインスタンスを 1 つだけ生成する仕組みである．&lt;/p>
+&lt;p>Singleton Pattern はインスタンスが 1 度だけ生成されることを保証する仕組みである．&lt;/p>
 &lt;p>典型的にはコンストラクタを非公開，つまり private にすることで (外部から) 生成を禁ずる．&lt;/p>
 &lt;details open>
 &lt;summary>head_first_design_patterns/one_of_a_king_object/singleton.cpp&lt;/summary>
@@ -47,11 +47,11 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;blockquote>
 &lt;p>Singleton パターンは，クラスがインスタンスを 1 つしか持たないことを保証し，そのインスタンスにアクセスするグローバルポイントを提供する．&lt;/p>
 &lt;/blockquote>
-&lt;p>書籍内には「グローバル」という言葉に対する定義は記述されていないが，ここでいうグローバルは「あるプロセスの中」と解釈して差し支えないとは思うが必ずしもプロセスである必要はないだろう．&lt;br>
+&lt;p>本文中では「グローバル」という言葉に対する定義はなされていないが，ここでいうグローバルは「あるプロセスの中」と解釈して差し支えないと思われる．しかし必ずしもプロセスである必要はないだろう．&lt;br>
 // 極端なことをいえば Singleton Pattern の概念自体は現実世界に拡張できるだろう．&lt;/p>
-&lt;p>一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において &lt;code>internal class Singleton {}&lt;/code> のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．&lt;/p>
+&lt;p>現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において &lt;code>internal class Singleton {}&lt;/code> のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．&lt;/p>
 &lt;h3 id="hahahugoshortcode-s3-hbhb">Thread-safe な実装&lt;/h3>
-&lt;p>本書でも指摘されているが &lt;code>GetInstance()&lt;/code> が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．&lt;/p>
+&lt;p>本文中でも指摘されているが &lt;code>GetInstance()&lt;/code> が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．&lt;/p>
 &lt;p>この問題に対する解決策を述べる．&lt;/p>
 &lt;ol>
 &lt;li>&lt;code>GetInsntance()&lt;/code> への同時アクセスを許容しない
@@ -111,13 +111,14 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;/details>
 &lt;/p>
 &lt;h3 id="hahahugoshortcode-s6-hbhb">Singleton Pattern の課題&lt;/h3>
-&lt;p>Singleton Pattenr と疎結合設計について以下のように記述されている (P.184)．&lt;/p>
+&lt;p>Singleton Pattern と疎結合設計について以下のように記述されている (P.184)．&lt;/p>
 &lt;blockquote>
 &lt;p>疎結合原則は，「相互にやり取りするオブジェクト間は，疎結合設計を使用する」というものです．Singleton を変更する場合には，その Singleton に結びついたすべてのオブジェクトを変更しなければいけないので，Singleton ではこの原則に違反しやすいのです．&lt;/p>
 &lt;/blockquote>
+&lt;p>あるクラス A と クラス B が存在し，クラス B がクラス A を利用する場合，クラス B はクラス A に依存することになる．グローバルにアクセスされる Singleton クラスは様々なクラスから利用される．つまり依存されることになり，結合が密になる (疎結合原則に反する)．&lt;/p>
 &lt;h2 id="hahahugoshortcode-s7-hbhb">感想&lt;/h2>
 &lt;h3 id="正確さと分かりやすいさのトレードオフ">正確さと分かりやすいさのトレードオフ&lt;/h3>
-&lt;p>一般に Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
+&lt;p>一般に Singleton の是非はだいぶ意見が割れているように思う．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
 &lt;p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．&lt;/p>
 &lt;p>例えば P.170 に以下の記載がある．&lt;/p>
 &lt;blockquote>
@@ -128,7 +129,8 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;p>どの時点でもインスタンスが 1 つしか存在しないことを保証する，Singleton パターンに基づいています．&lt;/p>
 &lt;/blockquote>
 &lt;p>前者の「必要になるまでオブジェクトが作成 (インスタンス化の意と理解している) されない」に対して後者は「いついかなる時も (つまり必要か否かによらず) 1 つのインスタンスが存在する」と述べている．&lt;/p>
-&lt;p>(私の理解では) Singleton の本旨は後者が正しい．矛盾するかを厳密に詰めていけば使用する言語にもよってくるのだが，一般に矛盾していると解釈して差し支えないだろう．しかし Singleton Pattern を実装した結果，前者の性質を持つことが往々にしてあり，それ自体は知っていなければならないだろう．そうはいってもこの下りを厳密に説明することが本来の目的ではないのもわかる．このように必要な情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．&lt;/p>
+&lt;p>この 2 文は (使用する言語にもよってくるのだが) 一般に矛盾していると解釈して差し支えないだろう．(私の理解では) Singleton の本旨は後者が正しい．しかし Singleton Pattern を実装した結果，前者の性質を持つことは往々にしてあり，それ自体は知っていたほうがよいだろう．&lt;/p>
+&lt;p>しかしこのくだりを細かく説明することが目的としているわけではない．このように情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．&lt;/p>
 &lt;h3 id="遅延インスタンス化と先行インスタンス化の謎">遅延インスタンス化と先行インスタンス化の謎&lt;/h3>
 &lt;p>「遅延インスタンス化と先行インスタンス化の問題がある」と述べられているが，結局これがどのような状況なのか説明が少ない．特に P.184 でグローバル変数と Singleton の違いについて以下のように説明している．&lt;/p>
 &lt;blockquote>
