@@ -137,7 +137,14 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 <li>端的にいえば <code>GetInstance()</code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．</li>
 </ul>
 </li>
+<li>ダブルチェックロッキングを利用し同期処理を減らす
+<ul>
+<li><code>GetInsntance()</code> の中でもコンストラクタの呼び出し部分にだけ同期処理を行い，大抵のケースでロックを取らずに済ませる実装である</li>
+<li>ここまでくると Singleton がどう，というよりは Multi-thread Programming におけるテクニックの話になってくるのでここでは割愛する</li>
+</ul>
+</li>
 </ol>
+<p>以下は C++ で先行インスタンス生成のスタイルに変更したものである．
 <details open>
 <summary>head_first_design_patterns/one_of_a_king_object/singleton_static_initializer.cpp</summary>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>// Copyright (c) 2023, Kumazawa (sparrow-blue)
@@ -176,8 +183,15 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 }
 </code></pre></div>
 </details>
-<h3 id=hahahugoshortcode-s6-hbhb>感想<a href=#hahahugoshortcode-s6-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
-<p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．</p>
+</p>
+<h3 id=hahahugoshortcode-s6-hbhb>Singleton Pattern の課題<a href=#hahahugoshortcode-s6-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>Singleton Pattenr と疎結合設計について以下のように記述されている (P.184)．</p>
+<blockquote>
+<p>疎結合原則は，「相互にやり取りするオブジェクト間は，疎結合設計を使用する」というものです．Singleton を変更する場合には，その Singleton に結びついたすべてのオブジェクトを変更しなければいけないので，Singleton ではこの原則に違反しやすいのです．</p>
+</blockquote>
+<h2 id=hahahugoshortcode-s7-hbhb>感想<a href=#hahahugoshortcode-s7-hbhb class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=正確さと分かりやすいさのトレードオフ>正確さと分かりやすいさのトレードオフ<a href=#正確さと分かりやすいさのトレードオフ class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>一般に Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．</p>
 <p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．</p>
 <p>例えば P.170 に以下の記載がある．</p>
 <blockquote>
@@ -189,6 +203,25 @@ Singleton<span style=color:#f92672>*</span> Singleton<span style=color:#f92672>:
 </blockquote>
 <p>前者の「必要になるまでオブジェクトが作成 (インスタンス化の意と理解している) されない」に対して後者は「いついかなる時も (つまり必要か否かによらず) 1 つのインスタンスが存在する」と述べている．</p>
 <p>(私の理解では) Singleton の本旨は後者が正しい．矛盾するかを厳密に詰めていけば使用する言語にもよってくるのだが，一般に矛盾していると解釈して差し支えないだろう．しかし Singleton Pattern を実装した結果，前者の性質を持つことが往々にしてあり，それ自体は知っていなければならないだろう．そうはいってもこの下りを厳密に説明することが本来の目的ではないのもわかる．このように必要な情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．</p>
+<h3 id=遅延インスタンス化と先行インスタンス化の謎>遅延インスタンス化と先行インスタンス化の謎<a href=#遅延インスタンス化と先行インスタンス化の謎 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>「遅延インスタンス化と先行インスタンス化の問題がある」と述べられているが，結局これがどのような状況なのか説明が少ない．特に P.184 でグローバル変数と Singleton の違いについて以下のように説明している．</p>
+<blockquote>
+<p>Javaでは，グローバル変数は基本的にはオブジェクトに対するスタティックな参照です．この方法でグローバル変数を使う場合，欠点がいくつかあります．1 つは既に説明したように，遅延インスタンス化と先行インスタンス化の問題があることです．</p>
+</blockquote>
+<p>ここで説明されているのは，おそらく単にグローバル変数として定義するとそのグローバル変数を初期化するタイミングがコントロールできない<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>という話だと想像しはするが，想像の域をでない．</p>
+<h3 id=列挙体が-singleton-の孕む諸問題を解決する謎>列挙体が Singleton の孕む諸問題を解決する謎<a href=#列挙体が-singleton-の孕む諸問題を解決する謎 class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>P.185 に以下の記述があるが，正直まるでわからない．Java の仕様だろうか．</p>
+<blockquote>
+<p>これまで説明してきた問題の多く (同期に関する心配，クラスローディング問題，リフレクション，シリアライズ/デシリアライズ問題) は，列挙型を使って Singleton を作成すればすべて解決できます．</p>
+</blockquote>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>単に static な参照が遅延インスタンス化だとするなら P.181 の例にある static 初期化子による先行インスタンス生成というのと矛盾する．static 参照かどうかは遅延インスタンス化/先行インスタンス化と関係ない話だと考える．&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div></div>
 <div class=pagination>
 <div class=pagination__title>

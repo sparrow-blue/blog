@@ -147,7 +147,14 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;li>端的にいえば &lt;code>GetInstance()&lt;/code> を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．&lt;/li>
 &lt;/ul>
 &lt;/li>
+&lt;li>ダブルチェックロッキングを利用し同期処理を減らす
+&lt;ul>
+&lt;li>&lt;code>GetInsntance()&lt;/code> の中でもコンストラクタの呼び出し部分にだけ同期処理を行い，大抵のケースでロックを取らずに済ませる実装である&lt;/li>
+&lt;li>ここまでくると Singleton がどう，というよりは Multi-thread Programming におけるテクニックの話になってくるのでここでは割愛する&lt;/li>
+&lt;/ul>
+&lt;/li>
 &lt;/ol>
+&lt;p>以下は C++ で先行インスタンス生成のスタイルに変更したものである．
 &lt;details open>
 &lt;summary>head_first_design_patterns/one_of_a_king_object/singleton_static_initializer.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
@@ -182,8 +189,15 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 }
 &lt;/code>&lt;/pre>&lt;/div>
 &lt;/details>
-&lt;h3 id="hahahugoshortcode-s6-hbhb">感想&lt;/h3>
-&lt;p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
+&lt;/p>
+&lt;h3 id="hahahugoshortcode-s6-hbhb">Singleton Pattern の課題&lt;/h3>
+&lt;p>Singleton Pattenr と疎結合設計について以下のように記述されている (P.184)．&lt;/p>
+&lt;blockquote>
+&lt;p>疎結合原則は，「相互にやり取りするオブジェクト間は，疎結合設計を使用する」というものです．Singleton を変更する場合には，その Singleton に結びついたすべてのオブジェクトを変更しなければいけないので，Singleton ではこの原則に違反しやすいのです．&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="hahahugoshortcode-s7-hbhb">感想&lt;/h2>
+&lt;h3 id="正確さと分かりやすいさのトレードオフ">正確さと分かりやすいさのトレードオフ&lt;/h3>
+&lt;p>一般に Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
 &lt;p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．&lt;/p>
 &lt;p>例えば P.170 に以下の記載がある．&lt;/p>
 &lt;blockquote>
@@ -194,7 +208,26 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;p>どの時点でもインスタンスが 1 つしか存在しないことを保証する，Singleton パターンに基づいています．&lt;/p>
 &lt;/blockquote>
 &lt;p>前者の「必要になるまでオブジェクトが作成 (インスタンス化の意と理解している) されない」に対して後者は「いついかなる時も (つまり必要か否かによらず) 1 つのインスタンスが存在する」と述べている．&lt;/p>
-&lt;p>(私の理解では) Singleton の本旨は後者が正しい．矛盾するかを厳密に詰めていけば使用する言語にもよってくるのだが，一般に矛盾していると解釈して差し支えないだろう．しかし Singleton Pattern を実装した結果，前者の性質を持つことが往々にしてあり，それ自体は知っていなければならないだろう．そうはいってもこの下りを厳密に説明することが本来の目的ではないのもわかる．このように必要な情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．&lt;/p></content></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;p>(私の理解では) Singleton の本旨は後者が正しい．矛盾するかを厳密に詰めていけば使用する言語にもよってくるのだが，一般に矛盾していると解釈して差し支えないだろう．しかし Singleton Pattern を実装した結果，前者の性質を持つことが往々にしてあり，それ自体は知っていなければならないだろう．そうはいってもこの下りを厳密に説明することが本来の目的ではないのもわかる．このように必要な情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．&lt;/p>
+&lt;h3 id="遅延インスタンス化と先行インスタンス化の謎">遅延インスタンス化と先行インスタンス化の謎&lt;/h3>
+&lt;p>「遅延インスタンス化と先行インスタンス化の問題がある」と述べられているが，結局これがどのような状況なのか説明が少ない．特に P.184 でグローバル変数と Singleton の違いについて以下のように説明している．&lt;/p>
+&lt;blockquote>
+&lt;p>Javaでは，グローバル変数は基本的にはオブジェクトに対するスタティックな参照です．この方法でグローバル変数を使う場合，欠点がいくつかあります．1 つは既に説明したように，遅延インスタンス化と先行インスタンス化の問題があることです．&lt;/p>
+&lt;/blockquote>
+&lt;p>ここで説明されているのは，おそらく単にグローバル変数として定義するとそのグローバル変数を初期化するタイミングがコントロールできない&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>という話だと想像しはするが，想像の域をでない．&lt;/p>
+&lt;h3 id="列挙体が-singleton-の孕む諸問題を解決する謎">列挙体が Singleton の孕む諸問題を解決する謎&lt;/h3>
+&lt;p>P.185 に以下の記述があるが，正直まるでわからない．Java の仕様だろうか．&lt;/p>
+&lt;blockquote>
+&lt;p>これまで説明してきた問題の多く (同期に関する心配，クラスローディング問題，リフレクション，シリアライズ/デシリアライズ問題) は，列挙型を使って Singleton を作成すればすべて解決できます．&lt;/p>
+&lt;/blockquote>
+&lt;section class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1" role="doc-endnote">
+&lt;p>単に static な参照が遅延インスタンス化だとするなら P.181 の例にある static 初期化子による先行インスタンス生成というのと矛盾する．static 参照かどうかは遅延インスタンス化/先行インスタンス化と関係ない話だと考える．&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/section></content></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．&lt;/p>
 &lt;h2 id="調査">調査&lt;/h2>
 &lt;h3 id="語られる像">語られる像&lt;/h3>
