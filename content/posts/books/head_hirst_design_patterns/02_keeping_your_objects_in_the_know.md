@@ -1,5 +1,5 @@
 ---
-date: "2023-06-24:
+date: "2023-06-24"
 description: ""
 draft: false
 # expiryDate: ""
