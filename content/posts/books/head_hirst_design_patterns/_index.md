@@ -8,12 +8,12 @@ keywords: []
 # publishDate: 1970-01-01
 # slug: ""
 # summary: ""
-title : "Head First Design Patterns"
+title : "Head Firstデザインパターン / Head First Design Patterns"
 # type: ""
 # url ""
 # weight: 
 tags: ["Design Pattern", "Head First Design Patterns"]
-categories: ["design"]
+categories: ["book", "design"]
 ---
 
 以下の書籍を読み，その内容をまとめる．

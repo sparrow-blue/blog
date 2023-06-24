@@ -8,11 +8,13 @@ keywords: []
 # publishDate: 1970-01-01
 # slug: ""
 # summary: ""
-title : "オブジェクトを事情通に / Keeping your objects in the know"
+title : "Book"
 # type: ""
 # url ""
 # weight: 
-tags: ["Design Pattern", "Head First Design Patterns", "Observer"]
-categories: ["book", "design"]
+tags: []
+categories: ["book"]
 ---
+
+読んだ書籍をまとめる．
 

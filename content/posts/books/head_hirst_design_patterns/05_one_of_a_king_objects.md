@@ -13,6 +13,6 @@ title : "唯一のオブジェクト / One of a king object"
 # url ""
 # weight: 
 tags: ["Design Pattern", "Head First Design Patterns", "Singleton"]
-categories: ["design"]
+categories: ["book", "design"]
 ---
 
