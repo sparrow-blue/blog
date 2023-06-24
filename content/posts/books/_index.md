@@ -8,11 +8,15 @@ keywords: []
 # publishDate: 1970-01-01
 # slug: ""
 # summary: ""
-title : "Title"
+title : "Books"
 # type: ""
 # url ""
 # weight: 
-tags: ["Design Pattern", "Head First Design Patterns"]
-categories: []
+tags: []
+categories: ["book"]
+menu: main
+layout: "list_parent"
 ---
+
+読んだ書籍をまとめる．
 
