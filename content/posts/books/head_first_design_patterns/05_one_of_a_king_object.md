@@ -59,7 +59,8 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
     - C++ では `std::mutex` で排他処理を行うことになるだろう
     - 同期処理はパフォーマンスへの影響が大きくなるため，頻繁に呼ばれるような処理ではなるべく避けたい
 1. 遅延インスタンス生成から先行インスタンス生成に変える
-    - 書籍中では `GetInstance()` が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については[{{< param h_report>}}](#{{< h_report >}})で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，
+    - 書籍中では `GetInstance()` が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については[{{< param h_report >}}](#{{< h_report >}})で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，
+    - 端的にいえば `GetInstance()` を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．
 
 
 ### {{< param h_report >}}
