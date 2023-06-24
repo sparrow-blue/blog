@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="post-list">
+    {{ range .Pages }}
+        {{ $parent := .Parent }}
+        {{ if and (eq .Section $parent.Type) (eq $parent.Section $parent.Parent.Type) }}
+            <div class="post">
+                <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                <time>{{ .Date.Format "January 2, 2006" }}</time>
+                {{ .Summary }}
+            </div>
+        {{ end }}
+    {{ end }}
+</div>
+{{ end }}

@@ -15,6 +15,7 @@ title : "Book"
 tags: []
 categories: ["book"]
 menu: main
+layout: "list_parent"
 ---
 
 読んだ書籍をまとめる．
