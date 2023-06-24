@@ -1,18 +1,18 @@
 ---
-date: "1970-01-01"
+date: "2023-06-24"
 description: ""
-draft: true
+draft: false
 # expiryDate: ""
 keywords: []
 # lastmod: ""
 # publishDate: 1970-01-01
 # slug: ""
 # summary: ""
-title : "Title"
+title : "唯一のオブジェクト / One of a king object"
 # type: ""
 # url ""
 # weight: 
-tags: []
-categories: []
+tags: ["Design Pattern", "Head First Design Patterns", "Singleton"]
+categories: ["design"]
 ---
 
