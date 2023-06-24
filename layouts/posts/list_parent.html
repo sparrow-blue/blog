@@ -5,7 +5,7 @@
 </div>
 {{ end }}
 <div class="posts">
-    {{ range .Paginator.Pages }}
+    {{ range .Pages }}
     {{ $parent := .Parent }}
     {{ if and (eq .Section $parent.Type) (eq $parent.Section $parent.Parent.Type) }}
     <article class="post on-list">
