@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Templata Method on Design and Implementation</title><link>https://sparrow-blue.github.io/blog/tags/templata-method/</link><description>Recent content in Templata Method on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/tags/templata-method/index.xml" rel="self" type="application/rss+xml"/><item><title>アルゴリズムのカプセル化 / Encapsulating Algorithm</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/08_encapsulating_algorithms/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/08_encapsulating_algorithms/</guid><description>Template Method Pattern 同じような処理の流れを踏むクラスが複数あったとして，Template Method Pattern は処理の流れを抽象化する． 本文中では例として以下の 2 つのクラス</description><content>&lt;h2 id="template-method-pattern">Template Method Pattern&lt;/h2>
+&lt;p>同じような処理の流れを踏むクラスが複数あったとして，Template Method Pattern は処理の流れを抽象化する．&lt;/p>
+&lt;p>本文中では例として以下の 2 つのクラスを考えている．&lt;/p>
+&lt;ol>
+&lt;li>コーヒーを淹れる&lt;/li>
+&lt;li>紅茶を淹れる&lt;/li>
+&lt;/ol>
+&lt;p>それぞれ，大枠として以下の 4 つのステップを踏むという点で共通している．&lt;/p>
+&lt;ol>
+&lt;li>お湯を沸かす&lt;/li>
+&lt;li>コーヒー/紅茶を抽出する&lt;/li>
+&lt;li>カップに注ぐ&lt;/li>
+&lt;li>コンディメントを淹れる&lt;/li>
+&lt;/ol>
+&lt;p>Template Method Pattern はこの一連の手続きの流れ自体を抽象化する．&lt;/p>
+&lt;h3 id="template-method-pattern-の定義">Template Method Pattern の定義&lt;/h3>
+&lt;p>本書では以下のように Template Method Pttern を定義している．&lt;/p>
+&lt;blockquote>
+&lt;p>Template Method パターンは，メソッド内でアルゴリズムの骨組みを定義し，一部の手順をサブクラスに委ねる．Template Method は，アルゴリズムの構造を変えることなく，アルゴリズムのある手順をサブクラスに再定義させる．&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="caffeinebeverage-の実装">CaffeineBeverage の実装&lt;/h3>
+&lt;p>本文中にある例をベースに Template Method Pattern の例を示す．&lt;/p>
+&lt;details open>
+&lt;summary>head_first_design_patterns/encapsulating_algorithm/caffeine_beverage.cpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">/// @brief 飲み物を淹れるカップを表現する
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Cup&lt;/span> {};
+&lt;span style="color:#75715e">/// @brief カフェインを含む飲み物を表現する
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">CaffeineBeverage&lt;/span> {
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#75715e">/// @brief 抽象化された手続き
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">virtual&lt;/span> Cup PrepareRecipe() &lt;span style="color:#66d9ef">final&lt;/span> {
+&lt;span style="color:#75715e">// この部分が Template Method であり，それぞれの処理自体は具象クラスの実装に任せる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>BoilWater();
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>Brew();
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>PourInCup();
+&lt;span style="color:#66d9ef">this&lt;/span>&lt;span style="color:#f92672">-&amp;gt;&lt;/span>AddCondiments();
+&lt;span style="color:#66d9ef">return&lt;/span> cup_;
+}
+&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#75715e">/// @brief カップ
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> Cup cup_;
+&lt;span style="color:#75715e">/// @brief お湯を沸かす
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">BoilWater&lt;/span>() {}
+&lt;span style="color:#75715e">/// @brief 淹れる
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Brew&lt;/span>() {}
+&lt;span style="color:#75715e">/// @brief カップにそそぐ
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">PourInCup&lt;/span>() {}
+&lt;span style="color:#75715e">/// @brief ミルクやレモンなどを添加する
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">AddCondiments&lt;/span>() {}
+};
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Coffee&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> CaffeineBeverage {
+&lt;span style="color:#66d9ef">protected&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Brew() { &lt;span style="color:#75715e">/* コーヒーを淹れる */&lt;/span>
+}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">AddCondiments&lt;/span>() { &lt;span style="color:#75715e">/* ミルクを入れる */&lt;/span>
+}
+};
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Tea&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">public&lt;/span> CaffeineBeverage {
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Brew&lt;/span>() { &lt;span style="color:#75715e">/* 紅茶を淹れる */&lt;/span>
+}
+&lt;span style="color:#66d9ef">virtual&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">AddCondiments&lt;/span>() { &lt;span style="color:#75715e">/* レモンを入れる */&lt;/span>
+}
+};
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details></content></item></channel></rss>
