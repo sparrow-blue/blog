@@ -55,7 +55,7 @@
 &lt;/ul>
 &lt;p>Singleton Pattern はインスタンスを 1 つだけ生成する仕組みである．&lt;/p>
 &lt;p>典型的にはコンストラクタを非公開，つまり private にすることで (外部から) 生成を禁ずる．&lt;/p>
-&lt;details >
+&lt;details open>
 &lt;summary>head_first_design_patterns/one_of_a_king_object/singleton.cpp&lt;/summary>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
 &lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
@@ -87,9 +87,7 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">auto&lt;/span> singleton &lt;span style="color:#f92672">=&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>GetInstance();
 }
 &lt;/code>&lt;/pre>&lt;/div>
-&lt;/details>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Hoge&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+&lt;/details></content></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．&lt;/p>
 &lt;h2 id="調査">調査&lt;/h2>
 &lt;h3 id="語られる像">語られる像&lt;/h3>
