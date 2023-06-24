@@ -87,4 +87,17 @@ Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="col
 &lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">auto&lt;/span> singleton &lt;span style="color:#f92672">=&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>GetInstance();
 }
 &lt;/code>&lt;/pre>&lt;/div>
-&lt;/details></content></item></channel></rss>
+&lt;/details>
+&lt;h2 id="感想">感想&lt;/h2>
+&lt;p>Singleton の是非についてはだいぶ意見が割れているような気がする．はたから見ている限り，仕組みが単純で導入しやすいため安易に使われてしまうが，他のパターンに比べてデメリットが明確であることが多いのがその所以のように思う．&lt;/p>
+&lt;p>この節 (おそらくこの書籍全体) を通して，正確さよりも分かりやすさを意識しているようで，しばしば (言いたいことはわかるが) 矛盾した記述が散見された．&lt;/p>
+&lt;p>例えば P.170 に以下の記載がある．&lt;/p>
+&lt;blockquote>
+&lt;p>Singleton パターンでは，オブジェクトは必要になったときに初めて作成できるのだ．&lt;/p>
+&lt;/blockquote>
+&lt;p>一方で P.174 には以下の記載がある．&lt;/p>
+&lt;blockquote>
+&lt;p>どの時点でもインスタンスが 1 つしか存在しないことを保証する，Singleton パターンに基づいています．&lt;/p>
+&lt;/blockquote>
+&lt;p>前者の「必要になるまでオブジェクトが作成 (インスタンス化の意と理解している) されない」に対して後者は「いついかなる時も (つまり必要か否かによらず) 1 つのインスタンスが存在する」と述べている．&lt;/p>
+&lt;p>(私の理解では) Singleton の本旨は後者が正しい．矛盾するかを厳密に詰めていけば使用する言語にもよってくるのだが，一般に矛盾していると解釈して差し支えないだろう．しかし Singleton Pattern を実装した結果，前者の性質を持つことが往々にしてあり，それ自体は知っていなければならないだろう．そうはいってもこの下りを厳密に説明することが本来の目的ではないのもわかる．このように必要な情報を (言葉を選ばずに言えば) 騙し騙し混ぜ込んでいるように感じた．&lt;/p></content></item></channel></rss>
