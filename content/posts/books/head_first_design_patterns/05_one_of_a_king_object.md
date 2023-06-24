@@ -17,6 +17,7 @@ categories: ["book", "design"]
 
 h_title: "Singleton Pattern の定義"
 h_define: "Singleton Pattern の定義"
+h_threadsafe: "Thread-safe な実装"
 h_report: "感想"
 ---
 
@@ -48,7 +49,7 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
 
 一方で現実的には，そのオブジェクトの定義およびインスタンスにアクセスしうる範囲をグローバル呼ぶものと想像する．前者は生成の可否，後者は複製の可否に影響する．例えば C# において `internal class Singleton {}` のような形で定義されるとき，ここでいうグローバルはプロセスとは一致しない Singleton Pattern のクラスが定義されるだろう．
 
-### Thread-safe な実装
+### {{< param h_threadsafe >}}
 
 本書でも指摘されているが `GetInstance()` が Thread-unsafe なため Multi-thread Programming の文脈ではインスタンスが単一であることを保証できない．
 
@@ -59,7 +60,7 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
     - C++ では `std::mutex` で排他処理を行うことになるだろう
     - 同期処理はパフォーマンスへの影響が大きくなるため，頻繁に呼ばれるような処理ではなるべく避けたい
 1. 遅延インスタンス生成から先行インスタンス生成に変える
-    - 書籍中では `GetInstance()` が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については[{{< param h_report >}}](#{{< h_report >}})で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，
+    - 書籍中では `GetInstance()` が呼ばれたタイミングでインスタンス化される (遅延インスタンス生成) が Singleton Pattern のメリットであるかのように述べられている (詳細については[{{< param h_report >}}](#{{< param h_report >}})で述べる) が，実際は生成するタイミング自体は Singleton Pattern の関知する所ではない ([Singleton Pattern の定義](#Singleton Pattern の定義) を参照)，
     - 端的にいえば `GetInstance()` を呼ばれたタイミングではなく (static 初期化子などで) クラスがロードされたタイミングで初期化してしまえばよい．
 
 
