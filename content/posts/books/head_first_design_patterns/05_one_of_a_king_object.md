@@ -30,7 +30,4 @@ Singleton Pattern はインスタンスを 1 つだけ生成する仕組みで�
 
 典型的にはコンストラクタを非公開，つまり private にすることで (外部から) 生成を禁ずる．
 
-{{< readfile file="head_first_design_patterns/one_of_a_king_object/singleton.cpp" lang="cpp" >}}
-
-```cpp
-class Hoge
+{{< readfile file="head_first_design_patterns/one_of_a_king_object/singleton.cpp" lang="cpp" is_open="true" >}}
