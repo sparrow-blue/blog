@@ -1,4 +1,49 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design and Implementation</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/05_one_of_a_king_objects/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_hirst_design_patterns/05_one_of_a_king_objects/</guid><description/><content/></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Design and Implementation</title><link>https://sparrow-blue.github.io/blog/</link><description>Recent content on Design and Implementation</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 24 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://sparrow-blue.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する． Thread pool Cache Dialogbox Logger</description><content>&lt;h2 id="singleton-pattern">Singleton Pattern&lt;/h2>
+&lt;p>インスタンスを 1 つしか必要としないオブジェクトは存在し，そのケースで複数のインスタンスを生成すると問題になるケースが存在する．&lt;/p>
+&lt;ul>
+&lt;li>Thread pool&lt;/li>
+&lt;li>Cache&lt;/li>
+&lt;li>Dialogbox&lt;/li>
+&lt;li>Logger&lt;/li>
+&lt;li>etc.&lt;/li>
+&lt;/ul>
+&lt;p>Singleton Pattern はインスタンスを 1 つだけ生成する仕組みである．&lt;/p>
+&lt;p>典型的にはコンストラクタを非公開，つまり private にすることで (外部から) 生成を禁ずる．&lt;/p>
+&lt;details >
+&lt;summary>head_first_design_patterns/one_of_a_king_object/singleton.cpp&lt;/summary>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#75715e">// Copyright (c) 2023, Kumazawa (sparrow-blue)
+&lt;/span>&lt;span style="color:#75715e">// This source code is licensed under the BSD 3-Clause License.
+&lt;/span>&lt;span style="color:#75715e">// See https://github.com/sparrow-blue/blog/blob/main/LICENSE for details.
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">#include&lt;/span> &lt;span style="color:#75715e">&amp;lt;memory&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Singleton&lt;/span> {
+&lt;span style="color:#66d9ef">private&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#75715e">// 外部からのインスタンス化を禁ずる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> Singleton() {}
+&lt;span style="color:#66d9ef">static&lt;/span> Singleton&lt;span style="color:#f92672">*&lt;/span> singleton_;
+&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;span style="color:#66d9ef">static&lt;/span> Singleton&lt;span style="color:#f92672">*&lt;/span> GetInstance() {
+&lt;span style="color:#75715e">// 内部からであればコンストラクタが呼べる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>singleton_) singleton_ &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Singleton();
+&lt;span style="color:#66d9ef">return&lt;/span> singleton_;
+}
+&lt;span style="color:#75715e">// コピーコンストラクタなどは delete で禁止しなければならない．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> Singleton(&lt;span style="color:#66d9ef">const&lt;/span> Singleton&lt;span style="color:#f92672">&amp;amp;&lt;/span> other) &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">delete&lt;/span>;
+&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#66d9ef">operator&lt;/span>&lt;span style="color:#f92672">=&lt;/span>(&lt;span style="color:#66d9ef">const&lt;/span> Singleton&lt;span style="color:#f92672">&amp;amp;&lt;/span>) &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">delete&lt;/span>;
+};
+Singleton&lt;span style="color:#f92672">*&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>singleton_ &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">nullptr&lt;/span>;
+&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#75715e">// コンストラクタが private なので外部からインスタンス化できない．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// auto singleton = new Singleton();
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;span style="color:#75715e">// static なメンバ関数からのみインスタンス化できる．
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">auto&lt;/span> singleton &lt;span style="color:#f92672">=&lt;/span> Singleton&lt;span style="color:#f92672">::&lt;/span>GetInstance();
+}
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;/details>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Hoge&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Observable Member</title><link>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</link><pubDate>Sat, 17 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/design_pattern/observable_member/</guid><description>このエントリの目指すところ C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する． 調査</description><content>&lt;h2 id="このエントリの目指すところ">このエントリの目指すところ&lt;/h2>
 &lt;p>C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．&lt;/p>
 &lt;h2 id="調査">調査&lt;/h2>
 &lt;h3 id="語られる像">語られる像&lt;/h3>

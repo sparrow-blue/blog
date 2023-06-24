@@ -9,6 +9,16 @@ src_dir = '.'
 env.VariantDir(build_dir, src_dir, duplicate=False)
 build_env = env.Clone()
 
+books_head_first_design_patterns_singleton_dir = os.path.join(build_dir, 'head_first_design_patterns', 'one_of_a_king_object')
+
+build_env.Append(CPPPATH=[os.path.join(Dir('#').abspath, books_head_first_design_patterns_singleton_dir)])
+build_env.Append(CCFLAGS=['-g', '-O0', '-std=c++20'])
+
+singleton = build_env.Program(
+    target = os.path.join(books_head_first_design_patterns_singleton_dir, "singleton"),
+    source = [os.path.join(books_head_first_design_patterns_singleton_dir, "singleton.cpp")]
+)
+
 design_pattern_dir = os.path.join(build_dir, 'design_pattern')
 
 build_env.Append(CPPPATH=[os.path.join(Dir('#').abspath, design_pattern_dir)])
@@ -29,4 +39,4 @@ observable_member = build_env.Program(
     source = [os.path.join(design_pattern_dir, "observable_member.cpp")]
 )
 
-Default(command_pattern, observer_pattern, observable_member)
+Default(singleton, command_pattern, observer_pattern, observable_member)
