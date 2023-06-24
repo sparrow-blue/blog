@@ -19,6 +19,11 @@ singleton = build_env.Program(
     source = [os.path.join(books_head_first_design_patterns_singleton_dir, "singleton.cpp")]
 )
 
+singleton_static_initializer = build_env.Program(
+    target = os.path.join(books_head_first_design_patterns_singleton_dir, "singleton_static_initializer"),
+    source = [os.path.join(books_head_first_design_patterns_singleton_dir, "singleton_static_initializer.cpp")]
+)
+
 design_pattern_dir = os.path.join(build_dir, 'design_pattern')
 
 build_env.Append(CPPPATH=[os.path.join(Dir('#').abspath, design_pattern_dir)])
@@ -39,4 +44,4 @@ observable_member = build_env.Program(
     source = [os.path.join(design_pattern_dir, "observable_member.cpp")]
 )
 
-Default(singleton, command_pattern, observer_pattern, observable_member)
+Default(singleton, singleton_static_initializer, command_pattern, observer_pattern, observable_member)
