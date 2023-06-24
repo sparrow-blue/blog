@@ -8,7 +8,7 @@ keywords: []
 # publishDate: 1970-01-01
 # slug: ""
 # summary: ""
-title : "Book"
+title : "Books"
 # type: ""
 # url ""
 # weight: 
