@@ -8,7 +8,7 @@ keywords: []
 # publishDate: "2023-06-13"
 # slug: ""
 # summary: ""
-title : "Observable Method"
+title : "Observable Member"
 # type: ""
 # url ""
 # weight: 
@@ -18,7 +18,7 @@ categories: ["design"]
 
 ## このエントリの目指すところ
 
-C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Method という名称で記載する．
+C# ライクなイベントハンドリングを実装する．パターンの名称がわからないので，とりあえず Observable Member という名称で記載する．
 
 ## 調査
 
@@ -61,6 +61,8 @@ InstalledDir: /usr/bin
 
 {{< readfile file="design_pattern/observable_member.cpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observable_member/observable_member.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observable_member/ObservableDiagram.hpp" lang="cpp" >}}
+{{< readfile file="design_pattern/observable_member/ObservableLine.hpp" lang="cpp" >}}
 {{< readfile file="design_pattern/observable_member/EventHandler.hpp" lang="cpp" >}}
 
 ### 実行結果
