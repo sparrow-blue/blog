@@ -14,6 +14,7 @@ title : "Book"
 # weight: 
 tags: []
 categories: ["book"]
+menu: main
 ---
 
 読んだ書籍をまとめる．
