@@ -147,7 +147,31 @@
 };
 &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {}
 &lt;/code>&lt;/pre>&lt;/div>
-&lt;/details></content></item><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトが存在する．その場合，複数のインスタンスを生成するとかえって問題になることがある． Thread pool Cache Dialogbox</description><content>&lt;h2 id="hahahugoshortcode-s0-hbhb">Singleton Pattern&lt;/h2>
+&lt;/details>
+&lt;h3 id="ハリウッドの原則--hollywood-principle">ハリウッドの原則 / Hollywood Principle&lt;/h3>
+&lt;blockquote>
+&lt;p>ハリウッドの原則&lt;br>
+こちらを呼び出すな．こちらから呼び出す．&lt;br>
+(Don&amp;rsquo;t call up, we&amp;rsquo;ll call you.)&lt;/p>
+&lt;/blockquote>
+&lt;p>Object Oriented Design におけるハリウッドの原則は，コンポーネント (典型的にはオブジェクト) 間の依存 (参照) 関係にルールを持たせようとするものである．OSI Reference Model や TCP/IP Protocol Suite の概念が類するといえるだろう．つまり上位のレイヤは下位のレイヤに依存するが，下位のレイヤは上位のレイヤに依存しない関係である．&lt;/p>
+&lt;p>Template Method Pattern の文脈でこの言葉が出てきたのは親クラスが呼び出し方を定義し，子クラスが呼び出される処理を実装する，という意味で子クラスはハリウッドの原則でいうところの呼び出される側に徹している，という意味合いであると思われる．&lt;/p>
+&lt;p>高水準コンポーネントと低水準コンポーネントについては 4 章 (P.139) で説明されているので，引用しておく．&lt;/p>
+&lt;blockquote>
+&lt;p>「高水準」コンポーネントとは，他の「低水準」コンポーネントに対して定義された振る舞いを持つクラスのことです．&lt;/p>
+&lt;/blockquote>
+&lt;p>なお，ハリウッドの原則と依存関係反転の原則の関係性について述べられている (P.300) が，依存関係反転の原則については 4 章で説明されているとのことなので，ここでは言及しない．&lt;br>
+// 章立ての順で読んでいないため，8 章についてのまとめを書いている今現在，また 4 章を読んでいない．&lt;/p>
+&lt;h2 id="感想">感想&lt;/h2>
+&lt;h3 id="abstract-method-と-hhok">Abstract Method と Hhok&lt;/h3>
+&lt;p>本文中では Template Method Pattern の実現方法として抽象メソッドを具象クラスで実装する方式とフックするメソッドをオーバライドする方式の 2 種類を提示している．ただ，Temmplate Method Pattern の定義にもあるように Template Method Pattern の目的は「アルゴリズムの骨組みを定義」することにあると考える．&lt;/p>
+&lt;h3 id="hollywood-principle-について">Hollywood Principle について&lt;/h3>
+&lt;p>ハリウッドの原則について以下のように補足されている (P.298).&lt;/p>
+&lt;blockquote>
+&lt;p>ハリウッドの原則を使うと，低水準コンポーネントがそれ自体をシステムにフックすることはできますが，高水準コンポーネントが低水準コンポーネントがいつどのように必要になるかについて判断します．&lt;/p>
+&lt;/blockquote>
+&lt;p>個人的には (確かに親クラスと読んだりはするが) 基底クラスを高水準コンポーネントと呼び，派生クラスを低水準コンポーネントの呼ぶのは，なんとなく抵抗がある (派生クラスのほうがレイヤが上ではないか)．&lt;br>
+// 確かに派生クラスが基底クラスに依存しているので，基底クラスが高水準コンポーネント (依存される側) で派生クラスが低水準コンポーネント (依存する側) である，と言っているというのはわかる．&lt;/p></content></item><item><title>オブジェクトを事情通に / Keeping your objects in the know</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/02_keeping_your_objects_in_the_know/</guid><description/><content/></item><item><title>唯一のオブジェクト / One of a king object</title><link>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</link><pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate><guid>https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/05_one_of_a_king_object/</guid><description>Singleton Pattern インスタンスを 1 つしか必要としないオブジェクトが存在する．その場合，複数のインスタンスを生成するとかえって問題になることがある． Thread pool Cache Dialogbox</description><content>&lt;h2 id="hahahugoshortcode-s0-hbhb">Singleton Pattern&lt;/h2>
 &lt;p>インスタンスを 1 つしか必要としないオブジェクトが存在する．その場合，複数のインスタンスを生成するとかえって問題になることがある．&lt;/p>
 &lt;ul>
 &lt;li>Thread pool&lt;/li>

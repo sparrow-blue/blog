@@ -57,7 +57,7 @@ Design and Implementation
 <h1 class=post-title>
 <a href=https://sparrow-blue.github.io/blog/posts/books/head_first_design_patterns/08_encapsulating_algorithms/>アルゴリズムのカプセル化 / Encapsulating Algorithm</a>
 </h1>
-<div class=post-meta><time class=post-date>2023-06-24[Updated::2023-06-24]</time></div>
+<div class=post-meta><time class=post-date>2023-06-24[Updated::2023-06-26]</time></div>
 <span class=post-tags>
 #<a href=https://sparrow-blue.github.io/blog/tags/design-pattern/>Design Pattern</a>&nbsp;
 #<a href=https://sparrow-blue.github.io/blog/tags/head-first-design-patterns/>Head First Design Patterns</a>&nbsp;
@@ -139,6 +139,30 @@ Design and Implementation
 <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {}
 </code></pre></div>
 </details>
+<h3 id=ハリウッドの原則--hollywood-principle>ハリウッドの原則 / Hollywood Principle<a href=#ハリウッドの原則--hollywood-principle class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<blockquote>
+<p>ハリウッドの原則<br>
+こちらを呼び出すな．こちらから呼び出す．<br>
+(Don&rsquo;t call up, we&rsquo;ll call you.)</p>
+</blockquote>
+<p>Object Oriented Design におけるハリウッドの原則は，コンポーネント (典型的にはオブジェクト) 間の依存 (参照) 関係にルールを持たせようとするものである．OSI Reference Model や TCP/IP Protocol Suite の概念が類するといえるだろう．つまり上位のレイヤは下位のレイヤに依存するが，下位のレイヤは上位のレイヤに依存しない関係である．</p>
+<p>Template Method Pattern の文脈でこの言葉が出てきたのは親クラスが呼び出し方を定義し，子クラスが呼び出される処理を実装する，という意味で子クラスはハリウッドの原則でいうところの呼び出される側に徹している，という意味合いであると思われる．</p>
+<p>高水準コンポーネントと低水準コンポーネントについては 4 章 (P.139) で説明されているので，引用しておく．</p>
+<blockquote>
+<p>「高水準」コンポーネントとは，他の「低水準」コンポーネントに対して定義された振る舞いを持つクラスのことです．</p>
+</blockquote>
+<p>なお，ハリウッドの原則と依存関係反転の原則の関係性について述べられている (P.300) が，依存関係反転の原則については 4 章で説明されているとのことなので，ここでは言及しない．<br>
+// 章立ての順で読んでいないため，8 章についてのまとめを書いている今現在，また 4 章を読んでいない．</p>
+<h2 id=感想>感想<a href=#感想 class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<h3 id=abstract-method-と-hhok>Abstract Method と Hhok<a href=#abstract-method-と-hhok class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>本文中では Template Method Pattern の実現方法として抽象メソッドを具象クラスで実装する方式とフックするメソッドをオーバライドする方式の 2 種類を提示している．ただ，Temmplate Method Pattern の定義にもあるように Template Method Pattern の目的は「アルゴリズムの骨組みを定義」することにあると考える．</p>
+<h3 id=hollywood-principle-について>Hollywood Principle について<a href=#hollywood-principle-について class=hanchor arialabel=Anchor>&#8983;</a> </h3>
+<p>ハリウッドの原則について以下のように補足されている (P.298).</p>
+<blockquote>
+<p>ハリウッドの原則を使うと，低水準コンポーネントがそれ自体をシステムにフックすることはできますが，高水準コンポーネントが低水準コンポーネントがいつどのように必要になるかについて判断します．</p>
+</blockquote>
+<p>個人的には (確かに親クラスと読んだりはするが) 基底クラスを高水準コンポーネントと呼び，派生クラスを低水準コンポーネントの呼ぶのは，なんとなく抵抗がある (派生クラスのほうがレイヤが上ではないか)．<br>
+// 確かに派生クラスが基底クラスに依存しているので，基底クラスが高水準コンポーネント (依存される側) で派生クラスが低水準コンポーネント (依存する側) である，と言っているというのはわかる．</p>
 </div></div>
 <div class=pagination>
 <div class=pagination__title>
